@@ -1,10 +1,8 @@
-const ACTION_TYPES = {
+export default {
 	AUTH_USER: {
 		value: 'AUTH_USER'
 	},
-	UNAUTH_USER: {
-		value: 'UNAUTH_USER'
+	RECEIVED_STYLISTS: {
+		value: 'RECEIVED_STYLISTS'
 	}
 }
-
-export ACTION_TYPES

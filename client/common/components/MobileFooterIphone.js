@@ -9,25 +9,56 @@ const recentsIcon = <FontIcon className="material-icons">account_box</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">book</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
 
-export default function MobileFooterIphone(props) {
-	return (
-        <BottomNavigation style={{position: 'fixed', bottom: 0}} selectedIndex={props.view}>
-          <BottomNavigationItem
-            label="My Account"
-            icon={recentsIcon}
+import navigate from '../actions/router-actions'
 
-            onTouchTap={props.handleNavigation(0)}
-          />
-          <BottomNavigationItem
-            label="Appointments"
-            icon={nearbyIcon}
-            onTouchTap={props.handleNavigation(1)}
-          />
-          <BottomNavigationItem
-            label="Book"
-            icon={favoritesIcon}
-            onTouchTap={props.handleNavigation(2)}
-          />
-        </BottomNavigation>
+import { connect } from 'react-redux'
+
+import { Link } from 'react-router-dom';
+
+function MobileFooterIphone(props) {
+  
+  function findIndex(props) {
+    switch(props.location) {
+      case '/account':
+        return 0
+      case '/appointment':
+        return 1
+      case '/order':
+        return 2
+    }
+  }
+
+	return (
+    <BottomNavigation style={{position: 'fixed', bottom: 0}} selectedIndex={findIndex(props)}>
+      <BottomNavigationItem
+        label="My Account"
+        icon={recentsIcon}
+        onTouchTap={() => props.navigate('/account')}
+      />
+      <BottomNavigationItem
+        label="Appointments"
+        icon={nearbyIcon}
+        onTouchTap={() => props.navigate('/appointment')}
+      />
+      <BottomNavigationItem
+        label="Book"
+        icon={favoritesIcon}
+        onTouchTap={() => props.navigate('/order')}
+      />
+    </BottomNavigation>
 	)
 }
+
+const mapStateToProps = (state) => {
+  return {
+    location: state.router.location.pathname
+  }
+}
+
+let MobileFooterIphoneComponent = connect( mapStateToProps, {
+  navigate: navigate
+})(MobileFooterIphone)
+
+
+
+export default MobileFooterIphoneComponent;

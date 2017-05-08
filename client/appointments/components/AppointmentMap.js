@@ -6,8 +6,8 @@ import React from 'react'
 const GettingStartedGoogleMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
-    defaultZoom={3}
-    defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+    defaultZoom={10}
+    defaultCenter={{ lat: props.lat, lng: props.lng }}
     onClick={props.onMapClick}
   >
     {props.markers.map((marker, index) => (
@@ -20,7 +20,15 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
 ));
 // Then, render it:
 
-export default function AppointmentMap() {
+export default function AppointmentMap(props) {
+
+  const marker = {
+    position: {
+      lat: props.lat,
+      lng: props.lng,
+    },
+  }
+
 	return ( 
 		<GettingStartedGoogleMap
 		    containerElement={
@@ -31,8 +39,10 @@ export default function AppointmentMap() {
 		    }
 		    onMapLoad={_.noop}
 		    onMapClick={_.noop}
-		    markers={[]}
+		    markers={[marker]}
 		    onMarkerRightClick={_.noop}
+        lat={props.lat}
+        lng={props.lng}
   		/> 
   	)
 }

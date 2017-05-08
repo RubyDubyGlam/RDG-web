@@ -1,24 +1,19 @@
 import axios from 'axios'
 
-export function loginApi(username, password) {
-  return axios.post('v1/auth', {
-    username: username,
-    password: password
-  })
-}
-
-export function signupApi(username, password, first_name, last_name, phone_number) {
-  return axios.post('v1/register', {
-    email_address: username,
-    password: password,
-    first_name: first_name,
-    last_name: last_name,
-    phone_number: phone_number
-  })
-}
-
 export function meApi() {
-  axios.get('v1/me', {
-    headers: { 'Authorization': 'jwt ' + cookie.load('rdgcookie') }
+  return axios.get('/v1/me').then((response) => {
+    return response.data
+  })  
+}
+
+export function getUser() {
+  return axios.get('/v1/user').then((response) => {
+    return response.data
+  })  
+}
+
+export function getStylists() {
+  return axios.get('/v1/stylists').then((response) => {
+    return response.data
   })  
 }

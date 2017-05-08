@@ -10,6 +10,7 @@ module.exports = {
 		    email_address: String,
 		    facebook_id: String,
 		    google_id: String,
+		    instagram_id: String,
 		    permissions: {
 		    	type: Number,
 		    	default : 0

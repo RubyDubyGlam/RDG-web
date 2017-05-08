@@ -1,6 +1,7 @@
 var passport = require('passport')
 var Strategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var InstagramStrategy = require('passport-instagram').Strategy;
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -56,19 +57,21 @@ function registerRoutes(app, db) {
 
 	passport.use(new InstagramStrategy({
 	    clientID: '7ab71bbbf974497ba441f53dbb133225',
-	    clientSecret: INSTAGRAM_CLIENT_SECRET,
-	    callbackURL: "http://localhost:3000/auth/instagram/callback"
+	    clientSecret: 'a85610256de44acb9f2fbaa98d9beee6',
+	    callbackURL: "http://localhost:8080/v1/auth/instagram/callback"
 	  },
-	  function(accessToken, refreshToken, profile, done) {
-	    // asynchronous verification, for effect...
-	    process.nextTick(function () {
-	      
-	      // To keep the example simple, the user's Instagram profile is returned to
-	      // represent the logged-in user.  In a typical application, you would want
-	      // to associate the Instagram account with a user record in your database,
-	      // and return that user instead.
-	      return done(null, profile);
-	    });
+	  function(accessToken, refreshToken, profile, cb) {
+	  	   var User = db.model('User')
+
+	  	   var full_name = profile.displayName.split(' ')
+	       
+	       User.findOrCreate({ 
+	       	instagram_id: profile.id,
+	    	first_name: full_name[0],
+	    	last_name: full_name[1],
+	       }, function (err, user) {
+	         return cb(err, user);
+	       });
 	  }
 	));
 
@@ -76,8 +79,22 @@ function registerRoutes(app, db) {
 	app.use(passport.session());
 
 	app.get('/v1/me', function (req, res) {
-  		res.json(req.user)
+		if (req.user) {
+  			res.json(req.user)
+		} else {
+			res.send(400, 'Unauthenticated')
+		}
 	})
+
+	app.get('/v1/auth/instagram',
+		passport.authenticate('instagram') 
+	);
+
+	app.get('/v1/auth/instagram/callback', 
+	  passport.authenticate('instagram', { failureRedirect: '/', scope: ['email', 'profile'] }),
+	  function(req, res) {
+	    res.redirect('/');
+	  });
 
 	app.get('/v1/auth/google',
 	  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email', 'profile'] }));
@@ -98,10 +115,18 @@ function registerRoutes(app, db) {
 	  }
 	)
 
-	app.get('/v1/users', function(req, res) {
+	app.get('/v1/stylists', function(req, res) {
 		var User = db.model('User')
 
-		User.find({}, function(err, users) {
+		User.find({ $or: [{permissions: 1}, {permissions: 2}]}, function(err, users) {
+			res.json(users)
+		})
+	})
+
+	app.get('/v1/user/:id', function(req, res) {
+		var User = db.model('User')
+
+		User.findById(req.params.id, function(err, users) {
 			res.json(users)
 		})
 	})

@@ -12,24 +12,40 @@ import GettingStartedGoogleMap from './AppointmentMap'
 
 import moment from 'moment'
 
-const CardExampleWithAvatar = (props) => (
-  <Card style={{width: '100%'}}>
-    <CardHeader
-      title="URL Avatar"
-      subtitle="Subtitle"
-      avatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
-    />
-    <CardMedia>
-      <GettingStartedGoogleMap />
-    </CardMedia>
-    <CardTitle title={moment(props.appointment.time).format('HH:MM')} subtitle={props.appointment.address} />
-    <CardText>
-    </CardText>
-    <CardActions style={{position: 'absolute', bottom: 56, width: '100%', display: 'flex'}}>
-      <RaisedButton primary style={{flexGrow: 1}} label="Decline" />
-      <RaisedButton secondary style={{flexGrow: 1}} label="Accept" />
-    </CardActions>
-  </Card>
-);
+import { connect } from 'react-redux'
 
-export default CardExampleWithAvatar;
+import AppointmentActions from './AppointmentActions'
+
+const AppointmentCard = (props) => {
+  console.log(props)
+  return (
+    <Card style={{width: '100%'}}>
+      <CardHeader
+        title="URL Avatar"
+        subtitle="Subtitle"
+        avatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
+      />
+      <CardMedia>
+        <GettingStartedGoogleMap 
+          lat={Number(props.appointments[props.match.params.id].latitude)}
+          lng={Number(props.appointments[props.match.params.id].longitude)}
+        />
+      </CardMedia>
+      <CardTitle title={moment(props.appointments[props.match.params.id].time).format('HH:MM')} subtitle={props.appointments[props.match.params.id].address} />
+      <CardText>
+      </CardText>
+      <AppointmentActions permissions={props.user.permissions} appointment={props.appointments[props.match.params.id]} />
+    </Card>
+  )
+};
+
+const mapStateToProps = (state) => {
+  return {
+    appointments: state.appointment.appointments,
+    user: state.user.user
+  }
+}
+
+let AppointmentCardComponent = connect( mapStateToProps )(AppointmentCard)
+
+export default AppointmentCardComponent

@@ -35,8 +35,8 @@ export default class LoginContainer extends Component {
     window.location.href = '/v1/auth/google'    
   }
 
-  authTwitter = () => {
-    
+  authInstagram = () => {
+    window.location.href = '/v1/auth/instagram'     
   }
 
   render() {
@@ -63,6 +63,7 @@ export default class LoginContainer extends Component {
               label="Login with Twitter"
               labelPosition="before"
               containerElement="label"
+              onClick={this.authInstagram}
             />
         </div>
       </div>

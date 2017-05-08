@@ -1,38 +1,34 @@
 import axios from 'axios'
+
 import {
-	loginApi,
-	signupApi,
-	meApi
+	meApi,
+	getStylists as getStylistsApi
 } from '../service/user-api'
 
-export function login(username, password) {
-	return function(dispatch, getState) {
-		loginApi(username, password).then((response) => {
-			cookie.save('rdgcookie', response.data.access_token)
-			axios.defaults.headers.common['Authorization'] = 'jwt ' + response.data.access_token
-		})
-	}
-}
-
-export function signup(username, password, first_name, last_name, phone_number) {
-	return function(dispatch, getState) {
-		signupApi(
-			username, 
-			password, 
-			first_name, 
-			last_name, 
-			phone_number
-		).then((response) => {
-	    cookie.save('rdgcookie', response.data.access_token)
-	  	axios.defaults.headers.common['Authorization'] = 'jwt ' + response.data.access_token
-	  })
-	}
-}
+import ACTION_TYPES from './user-action-enum'
 
 export function me() {
 	return function(dispatch, getState) {
 		meApi().then((response) => {
-			response
+			dispatch({
+				type: ACTION_TYPES.AUTH_USER.value,
+				payload: {
+					user: response
+				}
+			})
+		})
+	}
+}
+
+export function getStylists() {
+	return function(dispatch, getState) {
+		getStylistsApi().then((response) => {
+			dispatch({
+				type: ACTION_TYPES.RECEIVED_STYLISTS.value,
+				payload: {
+					stylists: response
+				}
+			})
 		})
 	}
 }

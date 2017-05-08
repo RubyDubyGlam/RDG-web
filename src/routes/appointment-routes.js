@@ -43,7 +43,22 @@ function registerRoutes(app, db) {
 			{stylist_id: req.body.stylist_id, status: 1},
 			{new: true},
 			function(err, appointment) {
-				console.log(err, appointment)
+				res.json(appointment)
+			}
+		)
+	})
+
+	app.post('/v1/appointment/:id/accept', function(req, res) {
+	    var Appointment = db.model('Appointment')		
+
+		Appointment.findByIdAndUpdate(
+			req.params.id, 
+			{
+				stylist_id: req.user._id, 
+				status: 2
+			},
+			{new: true},
+			function(err, appointment) {
 				res.json(appointment)
 			}
 		)
@@ -86,13 +101,13 @@ function registerRoutes(app, db) {
 		}
 
 		if(req.user.permissions === 1) {
-			Appointment.find({}, function(err, users) {
+			Appointment.find({stylist_id: req.user._id}, function(err, users) {
 				res.json(users)
 			})			
 		}		
 
 		if(req.user.permissions === 0) {
-			Appointment.find({}, function(err, users) {
+			Appointment.find({customer_id: req.user._id}, function(err, users) {
 				res.json(users)
 			})			
 		}	
