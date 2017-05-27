@@ -34,7 +34,6 @@ app.get('/', function (req, res) {
   console.log(req.user)
 })
 
-app.listen(8080, function () {
+app.listen(process.env.PORT || 8080, function () {
   console.log('Example app listening on port 8080!')
 })
- 
