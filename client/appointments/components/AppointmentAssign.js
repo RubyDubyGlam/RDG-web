@@ -9,12 +9,22 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { map } from 'lodash'
+import { map, filter } from 'lodash'
 
 import { connect } from 'react-redux'
 
 import { getStylists } from '../../user/action/user-action'
 import { assignStylist } from '../action/appointment-action'
+
+import HairDryer from '../../../public/assets/technology.svg'
+import Nails from '../../../public/assets/nail-polish.svg'
+import Makeup from '../../../public/assets/lipstick.svg'
+
+import Loader from '../../common/components/Loader'
+
+import moment from 'moment'
+
+import navigate from '../../common/actions/router-actions'
 
 class AppointmentAssign extends Component {
 
@@ -22,7 +32,8 @@ class AppointmentAssign extends Component {
 		super(props)
 		this.state = {
 			is_confirm_open: false,
-			stylist: {}
+			stylist: {},
+			is_loading: false
 		}
 
 	}
@@ -48,12 +59,28 @@ class AppointmentAssign extends Component {
 	}
 
 	handleAssignSubmit = () => {
+
+		this.setState({
+			is_loading: true
+		})
+
 		this.props.assignStylist(
 			this.props.appointments[this.props.match.params.id]._id,
 			this.state.stylist._id
-		)
+		).then((response) => {
+			this.props.navigate(`appointment/${this.props.match.params.id}`)
+		})
 	}
 
+	populateIcons = (appointment) => {
+		return (
+			<div>
+				{ appointment.products.hair && <HairDryer style={{height: 20, }}/> }
+				{ appointment.products.nails && <Nails style={{height: 20, }}/> }
+				{ appointment.products.makeup && <Makeup style={{height: 20, }}/> }
+			</div>
+		)
+	}
 
 	render() {
 	    const actions = [
@@ -70,10 +97,14 @@ class AppointmentAssign extends Component {
 	      />,
 	    ];
 
+	    const stylists = filter(this.props.stylists, (stylist) => {
+	    	return stylist._id !== this.props.user._id
+	    })
+
 	    return (
 	    	<List>
 		    	{
-		    		map(this.props.stylists, (stylist) => {
+		    		map(stylists, (stylist) => {
 			    		return (
 					      <ListItem
 					        primaryText={`${stylist.first_name} ${stylist.last_name}`}
@@ -85,17 +116,21 @@ class AppointmentAssign extends Component {
 		    		})
 		    	}
 		    	<div>
+		    		{this.state.is_loading ? <Loader /> : null}
 			        <Dialog
 			          actions={actions}
 			          modal={false}
 			          open={this.state.is_confirm_open}
 			          onRequestClose={this.handleAssignCancel}
-			          contentStyle={{width: '100%'}}
+			          contentStyle={{textAlign:'center', width: '100%'}}
 			        >
-				        <p>Assign {`${this.state.stylist.first_name} ${this.state.stylist.last_name}`} to:</p>
-				        <br />				        
+				        <p style={{fontSize: 18}}>Assign {`${this.state.stylist.first_name} ${this.state.stylist.last_name}`} to</p>
+				        <p style={{fontSize: 18}}>Address:</p>		        
 				        <p>{`${this.props.appointments[this.props.match.params.id].address}`}</p>
-				        <p>{`${this.props.appointments[this.props.match.params.id].time}`}</p>
+				        <p style={{fontSize: 18}}>Time:</p>
+				        <p>{`${moment(this.props.appointments[this.props.match.params.id].time).format('MMMM Do, h:mm a')}`}</p>
+				        <p style={{fontSize: 18}}>Services:</p>
+				        {this.populateIcons(this.props.appointments[this.props.match.params.id])}
 			        </Dialog>
 		      </div>
 	    	</List>
@@ -106,13 +141,15 @@ class AppointmentAssign extends Component {
 const mapStateToProps = (state) => {
   return {
   	stylists: state.user.stylists,
-  	appointments: state.appointment.appointments
+  	appointments: state.appointment.appointments,
+  	user: state.user.user
   }
 }
 
 let AppointmentAssignComponent = connect( mapStateToProps, {
   getStylists,
-  assignStylist
+  assignStylist, 
+  navigate
 })(AppointmentAssign)
 
 export default AppointmentAssignComponent

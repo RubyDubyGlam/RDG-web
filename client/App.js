@@ -20,6 +20,8 @@ import reducer from './common/reducer/root_reducer'
 import { Provider } from 'react-redux'
 
 import MobileLayoutIphone from './common/components/MobileLayoutIphone'
+import MobileLayoutAndroid from './common/components/MobileLayoutAndroid'
+import WebLayout from './common/components/WebLayout'
 
 import history from './common/service/history-service'
 
@@ -27,19 +29,29 @@ import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-ro
 
 const router = routerMiddleware(history)
 
-console.log(router)
-
 const store = createStore(reducer, applyMiddleware(thunk, router))
 
 import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   render() {
+    let agent = <Route path="/" component={WebLayout} />
+
+    if( /iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+      agent = <Route path="/" component={MobileLayoutIphone} />
+    }
+
+
+    if( /Android/i.test(navigator.userAgent) ) {
+      agent = <Route path="/" component={MobileLayoutAndroid} />
+    }
+
+
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+      <MuiThemeProvider>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <Route path="/" component={MobileLayoutIphone} />
+            {agent}
           </ConnectedRouter>
         </Provider>
       </MuiThemeProvider>

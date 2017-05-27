@@ -29,7 +29,7 @@ function MobileFooterIphone(props) {
   }
 
 	return (
-    <BottomNavigation style={{position: 'fixed', bottom: 0}} selectedIndex={findIndex(props)}>
+    <BottomNavigation style={{position: 'fixed', bottom: 0, zIndex: 2}} selectedIndex={findIndex(props)}>
       <BottomNavigationItem
         label="My Account"
         icon={recentsIcon}

@@ -10,6 +10,8 @@ import MobileHeaderIphone from './MobileHeaderIphone'
 import { me } from '../../user/action/user-action'
 import { connect } from 'react-redux'
 
+import { withRouter } from 'react-router'
+
 import {
   Route,
   Switch
@@ -51,13 +53,13 @@ class MobileLayoutIphone extends Component {
 		<div style={styles.container}>
 			<MobileHeaderIphone />
 			<Switch>
-				<Route path='/order' component={OrderContainer} />
-				<Route path='/appointment' component={AppointmentContainer} />
-				<Route path='/account' component={UserAccountContainer} />
+				<Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
+				<Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
+				<Route path='/account' component={UserAccountContainer} user={this.props.user} />
 			</Switch>
 			{ this.props.user ? <MobileFooterIphone view={this.state.view} handleNavigation={this.handleNavigation}/> : null }
 			{ !this.props.user ? <LoginContainer /> : null}
-			<img style={{zIndex: -1, opacity: .02, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
+			<img style={{zIndex: -1, opacity: .05, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
 		</div>
     )
   }
@@ -65,13 +67,14 @@ class MobileLayoutIphone extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.user
+    user: state.user.user,
+    appointments: state.appointment.appointments
   }
 }
 
-let MobileLayoutIphoneComponent = connect( mapStateToProps, {
+let MobileLayoutIphoneComponent = withRouter(connect( mapStateToProps, {
 	me: me
-})(MobileLayoutIphone)
+}, undefined, {pure:false})(MobileLayoutIphone))
 
 
 

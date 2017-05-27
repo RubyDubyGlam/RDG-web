@@ -9,7 +9,14 @@ module.exports = {
 		    	type: ObjectId,
 		    	required: true 
 		    },
+		    customer_full_name: {
+		    	type: String,
+		    	required: true
+		    },
 		    stylist_id: ObjectId,
+		    stylist_full_name: {
+		    	type: String
+		    },
 		    address: {
 				type: String,
 				required: true
@@ -30,14 +37,18 @@ module.exports = {
 		    	type: Date,
 		    	required: true
 		    },
-		    type: {
-		    	type: Number,
+		    phone_number: {
+		    	type: String,
+		    	required: true
+		    },
+		    products: {
+		    	type: Object,
 		    	required: true
 		    },
 		    payment_token: {
 		    	type: String,
 		    	required: true
-		    }
+		    },
 		});
 
 		var BlogPostModel = mongoose.model('Appointment', Appointment)

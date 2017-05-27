@@ -31,24 +31,24 @@ export function assignStylist(appointment_id, stylist_id) {
 			dispatch({
 				type: ACTION_TYPES.STYLIST_ASSIGNED.value,
 				payload: {
-					appointment: keyBy(response, '_id')
+					appointment: keyBy([response], '_id')
 				}
 			})
 		})
 	}
 }
 
-export function acceptAppointment(appointment_id) {
+export function appointmentStateChange(appointment_id, state) {
 	return function(dispatch) {
 		dispatch({
-			type: ACTION_TYPES.ACCEPTING_APPOINTMENT.value
+			type: ACTION_TYPES.APPOINTMENT_STATE_CHANGING.value
 		})
 
-		return acceptAppointmentApi(appointment_id).then((response) => {
+		return acceptAppointmentApi(appointment_id, state).then((response) => {
 			dispatch({
-				type: ACTION_TYPES.APPOINTMENT_ACCEPTED.value,
+				type: ACTION_TYPES.APPOINTMENT_STATE_CHANGED.value,
 				payload: {
-					appointment: keyBy(response, '_id')
+					appointment: keyBy([response], '_id')
 				}
 			})
 		})

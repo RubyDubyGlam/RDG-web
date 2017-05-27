@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
-import CardExampleWithAvatar from './AppointmentCard'
+import AppointmentCard from './AppointmentCard'
 import AppointmentAssign from './AppointmentAssign'
 import AppointmentList from './AppointmentList'
+import AppointmentListStylist from './AppointmentListStylist'
+import AppointmentListAdmin from './AppointmentListAdmin'
+import AppointmentRouter from './AppointmentRouter'
 
 import { Switch, Route } from 'react-router-dom'
 
@@ -10,38 +13,17 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 	console.log('wooo')
 }
 
-import { connect } from 'react-redux'
-
-import { getAppointments } from '../action/appointment-action'
-
-class AppointmentContainer extends Component {
-
-	componentDidMount(props) {
-		console.log(props)
-		this.props.getAppointments()
-	}
+export default class AppointmentContainer extends Component {
 
 	render() {
 		return (
 			<Switch>
 				<Route path='/appointment/:id/assign' component={AppointmentAssign} />
-				<Route path='/appointment/:id' component={CardExampleWithAvatar} />
-				<Route path='/appointment' render={() => <AppointmentList appointments={this.props.appointments}/>} />
+				<Route path='/appointment/:id' render={() => <AppointmentCard appointments={this.props.appointments} />} />
+				<Route path='/appointment' component={AppointmentRouter} />
 			</Switch>
 		)
 	}
 }
-
-const mapStateToProps = (state) => {
-  return {
-  	appointments: state.appointment.appointments
-  }
-}
-
-let AppointmentContainerComponent = connect( mapStateToProps, {
-  getAppointments: getAppointments
-})(AppointmentContainer)
-
-export default AppointmentContainerComponent
 
 

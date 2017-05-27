@@ -11,10 +11,19 @@ module.exports = {
 		    facebook_id: String,
 		    google_id: String,
 		    instagram_id: String,
-		    permissions: {
-		    	type: Number,
-		    	default : 0
-		    }
+		    roles: {
+		    	type: Object,
+		    	default : {
+		    		admin: false,
+		    		stylist: false,
+		    	},
+		    },
+		    phone_number: String,
+		    subscribed: {
+		    	type: Boolean,
+		    	default: true
+		    },
+		    profile_picture: String,
 		});
 
 		var findOrCreate = require('mongoose-findorcreate')

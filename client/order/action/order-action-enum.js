@@ -1,0 +1,8 @@
+export default {
+	APPOINTMENT_CREATING: {
+		value: 'APPOINTMENT_CREATING'
+	},
+	APPOINTMENT_CREATED: {
+		value: 'APPOINTMENT_CREATED'		
+	}
+}

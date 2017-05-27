@@ -1,5 +1,7 @@
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-import React from 'react'
+import React, { Component } from 'react'
+
+import CarIcon from '../../../public/assets/car.svg'
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
@@ -20,29 +22,73 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
 ));
 // Then, render it:
 
-export default function AppointmentMap(props) {
+export default class AppointmentMap extends Component {
 
-  const marker = {
-    position: {
-      lat: props.lat,
-      lng: props.lng,
-    },
+  constructor(props) {
+    super(props)
+    this.state = {
+      location: null
+    }
+    navigator.geolocation.getCurrentPosition(this.markLocation)
   }
 
-	return ( 
-		<GettingStartedGoogleMap
-		    containerElement={
-		      <div style={{ height: 200 }} />
-		    }
-		    mapElement={
-		      <div style={{ height: 200 }} />
-		    }
-		    onMapLoad={_.noop}
-		    onMapClick={_.noop}
-		    markers={[marker]}
-		    onMarkerRightClick={_.noop}
-        lat={props.lat}
-        lng={props.lng}
-  		/> 
-  	)
+  markLocation = (position) => {
+    this.setState({
+      location: {
+        position: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude   
+        },
+        icon: '/assets/car.svg'
+      }
+    })
+  }
+
+  render() {
+
+    const {
+      props
+    } = this
+
+    const marker = {
+      position: {
+        lat: props.lat,
+        lng: props.lng,
+      },
+    }
+
+    const markers = [marker]
+
+    if (this.state.location) {
+      markers.push(this.state.location)
+    }
+
+    let agent = 'web'
+
+    if( /iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent) ) {
+      agent = 'ios'
+    }
+
+
+    if( /Android/i.test(navigator.userAgent) ) {
+      agent = 'android'
+    }
+
+  	return ( 
+  		<GettingStartedGoogleMap
+  		    containerElement={
+  		      <div style={{ height: agent === 'web' ? 450 : 250 }} />
+  		    }
+  		    mapElement={
+  		      <div style={{ height: agent === 'web' ? 450 : 250 }} />
+  		    }
+  		    onMapLoad={_.noop}
+  		    onMapClick={_.noop}
+  		    markers={markers}
+  		    onMarkerRightClick={_.noop}
+          lat={props.lat}
+          lng={props.lng}
+    		/> 
+    	)
+  }
 }

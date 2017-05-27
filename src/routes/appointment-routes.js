@@ -8,7 +8,7 @@ var options = {
 var geocoder = NodeGeocoder(options);
 
 
-function registerRoutes(app, db) {
+function registerRoutes(app, db, twilio_client) {
 
 	app.post('/v1/appointment/book', 
 		function(req, res) {
@@ -18,12 +18,14 @@ function registerRoutes(app, db) {
 	    	console.log(req.body, req.user)
 		    Appointment.create({
 		    	customer_id: req.user._id,
+		    	customer_full_name: req.user.first_name + ' ' + req.user.last_name,
 		    	address: req.body.address,
 		    	latitude: location[0].latitude,
 		    	longitude: location[0].longitude,
 		    	payment_token: req.body.payment_token,
-		    	type: 1,
+		    	products: req.body.products,
 		    	time: req.body.time,
+		    	phone_number: req.body.phone_number
 	    	}, function(err, Appointment) {
 	    		if (err) {
 	    			res.json(err)
@@ -36,16 +38,31 @@ function registerRoutes(app, db) {
 	})
 
 	app.post('/v1/appointment/assign', function(req, res) {
-	    var Appointment = db.model('Appointment')		
+	    var Appointment = db.model('Appointment')
+	    var User = db.model('User')
+	    var status
+	   	var user_model
 
-		Appointment.findByIdAndUpdate(
-			req.body.appointment_id, 
-			{stylist_id: req.body.stylist_id, status: 1},
-			{new: true},
-			function(err, appointment) {
-				res.json(appointment)
-			}
-		)
+	   	User.findById(req.body.stylist_id, function(err, stylist) {
+		    if (req.user._id === req.body.stylist_id) {
+		    	status = 2
+		    } else {
+		    	status = 1
+		    }
+
+			Appointment.findByIdAndUpdate(
+				req.body.appointment_id,
+				{
+					stylist_id: req.body.stylist_id, 
+					status: status,
+					stylist_full_name: stylist.first_name + ' ' + stylist.last_name
+				},
+				{new: true},
+				function(err, appointment) {
+					res.json(appointment)
+				}
+			)			
+		})
 	})
 
 	app.post('/v1/appointment/:id/accept', function(req, res) {
@@ -54,7 +71,6 @@ function registerRoutes(app, db) {
 		Appointment.findByIdAndUpdate(
 			req.params.id, 
 			{
-				stylist_id: req.user._id, 
 				status: 2
 			},
 			{new: true},
@@ -64,26 +80,64 @@ function registerRoutes(app, db) {
 		)
 	})
 
-	app.post('/v1/appointment/complete', function(req, res) {
+	app.post('/v1/appointment/:id/enroute', function(req, res) {
 	    var Appointment = db.model('Appointment')		
 
 		Appointment.findByIdAndUpdate(
-			req.body.appointment_id, 
-			{status: 2},
+			req.params.id, 
+			{
+				status: 3
+			},
 			{new: true},
 			function(err, appointment) {
-				console.log(err)
+				twilio_client.messages.create({
+				    body: 'Your stylist is on the way!',
+				    to: '+1' + appointment.phone_number,  // Text this number
+				    from: '+18052108161' // From a valid Twilio number
+				})
 				res.json(appointment)
 			}
 		)
 	})
 
-	app.post('/v1/appointment/cancel', function(req, res) {
+	app.post('/v1/appointment/:id/begin', function(req, res) {
 	    var Appointment = db.model('Appointment')		
 
-		Appointment.findOneAndUpdate(
-			{id: req.body.appointment_id}, 
-			{status: 3},
+		Appointment.findByIdAndUpdate(
+			req.params.id, 
+			{
+				status: 4
+			},
+			{new: true},
+			function(err, appointment) {
+				res.json(appointment)
+			}
+		)
+	})
+
+	app.post('/v1/appointment/:id/complete', function(req, res) {
+	    var Appointment = db.model('Appointment')		
+
+		Appointment.findByIdAndUpdate(
+			req.params.id, 
+			{
+				status: 5
+			},
+			{new: true},
+			function(err, appointment) {
+				res.json(appointment)
+			}
+		)
+	})
+
+	app.post('/v1/appointment/:id/cancel', function(req, res) {
+	    var Appointment = db.model('Appointment')		
+
+		Appointment.findByIdAndUpdate(
+			req.params.id, 
+			{
+				status: -1
+			},
 			{new: true},
 			function(err, appointment) {
 				res.json(appointment)
@@ -94,23 +148,21 @@ function registerRoutes(app, db) {
 	app.get('/v1/appointments', function(req, res) {
 		var Appointment = db.model('Appointment')
 
-		if(req.user.permissions === 2) {
-			Appointment.find({}, function(err, users) {
-				res.json(users)
+		if(req.user.roles.admin) {
+			return Appointment.find({}, function(err, appointments) {
+				res.json(appointments)
 			})			
 		}
 
-		if(req.user.permissions === 1) {
-			Appointment.find({stylist_id: req.user._id}, function(err, users) {
-				res.json(users)
+		if(req.user.roles.stylist) {
+			return Appointment.find({stylist_id: req.user._id}, function(err, appointments) {
+				res.json(appointments)
 			})			
-		}		
-
-		if(req.user.permissions === 0) {
-			Appointment.find({customer_id: req.user._id}, function(err, users) {
-				res.json(users)
-			})			
-		}	
+		}
+		
+		return Appointment.find({customer_id: req.user._id}, function(err, appointments) {
+			res.json(appointments)
+		})
 	})
 }
 

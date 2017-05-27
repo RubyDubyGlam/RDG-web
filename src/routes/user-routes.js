@@ -2,6 +2,8 @@ var passport = require('passport')
 var Strategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var InstagramStrategy = require('passport-instagram').Strategy;
+var _ = require('lodash')
+
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -23,11 +25,11 @@ function registerRoutes(app, db) {
 
 	  	var User = db.model('User')
 
-	    User.findOrCreate({ 
+	    User.findOrCreate({facebook_id: profile.id}, { 
 	    	facebook_id: profile.id,
 	    	first_name: profile.name.givenName,
 	    	last_name: profile.name.familyName,
-	    	email_address: profile.emails[0].value
+	    	email_address: profile.emails[0].value,
 		}, function (err, user) {
 	      return cb(err, user);
 	    })
@@ -40,18 +42,19 @@ function registerRoutes(app, db) {
 	    callbackURL: "http://localhost:8080/v1/auth/google/callback"
 	  },
 	  function(accessToken, refreshToken, profile, cb) {
-
-
 	  	   var User = db.model('User')
-	       
-	       User.findOrCreate({ 
-	       	google_id: profile.id,
-	    	first_name: profile.name.givenName,
-	    	last_name: profile.name.familyName,
-	    	email_address: profile.emails[0].value
-	       }, function (err, user) {
-	         return cb(err, user);
-	       });
+
+			var photo = _.get(profile, 'photos[0].value')
+
+		    User.findOrCreate({google_id: profile.id}, { 
+		    	google_id: profile.id,
+		    	first_name: profile.name.givenName,
+		    	last_name: profile.name.familyName,
+		    	email_address: profile.emails[0].value,
+		    	profile_picture: photo
+			}, function (err, user) {
+		      return cb(err, user);
+		    })
 	  }
 	));
 
@@ -65,7 +68,7 @@ function registerRoutes(app, db) {
 
 	  	   var full_name = profile.displayName.split(' ')
 	       
-	       User.findOrCreate({ 
+	       User.findOrCreate({instagram_id: profile.id}, { 
 	       	instagram_id: profile.id,
 	    	first_name: full_name[0],
 	    	last_name: full_name[1],
@@ -80,7 +83,14 @@ function registerRoutes(app, db) {
 
 	app.get('/v1/me', function (req, res) {
 		if (req.user) {
-  			res.json(req.user)
+		   	var User = db.model('User')
+
+			User.findById(req.user._id, 
+				function(err, user) {
+					console.log(err, user)
+					res.json(user)
+				}
+			)
 		} else {
 			res.send(400, 'Unauthenticated')
 		}
@@ -117,8 +127,8 @@ function registerRoutes(app, db) {
 
 	app.get('/v1/stylists', function(req, res) {
 		var User = db.model('User')
-
-		User.find({ $or: [{permissions: 1}, {permissions: 2}]}, function(err, users) {
+		
+		User.find({ 'roles.stylist' : true }, function(err, users) {
 			res.json(users)
 		})
 	})
@@ -130,6 +140,76 @@ function registerRoutes(app, db) {
 			res.json(users)
 		})
 	})
+
+	app.get('/v1/logout', function(req, res){
+	  req.logout();
+	  res.redirect('/');
+	});
+
+	app.post( '/v1/user/change-phone-number', function(req, res) {
+	   	var User = db.model('User')
+
+		User.findByIdAndUpdate(
+			req.user._id, 
+			{
+				phone_number: req.body.phone_number
+			},
+			{new: true},
+			function(err, user) {
+				res.json(user)
+			}
+		)
+	  }
+	)
+	
+	app.post( '/v1/user/change-email-address', function(req, res) {
+	   	var User = db.model('User')
+
+		User.findByIdAndUpdate(
+			req.user._id, 
+			{
+				email_address: req.body.email_address
+			},
+			{new: true},
+			function(err, user) {
+				res.json(user)
+			}
+		)
+	  }
+	)
+
+	app.post( '/v1/user/subscribe', function(req, res) {
+	   	var User = db.model('User')
+
+		User.findByIdAndUpdate(
+			req.user._id, 
+			{
+				subscribed: true
+			},
+			{new: true},
+			function(err, user) {
+				res.json(user)
+			}
+		)
+	  }
+	)
+
+	app.post( '/v1/user/unsubscribe', function(req, res) {
+	   	var User = db.model('User')
+
+		User.findByIdAndUpdate(
+			req.user._id, 
+			{
+				subscribed: false
+			},
+			{new: true},
+			function(err, user) {
+				console.log(err, user)
+				res.json(user)
+			}
+		)
+	  }
+	)
 }
 
 module.exports = {

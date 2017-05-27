@@ -8,7 +8,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: __dirname,
-    filename: '/public/js/bundle.js'
+    filename: './public/js/bundle.js'
   },
   module: {
     loaders: [
@@ -22,17 +22,17 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    publicPath: "/",
-    contentBase: "./public",
-    hot: true,
-    proxy: {
-      '/v1': {
-        target: 'http://127.0.0.1:5000',
-        changeOrigin: true,
-        pathRewrite: {"^/v1" : ""}
-      }
-    },
-  }
+  // devServer: {
+  //   publicPath: "/",
+  //   contentBase: "./public",
+  //   hot: true,
+  //   proxy: {
+  //     '/v1': {
+  //       target: 'http://127.0.0.1:5000',
+  //       changeOrigin: true,
+  //       pathRewrite: {"^/v1" : ""}
+  //     }
+  //   },
+  // }
 };
 

@@ -6,6 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import axios from 'axios'
 
+import Loader from '../../common/components/Loader'
+
+import { Button, Icon } from 'semantic-ui-react'
+
 const styles = {
   container: {
     height: '100%',
@@ -24,7 +28,9 @@ const styles = {
 export default class LoginContainer extends Component {
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      is_loading: false
+    }
   }
 
   authFacebook = () => {
@@ -43,30 +49,42 @@ export default class LoginContainer extends Component {
 
     return (
       <div style={styles.container}>
+        { this.state.is_loading ? <Loader /> : null }
         <div style={styles.container_redux}>
-          <RaisedButton
-            style={{marginTop: 36, width: '60%'}}
-              label="Login with Facebook"
-              labelPosition="before"
-              containerElement="label"
-              onClick={this.authFacebook}
-            /><br />
-          <RaisedButton
-            style={{marginTop: 36, width: '60%'}}
-              label="Login with Google"
-              labelPosition="before"
-              containerElement="label"
-              onClick={this.authGoogle}
-            /><br />
-          <RaisedButton
-            style={{marginTop: 36, width: '60%'}}
-              label="Login with Twitter"
-              labelPosition="before"
-              containerElement="label"
-              onClick={this.authInstagram}
-            />
+          <p style={{fontSize: 26}}>Login with</p>
+          <Button onClick={this.authFacebook} color='facebook' style={{marginTop: 36, width: '60%'}}>
+            <Icon name='facebook' /> Facebook
+          </Button>
+          <Button onClick={this.authGoogle} color='google plus' style={{marginTop: 36, width: '60%'}}>
+            <Icon name='google plus' /> Google Plus
+          </Button>
+          <Button onClick={this.authInstagram} color='instagram' style={{marginTop: 36, width: '60%'}}>
+            <Icon name='instagram' /> Instagram
+          </Button>
         </div>
       </div>
     )
   }
 }
+
+          // <RaisedButton
+          //   style={{marginTop: 36, width: '60%'}}
+          //     label="Login with Facebook"
+          //     labelPosition="before"
+          //     containerElement="label"
+          //     onClick={this.authFacebook}
+          //   /><br />
+          // <RaisedButton
+          //   style={{marginTop: 36, width: '60%'}}
+          //     label="Login with Google"
+          //     labelPosition="before"
+          //     containerElement="label"
+          //     onClick={this.authGoogle}
+          //   /><br />
+          // <RaisedButton
+          //   style={{marginTop: 36, width: '60%'}}
+          //     label="Login with Twitter"
+          //     labelPosition="before"
+          //     containerElement="label"
+          //     onClick={this.authInstagram}
+          //   />

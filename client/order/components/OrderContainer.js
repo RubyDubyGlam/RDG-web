@@ -26,9 +26,10 @@ const styles = {
 		margin: 0,
 		display: 'flex',
 		flexDirection: 'column',
+		alignItems: 'center',
+		overflowY: 'scroll'
 	},
 }
-
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 	console.log('wooo')
@@ -37,28 +38,32 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 export default class OrderFlow extends Component {
 	constructor(props) {
 		super(props)
+
+		console.log(props)
 		this.state = {
-			step: 0,
-			date: '',
-			time: '',
-			product: '',
+			step: 1,
+			date_time: '',
+			products: {
+				nails: false,
+				hair: false,
+				makeup: false
+			},
 			address: '',
-			payment_token: ''
+			payment_token: '',
+			phone_number: props.user.phone_number || '',
 		}
 	}
 
-	navigateStep = (step) => {
-		return () => {
-			this.setState({step})
-			console.log(this.state)
-		}
+	goForward = () => {
+		this.setState({step: this.state.step + 1})
 	}
 
-	setProduct = (product) => {
-		return (event) => {
-			this.setState({product})			
-		}
+	goBack = (step) => {
+		this.setState({step: this.state.step - 1})
+	}
 
+	setProducts = (products) => {
+		this.setState({products})			
 	}
 
 	setPayment = (token_id) => {
@@ -67,21 +72,29 @@ export default class OrderFlow extends Component {
 		})
 	}
 
+	setContact = (phone_number) => {
+		this.setState({
+			phone_number
+		})
+	}
+
 	setDateTimeAddress = (date, time, address) => {
-		this.setState({date, time, address})
+		const date_time = moment(date + ' ' + time)
+		
+		this.setState({date_time, address})
 	}
 
 	render() {
 		return (
 			<div style={styles.container}>
-					<Progress percent={60} active />
-					{ this.state.step === 0 ? <OrderProductSelection navigateStep={this.navigateStep} /> : null }
+					<Progress style={{width: '100%', marginBottom: 20}} percent={this.state.step * 25} active />
+					{ this.state.step === 1 ? <OrderProductSelection setProducts={this.setProducts} goForward={this.goForward} goBack={this.goBack} form_data={this.state} /> : null }
 
-					{ this.state.step === 1 ? <OrderDateTimePlaceSelection navigateStep={this.navigateStep} setDateTimeAddress={this.setDateTimeAddress} /> : null }
+					{ this.state.step === 2 ? <OrderDateTimePlaceSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} /> : null }
 
-					{ this.state.step === 2 ? <OrderPaymentSelection navigateStep={this.navigateStep} setPayment={this.setPayment} /> : null }
+					{ this.state.step === 3 ? <OrderPaymentSelection goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} /> : null }
 
-					{ this.state.step === 3 ? <OrderConfirm form_data={this.state} navigateStep={this.navigateStep} /> : null }
+					{ this.state.step === 4 ? <OrderConfirm form_data={this.state} goForward={this.goForward} goBack={this.goBack} /> : null }
 
 	        </div>
 		)		

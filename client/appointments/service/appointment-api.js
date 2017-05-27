@@ -15,8 +15,8 @@ export function assignStylist(appointment_id, stylist_id){
 	})	
 }
 
-export function acceptAppointment(appointment_id){
-	return axios.post(`/v1/appointment/${appointment_id}/accept`).then((response) => {
+export function acceptAppointment(appointment_id, state){
+	return axios.post(`/v1/appointment/${appointment_id}/${state}`).then((response) => {
 		return response.data
 	})	
 }
