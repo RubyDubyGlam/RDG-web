@@ -21,6 +21,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 	}
 
 	function ensureAdmin(req, res, next) {
+		console.log(req.user)
 		if (req.user.roles.admin) {
 			return next()
 		}
