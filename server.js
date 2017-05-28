@@ -28,8 +28,8 @@ registerRoutes.registerRoutes(app, mongoose, twilio_client)
 
 registerServices.registerServices(app, mongoose, twilio_client)
 
-app.get('/', function (req, res) {
-  console.log(req.user)
+app.get('*', function(req, res) {
+	res.sendFile('public/index.html'),
 })
 
 app.listen(process.env.PORT || 8080, function () {
