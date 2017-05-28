@@ -113,7 +113,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 	app.post('/v1/notify', function(req, res) {
 		var from = req.body.From
 
-		client.get(req.body.From, function (err, number) {
+		cache.get(req.body.From, function (err, number) {
 		    var number = number.toString()
 
 			twilio_client.messages.create({
