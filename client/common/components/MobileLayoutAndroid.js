@@ -52,11 +52,15 @@ class MobileLayoutIphone extends Component {
     return (
 		<div style={styles.container}>
 			{ this.props.user ? <MobileHeaderAndroid /> : null }
-			<Switch>
-				<Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
-				<Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
-				<Route path='/account' component={UserAccountContainer} user={this.props.user} />
-			</Switch>
+      {
+        this.props.user ? (
+          <Switch>
+            <Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
+            <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
+            <Route path='/account' component={UserAccountContainer} user={this.props.user} />
+          </Switch>
+        ) : null
+      }
 			{ !this.props.user ? <LoginContainer /> : null}
 			<img style={{zIndex: -1, opacity: .05, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
 		</div>

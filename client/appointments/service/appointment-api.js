@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export function getAppointments(){
-	return axios.get('/v1/appointments').then((response) => {
+	return axios.get('/v1/appointment/appointments').then((response) => {
 		return response.data
 	})	
 }

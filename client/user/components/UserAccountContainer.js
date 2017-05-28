@@ -9,6 +9,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Toggle from 'material-ui/Toggle';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import { connect } from 'react-redux'
 
@@ -130,40 +131,55 @@ class ListExampleSettings extends Component {
     super(props)
     this.state = {
       is_editing_phone_number: false,
-      is_editing_email_address: false
+      is_editing_email_address: false,
+      error: ''
     }
   }
 
   handleChangePhoneNumberModalClose = () => {
     this.setState({
-      is_editing_phone_number: false
+      is_editing_phone_number: false,
+      error: ''
     })
   }
 
   handleChangeEmailAddressModalClose = () => {
     this.setState({
-      is_editing_email_address: false
+      is_editing_email_address: false,
+      error: ''
     })
   }
 
   handleSubmitChangePhoneNumber = (phone_number) => {
     this.props.changePhoneNumber(phone_number).then(() => {
       this.setState({
-        is_editing_phone_number: false
-      })       
-    })   
+        is_editing_phone_number: false,
+        error: ''
+      })      
+    }).catch((error) => {
+      this.setState({error: 'Invalid phone_number'})
+    })     
   }
 
   changeSubmitEmailAddress = (email_address) => {
     this.props.changeEmailAddress(email_address).then(() => {
       this.setState({
-        is_editing_email_address: false
+        is_editing_email_address: false,
+        error: ''
       })       
+    }).catch((error) => {
+      this.setState({error: 'Invalid email address'})
     })   
   }
 
   changeSubmitToggleSubscribe = (e, subscribed) => {
     this.props.toggleSubscribe(subscribed)  
+  }
+
+  closeSnackbar = () => {
+    this.setState({
+      error: ''
+    })
   }
 
   render() {
@@ -225,6 +241,12 @@ class ListExampleSettings extends Component {
             <RaisedButton expand secondary label="Delete my account" />
           </ListItem>
         </List>
+          <Snackbar
+            open={this.state.error}
+            message={this.state.error ? this.state.error : null}
+            autoHideDuration={4000}
+            onRequestClose={this.closeSnackbar}
+          />
       </div>
     )
   }
