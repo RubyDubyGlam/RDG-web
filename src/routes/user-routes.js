@@ -15,10 +15,12 @@ passport.deserializeUser(function(obj, cb) {
 
 
 function registerRoutes(app, db) {
+	const base_url = process.env.HOST || "http://localhost:8080"
+
 	passport.use(new Strategy({
 	    clientID: '1003305543133729',
 	    clientSecret: '216a6e0705a46d9dfc3f98433fdbcf31',
-	    callbackURL: "http://localhost:8080/v1/auth/facebook/callback",
+	    callbackURL: base_url + "/v1/auth/facebook/callback",
 	    profileFields: ['id', 'emails', 'name']
 	  },
 	  function(accessToken, refreshToken, profile, cb) {
@@ -37,9 +39,9 @@ function registerRoutes(app, db) {
 	));
 
 	passport.use(new GoogleStrategy({
-	    clientID: '246933107573-nbbol2l50kkq4tno95rh96uesskram8b.apps.googleusercontent.com',
-	    clientSecret: 's-T5AL86OhUN_ooP2kLijLvK',
-	    callbackURL: "http://localhost:8080/v1/auth/google/callback"
+	    clientID: process.env.GOOGLE_ID,
+	    clientSecret: process.env.GOOGLE_SECRET,
+	    callbackURL: base_url + "/v1/auth/google/callback"
 	  },
 	  function(accessToken, refreshToken, profile, cb) {
 	  	   var User = db.model('User')
@@ -61,7 +63,7 @@ function registerRoutes(app, db) {
 	passport.use(new InstagramStrategy({
 	    clientID: '7ab71bbbf974497ba441f53dbb133225',
 	    clientSecret: 'a85610256de44acb9f2fbaa98d9beee6',
-	    callbackURL: "http://localhost:8080/v1/auth/instagram/callback"
+	    callbackURL: base_url + "/v1/auth/instagram/callback"
 	  },
 	  function(accessToken, refreshToken, profile, cb) {
 	  	   var User = db.model('User')
