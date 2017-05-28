@@ -9,7 +9,7 @@ var geocoder = NodeGeocoder(options);
 var appointment_controller = require('../controllers/appointment-controller')
 var user_controller = require('../controllers/user-controller')
 
-function registerRoutes(app, db, twilio_client) {
+function registerRoutes(app, db, twilio_client, cache) {
 	appointment_controller = appointment_controller.initializeController(app, db.model('Appointment'))
 	user_controller = user_controller.initializeController(app, db.model('User'))
 
@@ -91,11 +91,19 @@ function registerRoutes(app, db, twilio_client) {
 
 	app.post('/v1/notify', function(req, res) {
 		var from = req.body.From
-		twilio_client.messages.create({
-		    body: req.body.Body,
-		    to: '+18059158479',  // Text this number
-		    from: '+18052108161' // From a valid Twilio number
-		})
+
+		client.get(req.body.From, function (err, number) {
+		    var number = number.toString()
+
+		    console.log(number)
+
+			twilio_client.messages.create({
+			    body: req.body.Body,
+			    to: number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+		});
+
 	})
 
 	app.post('/v1/appointment/book', 
@@ -158,6 +166,12 @@ function registerRoutes(app, db, twilio_client) {
 	})
 
 	app.post('/v1/appointment/:id/enroute', ensureIsSameStylistOrAdmin, function(req, res) {
+		var appointment = appointment_controller.get(req.params.id)
+		var stylist = user_controller.get(appointment.stylist_id)
+
+		cache.set(appointment.phone_number, stylist.phone_number, 'EX', 120)
+		cache.set(stylist.phone_number, appointment.phone_number, 'EX', 120)
+
 	    appointment_controller.set(
 			req.params.id,
 			{ status: 3 },
