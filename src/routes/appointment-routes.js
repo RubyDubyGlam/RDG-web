@@ -21,7 +21,6 @@ function registerRoutes(app, db, twilio_client, cache) {
 	}
 
 	function ensureAdmin(req, res, next) {
-		console.log(req.user)
 		if (req.user.roles.admin) {
 			return next()
 		}
@@ -88,6 +87,27 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 	}
 
+	function createHandleSuccessAssign(req, res) {
+	   	return function(stylist) {
+    		var status = 1
+
+		    if (req.user._id === req.body.stylist_id) {
+		    	status = 2
+		    }
+
+			appointment_controller.set(
+				req.body.appointment_id,
+				{
+					stylist_id: req.body.stylist_id, 
+					status: status,
+					stylist_full_name: stylist.first_name + ' ' + stylist.last_name
+				},
+				createHandleSuccess(req, res),
+		    	createHandleError(req, res)
+			)			
+		}
+	}
+ 
 	app.use('/v1/appointment/*', ensureAuthenticated)
 
 	app.post('/v1/notify', function(req, res) {
@@ -95,8 +115,6 @@ function registerRoutes(app, db, twilio_client, cache) {
 
 		client.get(req.body.From, function (err, number) {
 		    var number = number.toString()
-
-		    console.log(number)
 
 			twilio_client.messages.create({
 			    body: req.body.Body,
@@ -135,24 +153,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 	app.post('/v1/appointment/assign', ensureAdmin, function(req, res) {
 	   	user_controller.get(
 	   		req.body.stylist_id, 
-	   		function(stylist) {
-	    		var status = 1
-
-			    if (req.user._id === req.body.stylist_id) {
-			    	status = 2
-			    }
-
-				appointment_controller.set(
-					req.body.appointment_id,
-					{
-						stylist_id: req.body.stylist_id, 
-						status: status,
-						stylist_full_name: stylist.first_name + ' ' + stylist.last_name
-					},
-					createHandleSuccess(req, res),
-			    	createHandleError(req, res)
-				)			
-			},
+	   		createHandleSuccessAssign(req, res),
 			createHandleError(req, res)
 		)
 	})
@@ -167,18 +168,28 @@ function registerRoutes(app, db, twilio_client, cache) {
 	})
 
 	app.post('/v1/appointment/:id/enroute', ensureIsSameStylistOrAdmin, function(req, res) {
-		var appointment = appointment_controller.get(req.params.id)
-		var stylist = user_controller.get(appointment.stylist_id)
-
-		cache.set(appointment.phone_number, stylist.phone_number, 'EX', 120)
-		cache.set(stylist.phone_number, appointment.phone_number, 'EX', 120)
-
-	    appointment_controller.set(
+		var appointment, stylist
+		appointment_controller.get(
 			req.params.id,
-			{ status: 3 },
-			createHandleSuccessNotify(req, res, 'Your stylist is on the way!'),
-	    	createHandleError(req, res)
-	    )
+			function(appointment) {
+				user_controller.get(
+					appointment.stylist_id.toString(),
+					function(stylist) {
+						cache.set(appointment.phone_number.toString(), stylist.phone_number.toString(), 'EX', 120)
+						cache.set(stylist.phone_number.toString(), appointment.phone_number.toString(), 'EX', 120)
+
+					    appointment_controller.set(
+							req.params.id,
+							{ status: 3 },
+							createHandleSuccessNotify(req, res, 'Your stylist is on the way!'),
+					    	createHandleError(req, res)
+					    )
+					},
+					createHandleError(req, res)
+				)
+			},
+			createHandleError(req, res)
+		)
 	})
 
 	app.post('/v1/appointment/:id/begin', ensureIsSameStylistOrAdmin, function(req, res) {

@@ -48,7 +48,6 @@ function notifyCompleted(app, db, twilio_client){
 	var Appointment = db.model('Appointment')
 
 	Appointment.find({status: { $nin: [5]}}, function(err, appointments) {
-		console.log(appointments)
 		var now = moment()
 		var critical_appointments = 0
 		var stylists = []

@@ -25,6 +25,7 @@ function initializeController(app, User) {
 		},
 		get: function(params, success_cb, error_cb) {
 			function handleFetchResponse(err, user) {
+
 				if (err) {
 					return error_cb(err)
 				}

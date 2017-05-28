@@ -7,7 +7,7 @@ function registerRoutes(app, db) {
 	  if (req.isAuthenticated())
 	    return next();
 	  else
-	    res.redirect('/')
+	    res.status(401).send()
 	}
 
 	function ensureAdmin(req, res, next) {
@@ -20,12 +20,14 @@ function registerRoutes(app, db) {
 
 	function createHandleSuccess(req, res) {
 		return function(user) {
+			console.log(user, 'user')
 			res.json(user)
 		}
 	}
 
 	function createHandleError(req, res) {
 		return function(err) {
+			console.log(err, 'err')
 			res.status(400).send(err)
 		}
 	}
