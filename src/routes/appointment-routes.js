@@ -166,7 +166,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 					    appointment_controller.set(
 							req.params.id,
 							{ status: 3 },
-							createHandleSuccessNotify(req, res, 'Your stylist is on the way!'),
+							createHandleSuccessNotify(req, res, 'Your stylist is on the way! You can reply to this text to contact them'),
 					    	createHandleError(req, res)
 					    )
 					},
