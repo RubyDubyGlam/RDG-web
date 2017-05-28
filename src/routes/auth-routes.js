@@ -83,6 +83,10 @@ function registerRoutes(app, db) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
+	app.post('/v1/notify', function(req, res) {
+		console.log(req, res)
+	})
+
 	app.get('/v1/auth/instagram', passport.authenticate('instagram'));
 
 	app.get('/v1/auth/instagram/callback', 
