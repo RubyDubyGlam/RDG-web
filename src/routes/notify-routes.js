@@ -115,7 +115,13 @@ function registerRoutes(app, db, twilio_client) {
 	})
 
 	app.post('/v1/notify', function(req, res) {
-		console.log(req, res)
+		var from = req.body.From
+		twilio_client.messages.create({
+		    body: req.body.Body,
+		    to: '+18059158479',  // Text this number
+		    from: '+18052108161' // From a valid Twilio number
+		})
+
 	})
 
 	app.post('/v1/appointment/assign', ensureAdmin, function(req, res) {
