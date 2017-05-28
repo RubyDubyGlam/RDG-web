@@ -5,8 +5,8 @@ var mongodb = require("mongodb");
 var mongoose = require('mongoose');
 var initializeModels = require('./src/schema/schema')
 
-var accountSid = 'ACc25db466a2c0059b6fe9b12b5ec06609'; // Your Account SID from www.twilio.com/console
-var authToken = '47da183cb3cf8394b0f260f7c5ada896';   // Your Auth Token from www.twilio.com/console
+var accountSid = process.env.TWILIO_SID || 'ACc25db466a2c0059b6fe9b12b5ec06609'
+var authToken = process.env.TWILIO_AUTH || '47da183cb3cf8394b0f260f7c5ada896'
 
 var twilio = require('twilio');
 var twilio_client = new twilio(accountSid, authToken);
@@ -20,9 +20,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('body-parser').json());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
-// mongoose.connect('mongodb://heroku_7fl3kpz2:b26j007ur6e4nmod9k8is6t5l0@ds115701.mlab.com:15701/heroku_7fl3kpz2');
-
-mongoose.connect('mongodb://heroku_6nz6425t:dll89in75qdnq39nsort0gnskv@ds137891.mlab.com:37891/heroku_6nz6425t')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://heroku_6nz6425t:dll89in75qdnq39nsort0gnskv@ds137891.mlab.com:37891/heroku_6nz6425t')
 
 initializeModels.initializeModels(mongoose)
 
