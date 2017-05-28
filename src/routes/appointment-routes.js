@@ -110,21 +110,6 @@ function registerRoutes(app, db, twilio_client, cache) {
  
 	app.use('/v1/appointment/*', ensureAuthenticated)
 
-	app.post('/v1/notify', function(req, res) {
-		var from = req.body.From
-
-		cache.get(req.body.From, function (err, number) {
-		    var number = number.toString()
-
-			twilio_client.messages.create({
-			    body: req.body.Body,
-			    to: number,  // Text this number
-			    from: '+18052108161' // From a valid Twilio number
-			})
-		});
-
-	})
-
 	app.post('/v1/appointment/book', 
 		function(req, res) {
 
