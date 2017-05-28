@@ -28,14 +28,13 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://heroku_6nz6425t:dll89in75
 
 var cache = redis.createClient('redis://h:pa253ba6c192c22b45b576a5c93c4576a96617a0f31d5d46271c6330c17b31908@ec2-34-206-162-178.compute-1.amazonaws.com:39849');
 
-client.on("connect", function (err) {
+cache.on("connect", function (err) {
     console.log('redis connected')
 });
 
 initializeModels.initializeModels(mongoose)
 
 registerRoutes.registerRoutes(app, mongoose, twilio_client, cache)
-
 registerServices.registerServices(app, mongoose, twilio_client, cache)
 
 app.get('*', function(req, res) {
