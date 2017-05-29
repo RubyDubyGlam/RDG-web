@@ -26,7 +26,7 @@ app.use(require('body-parser').json());
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://heroku_6nz6425t:dll89in75qdnq39nsort0gnskv@ds137891.mlab.com:37891/heroku_6nz6425t')
 
-var cache = redis.createClient('redis://h:pa253ba6c192c22b45b576a5c93c4576a96617a0f31d5d46271c6330c17b31908@ec2-34-206-162-178.compute-1.amazonaws.com:39849');
+var cache = redis.createClient(process.env.REDIS_URL || 'redis://h:pa253ba6c192c22b45b576a5c93c4576a96617a0f31d5d46271c6330c17b31908@ec2-34-206-162-178.compute-1.amazonaws.com:39849');
 
 app.use(session({
     store: new RedisStore({

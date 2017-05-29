@@ -167,10 +167,10 @@ class OrderConfirm extends Component {
 			appointment.date_time, 
 			appointment.products,
 			this.state.phone_number,
-		).then((response) => {
-			this.props.navigate('/appointment')
-		}).catch((response) => {
+		).catch((response) => {
 			this.setState({ is_loading: false })			
+		}).then((response) => {
+			this.props.navigate('/appointment')
 		})
 	}
 
