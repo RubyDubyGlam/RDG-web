@@ -18,8 +18,8 @@ function registerRoutes(app, db) {
 	const base_url = process.env.HOST || "http://localhost:8080"
 
 	passport.use(new Strategy({
-	    clientID: '1003305543133729',
-	    clientSecret: '216a6e0705a46d9dfc3f98433fdbcf31',
+	    clientID: process.env.FACEBOOK_ID || '1003305543133729',
+	    clientSecret: process.env.FACEBOOK_SECRET || '216a6e0705a46d9dfc3f98433fdbcf31',
 	    callbackURL: base_url + "/v1/auth/facebook/callback",
 	    profileFields: ['id', 'emails', 'name']
 	  },
@@ -61,8 +61,8 @@ function registerRoutes(app, db) {
 	));
 
 	passport.use(new InstagramStrategy({
-	    clientID: '7ab71bbbf974497ba441f53dbb133225',
-	    clientSecret: 'a85610256de44acb9f2fbaa98d9beee6',
+	    clientID: process.env.INSTAGRAM_ID || '7ab71bbbf974497ba441f53dbb133225',
+	    clientSecret: process.env.INSTAGRAM_SECRET || 'a85610256de44acb9f2fbaa98d9beee6',
 	    callbackURL: base_url + "/v1/auth/instagram/callback"
 	  },
 	  function(accessToken, refreshToken, profile, cb) {
@@ -109,6 +109,14 @@ function registerRoutes(app, db) {
 	    res.redirect('/appointment')
 	  }
 	)
+
+	app.get('/v1/auth/logout', function(req, res){
+		req.session.destroy((err) => {
+			req.logout()
+
+			res.redirect(200)
+		})
+	});
 }
 
 module.exports = {

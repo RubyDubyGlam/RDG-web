@@ -7,7 +7,7 @@ export function meApi() {
 }
 
 export function logout() {
-  return axios.get('/v1/user/logout').then((response) => {
+  return axios.get('/v1/auth/logout').then((response) => {
     return response.data
   })  
 }

@@ -20,7 +20,6 @@ function registerRoutes(app, db) {
 
 	function createHandleSuccess(req, res) {
 		return function(user) {
-			console.log(user, 'user')
 			res.json(user)
 		}
 	}
@@ -59,11 +58,6 @@ function registerRoutes(app, db) {
 	   		createHandleError(req, res)
 	   	)		
 	})
-
-	app.get('/v1/user/logout', function(req, res){
-	  req.logout();
-	  res.redirect('/')
-	});
 
 	app.post('/v1/user/change-phone-number', function(req, res) {
 		var formatted_phone_number = phone(req.body.phone_number)
