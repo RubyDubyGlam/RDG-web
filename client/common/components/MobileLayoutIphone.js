@@ -4,8 +4,12 @@ import OrderContainer from '../../order/components/OrderContainer'
 import AppointmentContainer from '../../appointments/components/AppointmentContainer'
 import UserAccountContainer from '../../user/components/UserAccountContainer'
 import LoginContainer from '../../user/components/LoginContainer'
-import MobileFooterIphone from './MobileFooterIphone'
-import MobileHeaderIphone from './MobileHeaderIphone'
+import MobileHeaderAndroid from './MobileHeaderAndroid'
+import HomeContainer from '../../home/components/HomeContainer'
+import MakeupContainer from '../../order/components/MakeupContainer'
+import LashesContainer from '../../order/components/LashesContainer'
+import BlowoutContainer from '../../order/components/BlowoutContainer'
+
 
 import { me } from '../../user/action/user-action'
 import { connect } from 'react-redux'
@@ -15,6 +19,7 @@ import { withRouter } from 'react-router'
 import {
   Route,
   Switch
+
 } from 'react-router-dom'
 
 const styles = {
@@ -53,7 +58,7 @@ class MobileLayoutIphone extends Component {
     return (
 		<div style={styles.container}>
       {
-        this.props.user && <MobileHeaderIphone />
+        this.props.user && <MobileHeaderAndroid />
       }
       {
         this.props.user && (
@@ -61,10 +66,16 @@ class MobileLayoutIphone extends Component {
             <Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
+            <Route path='/blowout/:service' render={() => <BlowoutContainer user={this.props.user}/>} />           
+            <Route path='/blowout' render={() => <BlowoutContainer user={this.props.user}/>}  />
+            <Route path='/makeup/:service' render={() => <BlowoutContainer user={this.props.user}/>} /> 
+            <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
+            <Route path='/lashes/:service' render={() => <BlowoutContainer user={this.props.user}/>} /> 
+            <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
+            <Route path='/' render={() => <HomeContainer user={this.props.user}/>}  />
           </Switch>
         )
       }
-			{ this.props.user ? <MobileFooterIphone view={this.state.view} handleNavigation={this.handleNavigation}/> : null }
 			{ !this.props.user ? <LoginContainer /> : null}
 			<img style={{zIndex: -1, opacity: .05, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
 		</div>

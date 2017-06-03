@@ -19,11 +19,16 @@ import { withRouter } from 'react-router'
 
 const styles = {
   root: {
+    height: '100%',
+    width: '100%',
+    padding: 0,
+    margin: 0,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '100%', 
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    backgroundImage: 'url("/assets/black-gradient.jpg")',
+    color: 'white'
   },
   phone_number_style: {
     width: '100%',
@@ -202,38 +207,44 @@ class ListExampleSettings extends Component {
           handleDialogClose={this.handleChangeEmailAddressModalClose}
           handleSubmit={this.changeSubmitEmailAddress}
         />
-        <List>
-          <Subheader>General</Subheader>
+        <List style={{marginTop: 8}}>
+          <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>General</Subheader>
           <ListItem
             primaryText="Link a Facebook account"
-            secondaryText="Link a Facebook account for quicker login"
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>Link a Facebook account for quicker login</span>}
           />
           <ListItem
             primaryText="Link a Google+ account"
-            secondaryText="Link a Google+ account for quicker login"
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>Link a Google+ account for quicker login</span>}
           />
           <ListItem
             primaryText="Link a Instagram account"
-            secondaryText="Link a Instagram account for quicker login"
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>Link a Instagram account for quicker login</span>}
           />
         </List>
         <Divider />
         <List>
-          <Subheader>Contact</Subheader>
+          <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
           <ListItem
             primaryText="Change my phone number"
-            secondaryText={user.email_address}
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
             onClick={e => this.setState({is_editing_email_address: true})}
           />
           <ListItem
             primaryText="Change my phone number"
-            secondaryText={user.phone_number}
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
             onClick={e => this.setState({is_editing_phone_number: true})}
           />
           <ListItem
             leftCheckbox={<Checkbox checked={user.subscribed} onCheck={this.changeSubmitToggleSubscribe}/>}
             primaryText="Subscribed"
-            secondaryText="Subscribed to offers"
+            style={{color: 'white'}}
+            secondaryText={<span style={{color: 'pink'}}>Subscribed to offers</span>}
           />
         </List>
         <List>

@@ -49,21 +49,29 @@ class MobileHeaderAndroid extends React.Component {
 		  <AppBar
 		    iconClassNameRight="muidocs-icon-navigation-expand-more"
 		    onLeftIconButtonTouchTap={e => this.setState({open: true})}
-		    style={{backgroundColor: 'black'}}
+		    style={{
+          backgroundColor: 'black',
+          backgroundImage: 'url("/assets/black-gradient.jpg")'
+        }}
 		  />
 	        <Drawer
 	          docked={false}
 	          width={'80%'}
 	          open={this.state.open}
 	          onRequestChange={(open) => this.setState({open})}
+            back
+            containerStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")', maxHeight: '100%'}}
 	        >	
-	        	<div style={{backgroundColor: 'black', width: '100%', height: '35%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
-	        		<img src={picture_url} style={{borderRadius: '50%', width:'45%'}} />
-	        		<p style={{color: 'white', fontSize: 16, marginTop: 26}}>Hello, {props.user.first_name + ' ' + props.user.last_name}</p>
+	        	<div style={{ width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
+	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
-        		<MenuItem primaryText="Book" rightIcon={favoritesIcon} onTouchTap={() => this.navigate('/order')}/>
-        		<MenuItem primaryText="Appointments" rightIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
-        		<MenuItem primaryText="My Account" rightIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Home" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/')}/>
+        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/order')}/>
+        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
+        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Contact Us" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Logout" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
 	        </Drawer>
       </div>
     );
