@@ -65,11 +65,11 @@ class MobileLayoutIphone extends Component {
             <Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
-            <Route path='/blowout/:service' render={() => <BlowoutContainer user={this.props.user}/>} />           
+            <Route path='/blowout/:service' render={() => <OrderContainer user={this.props.user}/>} />           
             <Route path='/blowout' render={() => <BlowoutContainer user={this.props.user}/>}  />
-            <Route path='/makeup/:service' render={() => <BlowoutContainer user={this.props.user}/>} /> 
+            <Route path='/makeup/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
-            <Route path='/lashes/:service' render={() => <BlowoutContainer user={this.props.user}/>} /> 
+            <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
             <Route path='/' render={() => <HomeContainer user={this.props.user}/>}  />
           </Switch>

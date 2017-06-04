@@ -104,7 +104,7 @@ export default class OrderDateTimePlaceSelection extends Component {
   	}
 
   	handleSetDate = (event, raw_date) => {
-		const display_date = (moment(raw_date).format('dddd MMM do'))
+		const display_date = (moment(raw_date).format('MMM Do'))
 		const date = (moment(raw_date).format('YYYY-MM-DD'))
   		this.setState({display_date, date})  		
   	}
@@ -129,15 +129,15 @@ export default class OrderDateTimePlaceSelection extends Component {
 		console.log(this.state)
 		return (
 			<div style={styles.root}>
-				<div style={{
-					position: 'absolute',
-				    bottom: 125,
-				    top: 70,
-				    overflowY: 'scroll'
-				}}>
-				  	<div style={{textAlign: 'center', paddingLeft: '30%', paddingRight: '30%', marginBottom: 24}}>
-			  			<p style={{fontSize: 15}}> Step 2 of 4 </p>
-			  			<p style={{fontSize: 16}}> Where are we going to meet you? </p>
+				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, height: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
+			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+				  			<p style={{fontSize: 15}}>Blowout</p>
+				  			<p style={{fontSize: 16}}>Price: lots</p>
+			  			</div>
+			  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+				  			<p style={{fontSize: 15}}>Duration: 60min</p>
+				  			<p style={{fontSize: 16}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
+			  			</div>
 	  				</div>
 					<Snackbar
 			          open={this.state.error}
@@ -146,47 +146,50 @@ export default class OrderDateTimePlaceSelection extends Component {
 			          onRequestClose={this.closeSnackbar}
 			          style={{width: '100%'}}
 			        />
-		        	<DatePicker 
-		        		onChange={this.handleSetDate} 
-		        		hintText="Select a date" 
-		        		style={{marginBottom: 20}}
-		        	    shouldDisableDate={(date) => moment(date).isBefore(today)}
-		        	/>
-		        	<TimePicker defaultTime={this.state.time || null} onChange={this.handleSetTime} hintText="Select a time" style={{marginBottom: 20}}/>
-		    		<AutoComplete
-			          hintText="Select a place"
-			          dataSource={this.state.predictions}
-			          onUpdateInput={this.handleInput}
-			          onNewRequest={this.handleLocationSelect}
-			          style={{marginBottom: 20}}
-		        	/>
-		        	<div>
-			        	{ this.state.display_date && 
-			        		<p>
-			        			{`${this.state.display_date} - ${this.state.display_time || ''}`}
-			        		</p> 
-			        	}
-			        	<p style={{fontSize: 18 }}>at</p> 
-			        	{ this.state.address && 
-			        		<p>
-			        			{`${this.state.address}`}
-			        		</p>
-			        	}
+			        <div style={{marginTop: 50, display:'flex', justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<span style={{color:'white', position: 'absolute'}}> {this.state.display_date || "Select Date"} </span>
+			        	<DatePicker 
+			        		onChange={this.handleSetDate} 
+			        		hintText={"Select a date"} 
+			        		style={{opacity: 0, height: 40}}
+			        	    shouldDisableDate={(date) => moment(date).isBefore(today)}
+			        	/>
 		        	</div>
-	        	</div>
-			    <div style={{position: 'absolute', bottom: 70, width: '100%', display: 'flex', justifyContent: 'center'}}>
-		        	<FlatButton
-			            label="Back"
-			            onTouchTap={this.props.goBack}
-			            style={{marginRight: 12}}
-		         	/>
-			        <RaisedButton
-			            primary={true}
-			            disabled= {!this.state.date || !this.state.time || !this.state.address}
-			            label="Next"
-			            onTouchTap={this.handleNavigateNext}
-			        />
-		        </div>
+			        <div style={{marginTop: 24, marginBottom: 50, display:'flex', justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<span style={{color:'white', position: 'absolute'}}> {this.state.display_time || "Select Time"} </span>
+			        	<TimePicker 
+			        		defaultTime={this.state.time || null} 
+			        		onChange={this.handleSetTime} 
+			        		hintText="Select a time" 
+			        		style={{opacity: 0, height: 40}}
+						/>
+			        </div>
+			        <div style={{marginTop: 12}}>
+				        <p style={{color:'white', fontSize: 24, width:'100%', textAlign: 'left', margin: 0}}>Hours of operation</p>
+			        	<p style={{color:'white', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>8am to 8pm</p>
+				        <p style={{color:'white', width:'100%', textAlign: 'left'}}>
+				        	If you desire appointments before our business hours or after we are 
+				        	happy to assist you, but there will be a 50% additional cost to the services desired
+				        </p>
+				        <p style={{color:'white', fontSize: 24, width:'100%', textAlign: 'left', marginBottom: 3}}>Cancellation Policy</p>
+				        <p style={{color:'white', width:'100%', textAlign: 'left'}}>
+				        	We understand that the unexpected can happen. If you need to cancel 
+				        	or reschedule your appointment, please do so by sending an email to 
+				        	reservations@rubydubyglam.com. Cancellation within four (4) hours will be charged
+				        	a 50% fee. Changes made less than four (4) hours will be charged the full fee.
+				        </p>
+			        </div>
+				    <div style={{position: 'absolute', bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
+				        <RaisedButton
+				            primary={true}
+				            disabled= {!this.state.date || !this.state.time}
+				            label="Next"
+				            onTouchTap={this.handleNavigateNext}
+				            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+				            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
+				            style={{width: '100%', height: 60 }}
+				        />
+			        </div>
 	        </div>
 		)	
 	}

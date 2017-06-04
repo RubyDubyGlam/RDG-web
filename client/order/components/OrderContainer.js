@@ -15,6 +15,7 @@ import OrderProductSelection from './OrderProductSelection'
 import OrderDateTimePlaceSelection from './OrderDateTimePlaceSelection'
 import OrderPaymentSelection from './OrderPaymentSelection'
 import OrderConfirm from './OrderConfirm'
+import AddressSelection from './AddressSelection'
 
 import MobileFooterIphone from '../../common/components/MobileFooterIphone'
 
@@ -27,7 +28,8 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		overflowY: 'scroll'
+		overflowY: 'scroll',
+		backgroundImage: 'url("/assets/black-gradient.jpg")'
 	},
 }
 
@@ -78,24 +80,26 @@ export default class OrderFlow extends Component {
 		})
 	}
 
-	setDateTimeAddress = (date, time, address) => {
+	setDateTimeAddress = (date, time) => {
 		const date_time = moment(date + ' ' + time)
 		
-		this.setState({date_time, address})
+		this.setState({date_time})
+	}
+
+	setAddress = (address) => {
+		this.setState({address})
 	}
 
 	render() {
 		return (
 			<div style={styles.container}>
-					<Progress style={{width: '100%', marginBottom: 20}} percent={this.state.step * 25} active />
-					{ this.state.step === 1 ? <OrderProductSelection setProducts={this.setProducts} goForward={this.goForward} goBack={this.goBack} form_data={this.state} /> : null }
+					{ this.state.step === 1 ? <OrderDateTimePlaceSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} /> : null }
 
-					{ this.state.step === 2 ? <OrderDateTimePlaceSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} /> : null }
+					{ this.state.step === 2 ? <AddressSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} /> : null }
 
 					{ this.state.step === 3 ? <OrderPaymentSelection goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} /> : null }
 
 					{ this.state.step === 4 ? <OrderConfirm form_data={this.state} goForward={this.goForward} goBack={this.goBack} /> : null }
-
 	        </div>
 		)		
 	}

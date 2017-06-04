@@ -15,6 +15,8 @@ import moment from 'moment'
 
 import axios from 'axios'
 
+import Subheader from 'material-ui/Subheader';
+
 import navigate from '../../common/actions/router-actions'
 import { createOrder } from '../action/order-action'
 
@@ -30,8 +32,10 @@ import Divider from 'material-ui/Divider';
 
 import TextField from 'material-ui/TextField'
 
+import Checkbox from 'material-ui/Checkbox';
+import Toggle from 'material-ui/Toggle';
+
 import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 import Dialog from 'material-ui/Dialog';
 
 import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../user/action/user-action'
@@ -224,7 +228,7 @@ class OrderConfirm extends Component {
 			<div style={styles.root}>
 				<div style={{
 					position: 'absolute',
-				    bottom: 125,
+				    bottom: 60,
 				    top: 70,
 				    overflowY: 'scroll',
 				    display: 'flex',
@@ -244,39 +248,72 @@ class OrderConfirm extends Component {
 			          handleDialogClose={this.handleChangeEmailAddressModalClose}
 			          handleSubmit={this.changeSubmitEmailAddress}
 			        />
-		        	<p style={{fontSize: 22}}>Order Summary </p>
-		        	<p style={{fontSize: 18}}>Time:</p>
-		        	<p style={{fontSize: 14}}>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</p>
-		        	<p style={{fontSize: 18}}>Place:</p>
-		        	<p style={{fontSize: 14}}>{appointment.address}</p>
-		        	<p style={{fontSize: 18, marginBottom: 6}}>Services:</p>
-		        	{this.populateIcons(appointment)}
-	        		<div style={{display: 'flex', flexDirection: 'column'}}>
-		        		<p style={{fontSize: 18, marginBottom: 6}}>Contact:</p>
+	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
 				        <List>
+	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Services</Subheader>
+				          <ListItem
+				            primaryText="Change services"
+				            style={{color: 'white'}}
+				            secondaryText={<span style={{color: 'pink'}}>Blowout + braid</span>}
+				          />
+				        </List>
+		        	</div>
+	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
+				        <List>
+	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Time</Subheader>
+				          <ListItem
+				            primaryText="Change time"
+				            style={{color: 'white'}}
+				            secondaryText={<span style={{color: 'pink'}}>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</span>}
+				          />
+				        </List>
+		        	</div>
+	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
+				        <List>
+	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Place</Subheader>
+				          <ListItem
+				            primaryText="Change place"
+				            style={{color: 'white'}}
+				            secondaryText={<span style={{color: 'pink'}}>{appointment.address}</span>}
+				          />
+				        </List>
+		        	</div>
+	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
+				        <List>
+	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact Info</Subheader>
 				          <ListItem
 				            primaryText="Change my email address"
-				            secondaryText={user.email_address}
+				            style={{color: 'white'}}
+				            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
 				            onClick={e => this.setState({is_editing_email_address: true})}
 				          />
 				          <ListItem
 				            primaryText="Change my phone number"
-				            secondaryText={user.phone_number}
+				            style={{color: 'white'}}
+				            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
 				            onClick={e => this.setState({is_editing_phone_number: true})}
+				          />
+				          <ListItem
+				            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
+				            primaryText="I agree to the terms of service"
+				            style={{color: 'white'}}
+				          />
+				          <ListItem
+				            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
+				            primaryText="Save this address and contact information"
+				            style={{color: 'white'}}
 				          />
 				        </List>
 		        	</div>
 		        </div>
-	        	<div style={{position: 'absolute', bottom: 70, width: '100%', display: 'flex', justifyContent: 'center'}}>
-		        	<FlatButton
-			            label="Back"
-			            onTouchTap={this.props.goBack}
-			            style={{marginRight: 12}}
-		         	/>
+			    <div style={{position: 'absolute', bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
 			        <RaisedButton
 			            primary={true}
-			            label="Book"
+			            label="Next"
 			            onTouchTap={this.onSubmit}
+			            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+			            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
+			            style={{width: '100%', height: 60 }}
 			        />
 		        </div>
 		        { this.state.is_loading && <Loader /> }

@@ -26,7 +26,8 @@ const styles = {
     alignItems: 'center',
     width: '100%', 
     overflowY: 'scroll',
-    textAlign: 'center'
+    textAlign: 'center',
+	backgroundImage: 'url("/assets/black-gradient.jpg")'
   },
 };
  
