@@ -23,7 +23,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '100%', 
+    width: '100%',
+    height: '100%',
     overflowY: 'scroll',
     textAlign: 'center'
   },
@@ -154,7 +155,7 @@ export default class OrderDateTimePlaceSelection extends Component {
 				        	a 50% fee. Changes made less than four (4) hours will be charged the full fee.
 				        </p>
 			        </div>
-				    <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 				        <RaisedButton
 				            primary={true}
 				            disabled= {!this.state.date || !this.state.time}
