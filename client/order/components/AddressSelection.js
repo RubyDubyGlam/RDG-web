@@ -121,14 +121,14 @@ export default class OrderPaymentSelection extends Component {
 		return (
 			<div style={styles.root}>
 				<SelectAddressModal possible_addresses={this.state.possible_addresses} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
-				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, height: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
+				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-				  			<p style={{fontSize: 15}}>Blowout</p>
-				  			<p style={{fontSize: 16}}>Price: lots</p>
+				  			<p style={{fontSize: '1em'}}>Blowout</p>
+				  			<p style={{fontSize: '1em'}}>Price: lots</p>
 			  			</div>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-				  			<p style={{fontSize: 15}}>Duration: 60min</p>
-				  			<p style={{fontSize: 16}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
+				  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
+				  			<p style={{fontSize: '1em'}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
 			  			</div>
 	  				</div>
 				  	<div style={{textAlign: 'center', paddingLeft: '20%', paddingRight: '20%', marginBottom: 24}}>
@@ -137,60 +137,59 @@ export default class OrderPaymentSelection extends Component {
 				    <TextField
 			      		floatingLabelText="Address line 1"
 			      		onChange={e => this.setState({addressone: e.target.value})}
-			      		inputStyle={{ color: 'white' }}
-			      		floatingLabelStyle = {{ color: 'pink' }}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 			      		underlineStyle={{ borderWidth: 0 }}
-			      		style={{margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
 				    <TextField
 
 			      		floatingLabelText="Address line 2"
 			      		onChange={e => this.setState({addresstwo: e.target.value})}
-				      	inputStyle={{ color: 'white' }}
-			      		floatingLabelStyle = {{ color: 'pink' }}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      	underlineStyle={{ borderWidth: 0 }}
-			      		style={{margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
-			    	<div style={{display: 'flex', width: '90%'}} >
+			    	<div style={{display: 'flex', width: '90%', minHeight: 80}} >
 					    <TextField
-
-				      		floatingLabelText="City"
-				      		onChange={e => this.setState({city: e.target.value})}
-				      		inputStyle={{ color: 'white' }}
-			      			floatingLabelStyle = {{ color: 'pink' }}
+			      		floatingLabelText="City"
+			      		onChange={e => this.setState({city: e.target.value})}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{padding: 16, flexGrow: 1, marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{fontSize: '1em', padding: 16, flexGrow: 1, marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 					    <TextField
 
 				      		floatingLabelText="State"
 				      		value={this.state.state}
 				      		onChange={e => this.setState({state: e.target.value})}
-				      		inputStyle={{ color: 'white' }}
-				      		floatingLabelStyle = {{ color: 'pink' }}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{padding: 6, width: '20%', marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{fontSize: '1em', padding: 6, width: '20%', marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 					    <TextField
 
 				      		floatingLabelText="Zip"
 				      		onChange={e => this.setState({zip: e.target.value})}
-				      		inputStyle={{ color: 'white' }}
-				      		floatingLabelStyle = {{ color: 'pink' }}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-					      	style={{padding: 16, width: '35%', marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+					      	style={{fontSize: '1em', padding: 16, width: '35%', marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 			    	</div>
 				    <TextField
 
 			      		floatingLabelText="Additional Directions"
 			      		onChange={e => this.setState({addresstwo: e.target.value})}
-				      	inputStyle={{ color: 'white' }}
-			      		floatingLabelStyle = {{ color: 'pink' }}
+			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      	underlineStyle={{ borderWidth: 0 }}
-			      		style={{ margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+			      		style={{fontSize: '1em',  margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
-				    <div style={{position: 'absolute', bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
+				    <div style={{ width: '100%', display: 'flex', justifyContent: 'center'}}>
 				        <RaisedButton
 				            primary={true}
 				            // disabled= {!this.state.date || !this.state.time}

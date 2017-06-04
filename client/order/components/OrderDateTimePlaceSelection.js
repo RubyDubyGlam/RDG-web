@@ -57,29 +57,6 @@ export default class OrderDateTimePlaceSelection extends Component {
   		})
   	}
 
-
-	handleInput = (input) => {
-
-  		if (!input) {
-  			return
-  		}
-
-	    let request = {
-	      input: input
-	    };
-	    
-	    this.autocompleteService.getPlacePredictions(request, data => {
-	    	const predictions = map(data, (prediction, index) => {
-	    		return {
-	    			text: prediction.description,
-	    			value: prediction
-	    		}
-	    	})
-
-	    	this.setState({ predictions })
-	    })
-  	}
-
   	handleSetTime = (event, raw_time) => {
 		const beginningTime = moment('8:00am', 'h:mma');
 		const endTime = moment('6:00pm', 'h:mma');
@@ -99,8 +76,6 @@ export default class OrderDateTimePlaceSelection extends Component {
 				error: 'Please choose a time between 8am and 6pm'
 			})
 		}
-
-
   	}
 
   	handleSetDate = (event, raw_date) => {
@@ -129,14 +104,14 @@ export default class OrderDateTimePlaceSelection extends Component {
 		console.log(this.state)
 		return (
 			<div style={styles.root}>
-				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, height: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
+				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-				  			<p style={{fontSize: 15}}>Blowout</p>
-				  			<p style={{fontSize: 16}}>Price: lots</p>
+				  			<p style={{fontSize: '1em'}}>Blowout</p>
+				  			<p style={{fontSize: '1em'}}>Price: lots</p>
 			  			</div>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-				  			<p style={{fontSize: 15}}>Duration: 60min</p>
-				  			<p style={{fontSize: 16}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
+				  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
+				  			<p style={{fontSize: '1em'}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
 			  			</div>
 	  				</div>
 					<Snackbar
@@ -146,8 +121,8 @@ export default class OrderDateTimePlaceSelection extends Component {
 			          onRequestClose={this.closeSnackbar}
 			          style={{width: '100%'}}
 			        />
-			        <div style={{marginTop: 50, display:'flex', justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-			        	<span style={{color:'white', position: 'absolute'}}> {this.state.display_date || "Select Date"} </span>
+			        <div style={{minHeight: 40, marginTop: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<div style={{color:'white'}}> {this.state.display_date || "Select Date"} </div>
 			        	<DatePicker 
 			        		onChange={this.handleSetDate} 
 			        		hintText={"Select a date"} 
@@ -155,8 +130,8 @@ export default class OrderDateTimePlaceSelection extends Component {
 			        	    shouldDisableDate={(date) => moment(date).isBefore(today)}
 			        	/>
 		        	</div>
-			        <div style={{marginTop: 24, marginBottom: 50, display:'flex', justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-			        	<span style={{color:'white', position: 'absolute'}}> {this.state.display_time || "Select Time"} </span>
+			        <div style={{minHeight: 40, marginTop: 24, marginBottom: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<div style={{color:'white'}}> {this.state.display_time || "Select Time"} </div>
 			        	<TimePicker 
 			        		defaultTime={this.state.time || null} 
 			        		onChange={this.handleSetTime} 
@@ -164,7 +139,7 @@ export default class OrderDateTimePlaceSelection extends Component {
 			        		style={{opacity: 0, height: 40}}
 						/>
 			        </div>
-			        <div style={{marginTop: 12}}>
+			        <div style={{marginTop: 12, padding: 12}}>
 				        <p style={{color:'white', fontSize: 24, width:'100%', textAlign: 'left', margin: 0}}>Hours of operation</p>
 			        	<p style={{color:'white', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>8am to 8pm</p>
 				        <p style={{color:'white', width:'100%', textAlign: 'left'}}>
@@ -179,7 +154,7 @@ export default class OrderDateTimePlaceSelection extends Component {
 				        	a 50% fee. Changes made less than four (4) hours will be charged the full fee.
 				        </p>
 			        </div>
-				    <div style={{position: 'absolute', bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
+				    <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
 				        <RaisedButton
 				            primary={true}
 				            disabled= {!this.state.date || !this.state.time}

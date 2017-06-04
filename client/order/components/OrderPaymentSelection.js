@@ -79,14 +79,14 @@ export default class OrderPaymentSelection extends Component {
 	render() {
 		return (
 			<div style={styles.root}>
-				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, height: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
+				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-				  			<p style={{fontSize: 15}}>Blowout</p>
-				  			<p style={{fontSize: 16}}>Price: lots</p>
+				  			<p style={{fontSize: '1em'}}>Blowout</p>
+				  			<p style={{fontSize: '1em'}}>Price: lots</p>
 			  			</div>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-				  			<p style={{fontSize: 15}}>Duration: 60min</p>
-				  			<p style={{fontSize: 16}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
+				  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
+				  			<p style={{fontSize: '1em'}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
 			  			</div>
 	  				</div>
 				  	<div style={{textAlign: 'center', paddingLeft: '20%', paddingRight: '20%', marginBottom: 24}}>
@@ -142,7 +142,7 @@ export default class OrderPaymentSelection extends Component {
 				      		style={{padding: 16, flexGrow: 1, marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 			    	</div>
-				    <div style={{position: 'absolute', bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
+				    <div style={{ bottom: 0, width: '100%', display: 'flex', justifyContent: 'center'}}>
 				        <RaisedButton
 				            primary={true}
 				            label="Next"
