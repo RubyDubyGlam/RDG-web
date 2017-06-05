@@ -182,13 +182,12 @@ export default class OrderPaymentSelection extends Component {
 				    	/>
 			    	</div>
 				    <TextField
-
 			      		floatingLabelText="Additional Directions"
 			      		onChange={e => this.setState({addresstwo: e.target.value})}
 			      		inputStyle={{ color: 'white', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      	underlineStyle={{ borderWidth: 0 }}
-			      		style={{fontSize: '1em',  margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+			      		style={{marginBottom: 26, fontSize: '1em',  marginTop: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
 				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 				        <RaisedButton

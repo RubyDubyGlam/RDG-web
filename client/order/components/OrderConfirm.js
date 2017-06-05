@@ -227,87 +227,66 @@ class OrderConfirm extends Component {
 
 		return (
 			<div style={styles.root}>
-				<div style={{
-					position: 'absolute',
-				    bottom: 60,
-				    top: 70,
-				    overflowY: 'scroll',
-				    display: 'flex',
-				    alignItems: 'center',
-				    justifyContent: 'center',
-				    flexDirection: 'column',
-				    width: '100%',
-
-				}}>
-			        <ChangePhoneNumberModal 
-			          open={this.state.is_editing_phone_number}
-			          handleDialogClose={this.handleChangePhoneNumberModalClose}
-			          handleSubmit={this.handleSubmitChangePhoneNumber}
-			        />
-			        <ChangeEmailAddressModal 
-			          open={this.state.is_editing_email_address}
-			          handleDialogClose={this.handleChangeEmailAddressModalClose}
-			          handleSubmit={this.changeSubmitEmailAddress}
-			        />
-	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
-				        <List>
-	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Services</Subheader>
-				          <ListItem
-				            primaryText="Change services"
-				            style={{color: 'white'}}
-				            secondaryText={<span style={{color: 'pink'}}>Blowout + braid</span>}
-				          />
-				        </List>
-		        	</div>
-	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
-				        <List>
-	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Time</Subheader>
-				          <ListItem
-				            primaryText="Change time"
-				            style={{color: 'white'}}
-				            secondaryText={<span style={{color: 'pink'}}>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</span>}
-				          />
-				        </List>
-		        	</div>
-	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
-				        <List>
-	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Place</Subheader>
-				          <ListItem
-				            primaryText="Change place"
-				            style={{color: 'white'}}
-				            secondaryText={<span style={{color: 'pink'}}>{appointment.address}</span>}
-				          />
-				        </List>
-		        	</div>
-	        		<div style={{display: 'flex', flexDirection: 'column', marginBottom: 6}}>
-				        <List>
-	          			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact Info</Subheader>
-				          <ListItem
-				            primaryText="Change my email address"
-				            style={{color: 'white'}}
-				            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
-				            onClick={e => this.setState({is_editing_email_address: true})}
-				          />
-				          <ListItem
-				            primaryText="Change my phone number"
-				            style={{color: 'white'}}
-				            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
-				            onClick={e => this.setState({is_editing_phone_number: true})}
-				          />
-				          <ListItem
-				            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
-				            primaryText="I agree to the terms of service"
-				            style={{color: 'white'}}
-				          />
-				          <ListItem
-				            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
-				            primaryText="Save this address and contact information"
-				            style={{color: 'white'}}
-				          />
-				        </List>
-		        	</div>
-		        </div>
-				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
+		        <ChangePhoneNumberModal 
+		          open={this.state.is_editing_phone_number}
+		          handleDialogClose={this.handleChangePhoneNumberModalClose}
+		          handleSubmit={this.handleSubmitChangePhoneNumber}
+		        />
+		        <ChangeEmailAddressModal 
+		          open={this.state.is_editing_email_address}
+		          handleDialogClose={this.handleChangeEmailAddressModalClose}
+		          handleSubmit={this.changeSubmitEmailAddress}
+		        />
+		        <List>
+      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Services</Subheader>
+		          <ListItem
+		            primaryText="Change services"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>Blowout + braid</span>}
+		          />
+		        </List>
+		        <List>
+      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Time</Subheader>
+		          <ListItem
+		            primaryText="Change time"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</span>}
+		          />
+		        </List>
+		        <List>
+      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Place</Subheader>
+		          <ListItem
+		            primaryText="Change place"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>{appointment.address}</span>}
+		          />
+		        </List>
+		        <List>
+      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact Info</Subheader>
+		          <ListItem
+		            primaryText="Change my email address"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
+		            onClick={e => this.setState({is_editing_email_address: true})}
+		          />
+		          <ListItem
+		            primaryText="Change my phone number"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
+		            onClick={e => this.setState({is_editing_phone_number: true})}
+		          />
+		          <ListItem
+		            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
+		            primaryText="I agree to the terms of service"
+		            style={{color: 'white'}}
+		          />
+		          <ListItem
+		            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
+		            primaryText="Save this address and contact information"
+		            style={{color: 'white'}}
+		          />
+		        </List>
+				<div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 			        <RaisedButton
 			            primary={true}
 			            label="Next"

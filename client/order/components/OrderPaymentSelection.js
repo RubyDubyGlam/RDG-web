@@ -100,9 +100,9 @@ export default class OrderPaymentSelection extends Component {
 			      		inputStyle={{ color: 'white' }}
 			      		floatingLabelStyle = {{ color: 'pink' }}
 			      		underlineStyle={{ borderWidth: 0 }}
-			      		style={{width: '70%', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+			      		style={{minHeight: 80, width: '70%', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
-			    	<div style={{display: 'flex', width: '90%'}} >
+			    	<div style={{display: 'flex', width: '90%', minHeight: 80, margin: 5}} >
 					    <TextField
 				      		hintText="Card number"
 				      		floatingLabelText="Card Number"
@@ -110,7 +110,7 @@ export default class OrderPaymentSelection extends Component {
 				      		inputStyle={{ color: 'white' }}
 				      		floatingLabelStyle = {{ color: 'pink' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{marginRight: 5, marginBottom: 5, marginTop: 5, padding: 16, width: '70%', minWidth: '70%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{minHeight: 80, marginRight: 5, marginBottom: 5, marginTop: 5, padding: 16, width: '70%', minWidth: '70%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 					    <TextField
 				      		hintText="MM/YY"
@@ -120,10 +120,10 @@ export default class OrderPaymentSelection extends Component {
 				      		inputStyle={{ color: 'white' }}
 			      			floatingLabelStyle = {{ color: 'pink' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{padding: 16, flexGrow: 1, marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{minHeight: 80, padding: 16, flexGrow: 1, marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 				    </div>
-				    <div style={{display: 'flex', width: '90%'}} >
+				    <div style={{display: 'flex', width: '90%', minHeight: 80, margin: 5, marginBottom: 26}} >
 					    <TextField
 				      		hintText="CVC"
 				      		floatingLabelText="CVC"
@@ -131,7 +131,7 @@ export default class OrderPaymentSelection extends Component {
 				      		inputStyle={{ color: 'white' }}
 			      			floatingLabelStyle = {{ color: 'pink' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{padding: 16, flexGrow: 1, marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{minHeight: 80, padding: 16, flexGrow: 1, marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 					    <TextField
 				      		hintText="Zip"
@@ -140,7 +140,7 @@ export default class OrderPaymentSelection extends Component {
 					      	inputStyle={{ color: 'white' }}
 			      			floatingLabelStyle = {{ color: 'pink' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{padding: 16, flexGrow: 1, marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{minHeight: 80, marginBottom: 26, padding: 16, flexGrow: 1, marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 			    	</div>
 				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
