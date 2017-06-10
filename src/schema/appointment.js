@@ -33,6 +33,10 @@ module.exports = {
 		    	type: Number,
 		    	default : 0
 		    },
+		    gratuity: {
+		    	type: Number,
+		    	default : 1000
+		    },
 		    time: {
 		    	type: Date,
 		    	required: true
@@ -42,10 +46,18 @@ module.exports = {
 		    	required: true
 		    },
 		    products: {
-		    	type: Object,
+		    	type: String,
 		    	required: true
 		    },
 		    payment_token: {
+		    	type: String,
+		    	required: true
+		    },
+		    order_id: {
+		    	type: String,
+		    	required: false
+		    },
+		    email_address: {
 		    	type: String,
 		    	required: true
 		    },

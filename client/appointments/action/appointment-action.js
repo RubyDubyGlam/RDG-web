@@ -1,7 +1,8 @@
 import { 
 	getAppointments as getAppointmentsApi,
 	assignStylist as assignStylistApi,
-	acceptAppointment as acceptAppointmentApi
+	acceptAppointment as acceptAppointmentApi,
+	postTip as postTipApi
 } from '../service/appointment-api'
 
 import { keyBy } from 'lodash'
@@ -15,6 +16,23 @@ export function getAppointments() {
 				type: ACTION_TYPES.RECEIVED_APPOINTMENTS.value,
 				payload: {
 					appointments: keyBy(response, '_id')
+				}
+			})
+		})
+	}
+}
+
+export function addTip(appointment_id, gratuity) {
+	return function(dispatch) {
+		dispatch({
+			type: ACTION_TYPES.APPOINTMENT_STATE_CHANGING.value
+		})
+
+		return postTipApi(appointment_id, gratuity).then((response) => {
+			dispatch({
+				type: ACTION_TYPES.APPOINTMENT_STATE_CHANGED.value,
+				payload: {
+					appointment: keyBy([response], '_id')
 				}
 			})
 		})

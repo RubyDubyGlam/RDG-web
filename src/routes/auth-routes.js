@@ -88,7 +88,7 @@ function registerRoutes(app, db) {
 	app.get('/v1/auth/instagram/callback', 
 	  passport.authenticate('instagram', { failureRedirect: '/', scope: ['email', 'profile'] }),
 	  function(req, res) {
-	    res.redirect('/appointment');
+	    res.redirect('/');
 	  });
 
 	app.get('/v1/auth/google',
@@ -97,7 +97,7 @@ function registerRoutes(app, db) {
 	app.get('/v1/auth/google/callback', 
 	  passport.authenticate('google', { failureRedirect: '/', scope: ['email', 'profile'] }),
 	  function(req, res) {
-	    res.redirect('/appointment');
+	    res.redirect('/');
 	  });
 
 	app.get('/v1/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
@@ -106,7 +106,7 @@ function registerRoutes(app, db) {
 	  '/v1/auth/facebook/callback', 
 	  passport.authenticate('facebook', { failureRedirect: '/' }),
 	  function(req, res) {
-	    res.redirect('/appointment')
+	    res.redirect('/')
 	  }
 	)
 

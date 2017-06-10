@@ -21,3 +21,11 @@ export function acceptAppointment(appointment_id, state){
 	})	
 }
 
+export function postTip(appointment_id, gratuity){
+	return axios.post(`/v1/appointment/${appointment_id}/tip`, {
+		gratuity,
+	}).then((response) => {
+		return response.data
+	})	
+}
+

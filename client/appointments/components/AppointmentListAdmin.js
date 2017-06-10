@@ -44,11 +44,7 @@ class AppointmentList extends Component {
 
 	function populateIcons(appointment) {
 		return (
-			<div style={{display: 'flex', width: 50}}>
-				{ appointment.products.hair && <HairDryer style={{height: 20, }}/> }
-				{ appointment.products.nails && <Nails style={{height: 20, }}/> }
-				{ appointment.products.makeup && <Makeup style={{height: 20, }}/> }
-			</div>
+			<div style={{display: 'flex', width: 50}}></div>
 		)
 	}
 

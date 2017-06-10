@@ -40,6 +40,8 @@ import Dialog from 'material-ui/Dialog';
 
 import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../user/action/user-action'
 
+import { withRouter } from 'react-router'
+
 const styles = {
   root: {
     display: 'flex',
@@ -157,7 +159,8 @@ class OrderConfirm extends Component {
 		this.state = {
 			is_loading: false,
 			is_valid_phone_number: props.user.phone_number ? true : false,
-			phone_number: props.user.phone_number || ''
+			phone_number: props.user.phone_number || '',
+			email_address: props.user.email_address || ''
 		}
 	}
 
@@ -170,8 +173,9 @@ class OrderConfirm extends Component {
 			appointment.address, 
 			appointment.payment_token, 
 			appointment.date_time, 
-			appointment.products,
+			this.props.match.params.service,
 			this.state.phone_number,
+			this.state.email_address,
 		).catch((response) => {
 			this.setState({ is_loading: false })			
 		}).then((response) => {
@@ -202,6 +206,7 @@ class OrderConfirm extends Component {
 	  }
 
   handleSubmitChangePhoneNumber = (phone_number) => {
+  	console.log(this.props)
     this.props.changePhoneNumber(phone_number).then(() => {
       this.setState({
         is_editing_phone_number: false
@@ -316,4 +321,4 @@ let OrderConfirmComponent = connect(mapStateToProps, {
 	changeEmailAddress,
 })(OrderConfirm)
 
-export default OrderConfirmComponent
+export default withRouter(OrderConfirmComponent)

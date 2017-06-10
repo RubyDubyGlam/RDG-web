@@ -9,6 +9,10 @@ var geocoder = NodeGeocoder(options);
 var appointment_controller = require('../controllers/appointment-controller')
 var user_controller = require('../controllers/user-controller')
 
+var stripe = require("stripe")(
+  "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
+);
+
 function registerRoutes(app, db, twilio_client, cache) {
 	appointment_controller = appointment_controller.initializeController(app, db.model('Appointment'))
 	user_controller = user_controller.initializeController(app, db.model('User'))
@@ -123,7 +127,8 @@ function registerRoutes(app, db, twilio_client, cache) {
 		    	payment_token: req.body.payment_token,
 		    	products: req.body.products,
 		    	time: req.body.time,
-		    	phone_number: req.body.phone_number
+		    	phone_number: req.body.phone_number,
+		    	email_address: req.body.email_address
 	    	}
 
 	    	appointment_controller.create(
@@ -147,6 +152,15 @@ function registerRoutes(app, db, twilio_client, cache) {
 	    appointment_controller.set(
 			req.params.id,
 			{ status: 2 },
+			createHandleSuccess(req, res),
+	    	createHandleError(req, res)
+	    )
+	})
+
+	app.post('/v1/appointment/:id/tip', function(req, res) {
+	    appointment_controller.set(
+			req.params.id,
+			{ gratuity: req.body.gratuity },
 			createHandleSuccess(req, res),
 	    	createHandleError(req, res)
 	    )
@@ -187,7 +201,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 	})
 
 	app.post('/v1/appointment/:id/complete', ensureIsSameStylistOrAdmin, function(req, res) {
-	    appointment_controller.set(
+	    appointment_controller.settle(
 			req.params.id,
 			{ status: 5 },
 			createHandleSuccess(req, res),

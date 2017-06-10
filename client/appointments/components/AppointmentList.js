@@ -41,30 +41,34 @@ function AppointmentList(props) {
 
 	function populateIcons(appointment) {
 		return (
-			<div style={{display: 'flex', width: 50}}>
-				{ appointment.products.hair && <HairDryer style={{height: 20, }}/> }
-				{ appointment.products.nails && <Nails style={{height: 20, }}/> }
-				{ appointment.products.makeup && <Makeup style={{height: 20, }}/> }
-			</div>
+			<div style={{display: 'flex', width: 50}}></div>
 		)
 	}
 
 	return (
 		<div style={{width: '100%', overflowY: 'scroll'}}>
 			<List>
-			    <Subheader inset={true}>My future appointments</Subheader>
+			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader>
 			    { 
 			    	appointments['future'] && map(appointments['future'], (appointment) => {
 					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>Blowout</p>
+						  			<p style={{fontSize: '1em'}}>Price: lots</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }
-			    <Subheader inset={true}>My completed appointments</Subheader>
+			    <Subheader style={{fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My completed appointments</Subheader>
 			    { 
 			    	appointments['past'] && map(appointments['past'], (appointment) => {
 					  return ( 

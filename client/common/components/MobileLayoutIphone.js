@@ -28,7 +28,8 @@ const styles = {
     padding: 0,
     margin: 0,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundImage: 'url("/assets/black-gradient.jpg")'    
   },
 }
 

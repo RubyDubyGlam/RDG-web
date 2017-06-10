@@ -6,13 +6,13 @@ import {
 	createOrder as createOrderApi,
 } from '../service/order-api'
 
-export function createOrder(address, payment_token, time, products, phone_number) {
+export function createOrder(address, payment_token, time, products, phone_number, email_address) {
 	return function(dispatch, setState) {
 		dispatch({
 			type: ACTION_TYPES.APPOINTMENT_CREATING.value
 		})
 
-		return createOrderApi(address, payment_token, time, products, phone_number).then((appointment) => {
+		return createOrderApi(address, payment_token, time, products, phone_number, email_address).then((appointment) => {
 			dispatch({
 				type: ACTION_TYPES.APPOINTMENT_CREATED.value,
 				payload: {
