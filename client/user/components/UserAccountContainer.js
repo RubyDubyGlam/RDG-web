@@ -33,7 +33,8 @@ const styles = {
   phone_number_style: {
     width: '100%',
     maxWidth: 'none',
-    minHeight: 95
+    minHeight: 95,
+    height: 95,
   }
 };
 
@@ -73,6 +74,7 @@ class ChangePhoneNumberModal extends Component {
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={styles.phone_number_style}
+        style={{}}
 
       >
         <TextField
