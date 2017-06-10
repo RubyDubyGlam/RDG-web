@@ -33,8 +33,6 @@ const styles = {
   phone_number_style: {
     width: '100%',
     maxWidth: 'none',
-    minHeight: 95,
-    height: 95,
   }
 };
 
@@ -74,8 +72,7 @@ class ChangePhoneNumberModal extends Component {
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={styles.phone_number_style}
-        style={{}}
-
+        bodyStyle={{minHeight: 90 }}
       >
         <TextField
           hintText="Phone number"
@@ -123,6 +120,7 @@ class ChangeEmailAddressModal extends Component {
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={styles.phone_number_style}
+        bodyStyle={{minHeight: 90 }}
       >
         <TextField
           hintText="Email Address"
