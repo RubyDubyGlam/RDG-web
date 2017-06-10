@@ -174,8 +174,9 @@ function registerRoutes(app, db, twilio_client, cache) {
 				user_controller.get(
 					appointment.stylist_id.toString(),
 					function(stylist) {
-						cache.set(appointment.phone_number.toString(), stylist.phone_number.toString(), 'EX', 120)
-						cache.set(stylist.phone_number.toString(), appointment.phone_number.toString(), 'EX', 120)
+						console.log(appointment, stylist)
+						cache.set(appointment.phone_number, stylist.phone_number, 'EX', 120)
+						cache.set(stylist.phone_number, appointment.phone_number, 'EX', 120)
 
 					    appointment_controller.set(
 							req.params.id,

@@ -2,26 +2,43 @@ var stripe = require("stripe")(
   "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
 );
 
-var sku_list = {
-	blowout: 'sku_AmiyrOT10UybnS',
-	gratuity: "sku_AmlhwO7bnE8PDR",
+var product_list = {
+	'blowout': {
+		price: 5000,
+		duration: 45,
+		name: 'Blowout',
+	},
+	'blowout+braid': {
+		price: 7500,
+		duration: 50,
+		name: 'Blowout & Braid',
+	},
+	'blowout+updo': {
+		price: 8500,
+		duration: 90,
+		name: 'Blowout & Up-do',
+	},
+	'makeup': {
+		price: 6500,
+		duration: 60,
+		name: 'Makeup',
+	},
+	'makeup+lashstrip': {
+		price: 8500,
+		duration: 60,
+		name: 'Makeup & Lash Strip',
+	},
+	'lashextensions': {
+		price: 20000,
+		duration: 120,
+		name: 'Lash Extensions',
+	},
+	'lashstrip+fill': {
+		price: 32500,
+		duration: 120,
+		name: 'Lash Extensions & Fill',
+	},
 }
-
-stripe.orders.create({
-  currency: 'usd',
-  items: [
-    {
-      type: 'sku',
-      amount: 700000,
-      parent: 'sku_AmiyrOT10UybnS',
-      quantity: 1,
-    },
-    {
-      type: 'shipping',
-      amount: 1000
-    }
-  ],
-})
 
 function initializeController(app, Appointment) {
 	return {
@@ -54,34 +71,28 @@ function initializeController(app, Appointment) {
 					return error_cb(err)
 				}
 
-				stripe.orders.create({
-				  metadata: {stylist_name: appointment.stylist_full_name},
-				  currency: 'usd',
-				  items: [
-				    {
-				      type: 'sku',
-				      parent: 'sku_AmiyrOT10UybnS',
-				    },
-				    {
-				      type: 'shipping',
-				      amount: Appointment.gratuity
-				    }
-				  ],
-				  email: appointment.email_address
+				stripe.charges.create({
+				  source: appointment.payment_token,
+				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity),
+				  currency: "usd",
+				  description: "Example charge",
+				  metadata: {
+				  	gratuity: appointment.gratuity,
+				  	subtotal: product_list[appointment.products].price,
+				  	service: appointment.products,
+				  	customer_id: appointment.customer_id.toString(),
+				  	stylist_id: appointment.stylist_id.toString(),
+				  	customer_full_name: appointment.customer_full_name,
+				  	stylist_full_name: appointment.stylist_full_name,
+				  },
+				  source: appointment.payment_token,
 				}, function(err, order) {
-					if (err) {
-						return error_cb(err)
-					}
-
-					stripe.orders.pay(order.id, {
-					  source: appointment.payment_token // obtained with Stripe.js
-					}, function(err, order) {
 						if (err) {
 							return error_cb(err)
 						}
 						Appointment.findByIdAndUpdate(
 							appointment_id, 
-							{order_id: order.id, settled: true},
+							{settled: true, status: 5},
 							{new: true},
 							function(err, user) {
 								if (err) {
@@ -93,7 +104,6 @@ function initializeController(app, Appointment) {
 						)
 					})			  
 				})
-			})
 		},
 		get: function(params, success_cb, error_cb) {
 			function handleFetchResponse(err, appointment) {

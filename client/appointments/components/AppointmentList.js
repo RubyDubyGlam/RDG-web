@@ -21,6 +21,44 @@ import Makeup from '../../../public/assets/lipstick.svg'
 
 import moment from 'moment'
 
+var product_list = {
+	'blowout': {
+		price: 5000,
+		duration: 45,
+		name: 'Blowout',
+	},
+	'blowout+braid': {
+		price: 7500,
+		duration: 50,
+		name: 'Blowout & Braid',
+	},
+	'blowout+updo': {
+		price: 8500,
+		duration: 90,
+		name: 'Blowout & Up-do',
+	},
+	'makeup': {
+		price: 6500,
+		duration: 60,
+		name: 'Makeup',
+	},
+	'makeup+lashstrip': {
+		price: 8500,
+		duration: 60,
+		name: 'Makeup & Lash Strip',
+	},
+	'lashextensions': {
+		price: 20000,
+		duration: 120,
+		name: 'Lash Extensions',
+	},
+	'lashstrip+fill': {
+		price: 32500,
+		duration: 120,
+		name: 'Lash Extensions & Fill',
+	},
+}
+
 function AppointmentList(props) {
 
 	let appointments = groupBy(props.appointments, (appointment) => {
@@ -57,11 +95,11 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>Blowout</p>
-						  			<p style={{fontSize: '1em'}}>Price: lots</p>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Price: {product_list[appointment.products].price}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration}</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
@@ -72,11 +110,19 @@ function AppointmentList(props) {
 			    { 
 			    	appointments['past'] && map(appointments['past'], (appointment) => {
 					  return ( 
-				  		<ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Price: {product_list[appointment.products].price}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration}</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }
