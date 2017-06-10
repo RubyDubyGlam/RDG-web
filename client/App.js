@@ -43,7 +43,7 @@ class App extends Component {
 
 
     if( /Android/i.test(navigator.userAgent) ) {
-      agent = <Route path="/" component={MobileLayoutAndroid} />
+      agent = <Route path="/" component={MobileLayoutIphone} />
     }
 
 
