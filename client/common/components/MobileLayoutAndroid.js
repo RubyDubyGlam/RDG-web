@@ -9,7 +9,7 @@ import HomeContainer from '../../home/components/HomeContainer'
 import MakeupContainer from '../../order/components/MakeupContainer'
 import LashesContainer from '../../order/components/LashesContainer'
 import BlowoutContainer from '../../order/components/BlowoutContainer'
-
+import FAQSContainer from '../../faqs/components/FAQContainer'
 
 import { me } from '../../user/action/user-action'
 import { connect } from 'react-redux'
@@ -64,6 +64,7 @@ class MobileLayoutIphone extends Component {
         this.props.user && (
           <Switch>
             <Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
+            <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
             <Route path='/blowout/:service' render={() => <OrderContainer user={this.props.user}/>} />           

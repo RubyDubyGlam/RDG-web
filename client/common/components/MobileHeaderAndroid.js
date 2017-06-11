@@ -70,7 +70,7 @@ class MobileHeaderAndroid extends React.Component {
         		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
         		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
             <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Contact Us" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/faqs')} />
             <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Logout" leftIcon={recentsIcon} onTouchTap={this.props.logout} />
 	        </Drawer>
       </div>

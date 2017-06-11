@@ -66,25 +66,3 @@ export default class LoginContainer extends Component {
     )
   }
 }
-
-          // <RaisedButton
-          //   style={{marginTop: 36, width: '60%'}}
-          //     label="Login with Facebook"
-          //     labelPosition="before"
-          //     containerElement="label"
-          //     onClick={this.authFacebook}
-          //   /><br />
-          // <RaisedButton
-          //   style={{marginTop: 36, width: '60%'}}
-          //     label="Login with Google"
-          //     labelPosition="before"
-          //     containerElement="label"
-          //     onClick={this.authGoogle}
-          //   /><br />
-          // <RaisedButton
-          //   style={{marginTop: 36, width: '60%'}}
-          //     label="Login with Twitter"
-          //     labelPosition="before"
-          //     containerElement="label"
-          //     onClick={this.authInstagram}
-          //   />
