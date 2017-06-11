@@ -106,7 +106,7 @@ function AppointmentList(props) {
 					  )
 			    	})
 			    }
-			    <Subheader style={{fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My completed appointments</Subheader>
+			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My completed appointments</Subheader>
 			    { 
 			    	appointments['past'] && map(appointments['past'], (appointment) => {
 					  return ( 

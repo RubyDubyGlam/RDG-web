@@ -21,6 +21,10 @@ import Subheader from 'material-ui/Subheader';
 
 import { map } from 'lodash'
 
+import { withRouter } from 'react-router'
+
+import moment from 'moment'
+
 const styles = {
   root: {
     display: 'flex',
@@ -32,6 +36,44 @@ const styles = {
     textAlign: 'center'
   },
 };
+
+var product_list = {
+  'blowout': {
+    price: 5000,
+    duration: 45,
+    name: 'Blowout',
+  },
+  'blowout+braid': {
+    price: 7500,
+    duration: 50,
+    name: 'Blowout & Braid',
+  },
+  'blowout+updo': {
+    price: 8500,
+    duration: 90,
+    name: 'Blowout & Up-do',
+  },
+  'makeup': {
+    price: 6500,
+    duration: 60,
+    name: 'Makeup',
+  },
+  'makeup+lashstrip': {
+    price: 8500,
+    duration: 60,
+    name: 'Makeup & Lash Strip',
+  },
+  'lashextensions': {
+    price: 20000,
+    duration: 120,
+    name: 'Lash Extensions',
+  },
+  'lashextensions+fill': {
+    price: 32500,
+    duration: 120,
+    name: 'Lash Extensions & Fill',
+  },
+}
 
 class SelectAddressModal extends Component {
   render() {
@@ -63,7 +105,7 @@ class SelectAddressModal extends Component {
   }
 }
 
-export default class OrderPaymentSelection extends Component {
+class OrderPaymentSelection extends Component {
 
 	constructor(props) {
 		super(props)
@@ -119,17 +161,24 @@ export default class OrderPaymentSelection extends Component {
 	}
 
 	render() {
+		const product = this.props.match.params.service
+
+		const appointment = this.props.form_data
+
+		const display_time = (moment(appointment.date_time).format('hh:mm A'))
+		const display_date = (moment(appointment.date_time).format('MMM Do'))
+
 		return (
 			<div style={styles.root}>
 				<SelectAddressModal possible_addresses={this.state.possible_addresses} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
 				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-				  			<p style={{fontSize: '1em'}}>Blowout</p>
-				  			<p style={{fontSize: '1em'}}>Price: lots</p>
+				  			<p style={{fontSize: '1em'}}>{product_list[product].name}</p>
+				  			<p style={{fontSize: '1em'}}>Price: ${product_list[product].price / 100}</p>
 			  			</div>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-				  			<p style={{fontSize: '1em'}}>Duration: 60min</p>
-				  			<p style={{fontSize: '1em'}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
+				  			<p style={{fontSize: '1em'}}>Duration: {product_list[product].duration} min</p>
+				  			<p style={{fontSize: '1em'}}>{`${display_date} @ ${display_time || ''}`}</p>
 			  			</div>
 	  				</div>
 				  	<div style={{textAlign: 'center', paddingLeft: '20%', paddingRight: '20%', marginBottom: 24}}>
@@ -211,3 +260,5 @@ export default class OrderPaymentSelection extends Component {
 		)
 	}
 }
+
+export default withRouter(OrderPaymentSelection)

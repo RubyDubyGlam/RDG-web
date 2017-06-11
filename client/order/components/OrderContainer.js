@@ -97,7 +97,7 @@ export default class OrderFlow extends Component {
 
 					{ this.state.step === 2 ? <AddressSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} /> : null }
 
-					{ this.state.step === 3 ? <OrderPaymentSelection goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} /> : null }
+					{ this.state.step === 3 ? <OrderPaymentSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} /> : null }
 
 					{ this.state.step === 4 ? <OrderConfirm form_data={this.state} goForward={this.goForward} goBack={this.goBack} /> : null }
 	        </div>

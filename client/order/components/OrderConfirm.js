@@ -161,8 +161,9 @@ class OrderConfirm extends Component {
 		this.state = {
 			is_loading: false,
 			is_valid_phone_number: props.user.phone_number ? true : false,
-			phone_number: props.user.phone_number || '',
-			email_address: props.user.email_address || ''
+			phone_number: props.user.phsone_number || '',
+			email_address: props.user.email_address || '', 
+			has_agreed_to_tos: false
 		}
 	}
 
@@ -208,7 +209,6 @@ class OrderConfirm extends Component {
 	  }
 
   handleSubmitChangePhoneNumber = (phone_number) => {
-  	console.log(this.props)
     this.props.changePhoneNumber(phone_number).then(() => {
       this.setState({
         is_editing_phone_number: false
@@ -223,6 +223,10 @@ class OrderConfirm extends Component {
       })       
     })   
   }
+
+   toggleTOS = (e, subscribed) => {
+     this.setState({ has_agreed_to_tos: subscribed})  
+   }	
 
 
 	render() {
@@ -283,13 +287,8 @@ class OrderConfirm extends Component {
 		            onClick={e => this.setState({is_editing_phone_number: true})}
 		          />
 		          <ListItem
-		            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
+		            leftCheckbox={<Checkbox onCheck={this.toggleTOS}/>}
 		            primaryText="I agree to the terms of service"
-		            style={{color: 'white'}}
-		          />
-		          <ListItem
-		            leftCheckbox={<Checkbox onCheck={this.changeSubmitToggleSubscribe}/>}
-		            primaryText="Save this address and contact information"
 		            style={{color: 'white'}}
 		          />
 		        </List>
@@ -301,6 +300,7 @@ class OrderConfirm extends Component {
 			            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
 			            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
 			            style={{width: '100%', height: 60 }}
+			            disabled={!this.state.has_agreed_to_tos}
 			        />
 		        </div>
 		        { this.state.is_loading && <Loader /> }
