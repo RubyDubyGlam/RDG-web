@@ -13,6 +13,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 
+import Loader from '../../common/components/Loader'
+
 const styles = {
   root: {
     display: 'flex',
@@ -78,12 +80,14 @@ class OrderPaymentSelection extends Component {
 			cvc: '',
 			zip: '',
 			error: '',
-			is_valid_card: false
+			is_valid_card: false,
+			is_loading: false
 		}
 		Stripe.setPublishableKey('pk_test_BTRrj2yjVesTnchX9JbiYJE3')
 	}
 
 	createToken = () => {
+		this.setState({is_loading: true})
 	  	Stripe.card.createToken({
 		    number: this.state.number,
 		    cvc: this.state.cvc,
@@ -92,10 +96,12 @@ class OrderPaymentSelection extends Component {
 		}, (status, response) => {
 			if (status === 200) {
 				this.props.setPayment(response.id)
-				this.props.goForward()				
+				this.props.goForward()
+
 			} else {
 				this.setState({
-					error: response.error.message
+					error: response.error.message,
+					is_loading: false,
 				})
 			}
 		})
@@ -127,8 +133,31 @@ class OrderPaymentSelection extends Component {
 		const display_time = (moment(appointment.date_time).format('hh:mm A'))
 		const display_date = (moment(appointment.date_time).format('MMM Do'))
 
+		let button_text = 'Next'
+
+		if (!this.state.zip) {
+			button_text = 'Invalid Zip'
+		} 
+
+		if (!this.state.cvc) {
+			button_text = 'Invalid CVC'
+		} 
+
+		if (!this.state.expr) {
+			button_text = 'Invalid Expiration'
+		}
+
+		if (!this.state.number) {
+			button_text = 'Invalid Number'
+		} 
+
+		if (!this.state.name) {
+			button_text = 'Invalid Name'
+		}
+
 		return (
 			<div style={styles.root}>
+					{ this.state.is_loading && <Loader /> }
 				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
 				  			<p style={{fontSize: '1em'}}>{product_list[product].name}</p>
@@ -195,10 +224,10 @@ class OrderPaymentSelection extends Component {
 				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 				        <RaisedButton
 				            primary={true}
-				            label="Next"
+				            label={button_text}
 				            onTouchTap={this.createToken}
 				            disabled={ !this.state.name || !this.state.number || !this.state.expr || !this.state.cvc || !this.state.zip }
-				            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+				            labelStyle={{ color:'pink' }}
 				            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
 				            style={{width: '100%', height: 60 }}
 				        />

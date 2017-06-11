@@ -96,17 +96,17 @@ function AppointmentList(props) {
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
 						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: {product_list[appointment.products].price}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration}</p>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
 					  )
 			    	})
 			    }
-			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My completed appointments</Subheader>
+			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My previous appointments</Subheader>
 			    { 
 			    	appointments['past'] && map(appointments['past'], (appointment) => {
 					  return ( 
@@ -116,11 +116,13 @@ function AppointmentList(props) {
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
 						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: {product_list[appointment.products].price}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration}</p>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+						  			<p style={{fontSize: '1em'}}>Stylist: {appointment.stylist_full_name || 'Unassigned' }</p>
 					  			</div>
 			  				</div>
 					  )

@@ -201,9 +201,9 @@ class OrderDateTimePlaceSelection extends Component {
 				        <RaisedButton
 				            primary={true}
 				            disabled= {!this.state.date || !this.state.time}
-				            label="Next"
+				            label={!this.state.date || !this.state.time ? 'Select a date and time' : "Next" }
 				            onTouchTap={this.handleNavigateNext}
-				            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+				            labelStyle={{ color:'pink'}}
 				            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
 				            style={{width: '100%', height: 60 }}
 				        />

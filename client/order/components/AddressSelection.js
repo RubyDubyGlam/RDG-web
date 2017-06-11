@@ -83,18 +83,23 @@ class SelectAddressModal extends Component {
 
     return (
       <Dialog
-        modal={false}
+        modal={true}
         open={props.open}
         onRequestClose={props.handleDialogClose}
+        bodyStyle={{ backgroundColor: 'rgba(0,0,0,0.9)'}}
+        titleStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+        actionsContainerStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+        contentStyle={{minWidth: '100%'}}
       >
         <List>
-		  <Subheader style={{color: 'black', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Possible Addresses</Subheader>
+		  <Subheader style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Select an Address</Subheader>
 		  {
 		  	map(props.possible_addresses, (address) => {
 		  		return (
 		          <ListItem
-		            primaryText={address.formatted_address}
+		            primaryText={<span style={{color: 'white', fontSize: 12}}>{address.formatted_address}</span>}
 		            onClick={e => props.setAddress(address.formatted_address)}
+
 		          />
 		  		)
 		    })
@@ -168,6 +173,24 @@ class OrderPaymentSelection extends Component {
 		const display_time = (moment(appointment.date_time).format('hh:mm A'))
 		const display_date = (moment(appointment.date_time).format('MMM Do'))
 
+		let button_text = 'Find Address'
+
+		if (!this.state.zip) {
+			button_text = 'Invalid Zipcode'
+		}
+
+		if (!this.state.state) {
+			button_text = 'Invalid State'
+		} 
+
+		if (!this.state.city) {
+			button_text = 'Invalid Zipcode'
+		}
+
+		if (!this.state.addressone) {
+			button_text = 'Invalid Address'
+		} 
+
 		return (
 			<div style={styles.root}>
 				<SelectAddressModal possible_addresses={this.state.possible_addresses} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
@@ -218,7 +241,7 @@ class OrderPaymentSelection extends Component {
 			      		inputStyle={{ color: 'white', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
-				      		style={{fontSize: '1em', padding: 6, width: '20%', marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
+				      		style={{fontSize: '1em', padding: 6, width: '30%', marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 				    	/>
 					    <TextField
 
@@ -232,7 +255,7 @@ class OrderPaymentSelection extends Component {
 			    	</div>
 				    <TextField
 			      		floatingLabelText="Additional Directions"
-			      		onChange={e => this.setState({addresstwo: e.target.value})}
+			      		onChange={e => this.setState({additional: e.target.value})}
 			      		inputStyle={{ color: 'white', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      	underlineStyle={{ borderWidth: 0 }}
@@ -241,10 +264,10 @@ class OrderPaymentSelection extends Component {
 				    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 				        <RaisedButton
 				            primary={true}
-				            // disabled= {!this.state.date || !this.state.time}
-				            label="Next"
+				            disabled= {!this.state.zip || !this.state.state || !this.state.addressone || !this.state.city}
+				            label={button_text}
 				            onTouchTap={this.handleLocationSelect}
-				            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+				            labelStyle={{color:'pink'}}
 				            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
 				            style={{width: '100%', height: 60 }}
 				        />

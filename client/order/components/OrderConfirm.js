@@ -42,6 +42,44 @@ import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../us
 
 import { withRouter } from 'react-router'
 
+var product_list = {
+  'blowout': {
+    price: 5000,
+    duration: 45,
+    name: 'Blowout',
+  },
+  'blowout+braid': {
+    price: 7500,
+    duration: 50,
+    name: 'Blowout & Braid',
+  },
+  'blowout+updo': {
+    price: 8500,
+    duration: 90,
+    name: 'Blowout & Up-do',
+  },
+  'makeup': {
+    price: 6500,
+    duration: 60,
+    name: 'Makeup',
+  },
+  'makeup+lashstrip': {
+    price: 8500,
+    duration: 60,
+    name: 'Makeup & Lash Strip',
+  },
+  'lashextensions': {
+    price: 20000,
+    duration: 120,
+    name: 'Lash Extensions',
+  },
+  'lashextensions+fill': {
+    price: 32500,
+    duration: 120,
+    name: 'Lash Extensions & Fill',
+  },
+}
+
 const styles = {
   root: {
     display: 'flex',
@@ -231,10 +269,21 @@ class OrderConfirm extends Component {
 
 	render() {
 		const appointment = this.props.form_data
+		const product = this.props.match.params.service
 
 		const {
 			user
 		} = this.props
+
+		let button_text = 'Book'
+
+		if (!user.email_address) {
+			button_text = 'Invalid Email'
+		} else if (!user.phone_number) {
+			button_text = 'Invalid Phone Number'
+		} else if (!this.state.has_agreed_to_tos) {
+			button_text = 'Agree to Terms'
+		}
 
 		return (
 			<div style={styles.root}>
@@ -251,23 +300,30 @@ class OrderConfirm extends Component {
 		        <List>
       			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Services</Subheader>
 		          <ListItem
-		            primaryText="Change services"
+		            primaryText="Services"
 		            style={{color: 'white'}}
-		            secondaryText={<span style={{color: 'pink'}}>Blowout + braid</span>}
+		            secondaryText={<span style={{color: 'pink'}}>{product_list[product].name}</span>}
+		          />
+		          <ListItem
+		            primaryText="Price"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>${product_list[product].price / 100}</span>}
+		          />
+		          <ListItem
+		            primaryText="Duration"
+		            style={{color: 'white'}}
+		            secondaryText={<span style={{color: 'pink'}}>{product_list[product].duration} min</span>}
 		          />
 		        </List>
 		        <List>
-      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Time</Subheader>
+      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Time & Place</Subheader>
 		          <ListItem
-		            primaryText="Change time"
+		            primaryText="Time"
 		            style={{color: 'white'}}
 		            secondaryText={<span style={{color: 'pink'}}>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</span>}
 		          />
-		        </List>
-		        <List>
-      			  <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Place</Subheader>
 		          <ListItem
-		            primaryText="Change place"
+		            primaryText="Place"
 		            style={{color: 'white'}}
 		            secondaryText={<span style={{color: 'pink'}}>{appointment.address}</span>}
 		          />
@@ -295,12 +351,12 @@ class OrderConfirm extends Component {
 				<div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 			        <RaisedButton
 			            primary={true}
-			            label="Next"
+			            label={button_text}
 			            onTouchTap={this.onSubmit}
-			            labelStyle={{color: 'white', fontFamily: "'Great Vibes', cursive", color:'pink'}}
+			            labelStyle={{color:'pink'}}
 			            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
 			            style={{width: '100%', height: 60 }}
-			            disabled={!this.state.has_agreed_to_tos}
+			            disabled={!user.email_address || !user.phone_number || !this.state.has_agreed_to_tos}
 			        />
 		        </div>
 		        { this.state.is_loading && <Loader /> }
