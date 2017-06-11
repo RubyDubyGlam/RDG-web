@@ -45,6 +45,9 @@ module.exports = {
 		    	type: String,
 		    	required: true
 		    },
+		    stylist_phone_number: {
+		    	type: String,
+		    },
 		    products: {
 		    	type: String,
 		    	required: true

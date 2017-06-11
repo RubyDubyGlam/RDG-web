@@ -77,8 +77,13 @@ function registerRoutes(app, db, twilio_client, cache) {
 	function createHandleSuccessNotify(req, res, notification) {
 		return function(appointment) {
 			twilio_client.messages.create({
-			    body: notification,
+			    body: 'Your stylist is on the way! You can reply to this text to contact them',
 			    to: appointment.phone_number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			twilio_client.messages.create({
+			    body: 'You can now reply to this text to contact your client',
+			    to: appointment.stylist_phone_number,  // Text this number
 			    from: '+18052108161' // From a valid Twilio number
 			})
 			res.json(appointment)
@@ -104,7 +109,8 @@ function registerRoutes(app, db, twilio_client, cache) {
 				{
 					stylist_id: req.body.stylist_id, 
 					status: status,
-					stylist_full_name: stylist.first_name + ' ' + stylist.last_name
+					stylist_full_name: stylist.first_name + ' ' + stylist.last_name,
+					stylist_phone_number: stylist.phone_number
 				},
 				createHandleSuccess(req, res),
 		    	createHandleError(req, res)
@@ -174,9 +180,8 @@ function registerRoutes(app, db, twilio_client, cache) {
 				user_controller.get(
 					appointment.stylist_id.toString(),
 					function(stylist) {
-						console.log(appointment, stylist)
-						cache.set(appointment.phone_number, stylist.phone_number, 'EX', 120)
-						cache.set(stylist.phone_number, appointment.phone_number, 'EX', 120)
+						cache.set(appointment.phone_number, stylist.phone_number, 'EX', 5400)
+						cache.set(stylist.phone_number, appointment.phone_number, 'EX', 5400)
 
 					    appointment_controller.set(
 							req.params.id,
