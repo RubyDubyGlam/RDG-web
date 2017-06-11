@@ -25,7 +25,7 @@ class OrderFlow extends Component {
 	render() {
 		return (
 			<div style={styles.container}>
-				<Paper zDepth={5} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }}>
+				<Paper zDepth={5} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }} onClick={() => this.props.navigate('/lashes/makeup')}>
 					<div style={{height: '100%', display: 'flex', alignItems: 'center'}} >
 						<img src={'/assets/04-new.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
@@ -35,7 +35,7 @@ class OrderFlow extends Component {
 						</div>
 					</div>
 				</Paper>
-				<Paper zDepth={5} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }}>
+				<Paper zDepth={5} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }} onClick={() => this.props.navigate('/lashes/makeup+lashstrip')}>
 					<div style={{height: '100%', display: 'flex', alignItems: 'center'}} >
 						<img src={'/assets/04-new.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >

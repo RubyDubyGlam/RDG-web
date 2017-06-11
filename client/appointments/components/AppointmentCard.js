@@ -30,9 +30,41 @@ import { withRouter } from 'react-router'
 
 import { addTip } from '../action/appointment-action'
 
-var sku_list = {
+var product_list = {
+  'blowout': {
+    price: 5000,
+    duration: 45,
+    name: 'Blowout',
+  },
   'blowout+braid': {
-    amount: 6000
+    price: 7500,
+    duration: 50,
+    name: 'Blowout & Braid',
+  },
+  'blowout+updo': {
+    price: 8500,
+    duration: 90,
+    name: 'Blowout & Up-do',
+  },
+  'makeup': {
+    price: 6500,
+    duration: 60,
+    name: 'Makeup',
+  },
+  'makeup+lashstrip': {
+    price: 8500,
+    duration: 60,
+    name: 'Makeup & Lash Strip',
+  },
+  'lashextensions': {
+    price: 20000,
+    duration: 120,
+    name: 'Lash Extensions',
+  },
+  'lashstrip+fill': {
+    price: 32500,
+    duration: 120,
+    name: 'Lash Extensions & Fill',
   },
 }
 
@@ -72,7 +104,7 @@ class AddTipModal extends Component {
     }
 
     this.setState({
-      gratuity: sku_list[this.props.product].amount * value - sku_list[this.props.product].amount
+      gratuity: product_list[this.props.product].price * value - product_list[this.props.product].price
     })
   }
 
@@ -158,7 +190,7 @@ class AddTipModal extends Component {
             inputStyle = {{ color: 'pink' }}
           />
         </RadioButtonGroup>
-        <div style={{ textAlign: 'center', fontSize: 32, color: 'white', marginTop: 24 }} >Amount: ${((sku_list[this.props.product].amount + this.state.gratuity) / 100).toFixed(2)}</div>
+        <div style={{ textAlign: 'center', fontSize: 32, color: 'white', marginTop: 24 }} >price: ${((product_list[this.props.product].price + this.state.gratuity) / 100).toFixed(2)}</div>
       </Dialog>
     )
   }
@@ -225,16 +257,16 @@ class AppointmentCard extends Component {
             <ListItem
               primaryText="Services"
               style={{color: 'white'}}
-              secondaryText={<span style={{color: 'pink'}}>Blowout + braid</span>}
+              secondaryText={<span style={{color: 'pink'}}>{product_list[appointment.products].name}</span>}
             />
             <ListItem
               primaryText="Total"
               style={{color: 'white'}}
               secondaryText={
                 <div style={{color: 'pink', maxHeight: 85, height: ''}}>
-                  <p>Services: ${(sku_list[appointment.products].amount / 100).toFixed(2)}</p>
+                  <p>Services: ${(product_list[appointment.products].price / 100).toFixed(2)}</p>
                   <p>Gratuity: ${(appointment.gratuity / 100).toFixed(2)}</p>
-                  <p>Total: ${((sku_list[appointment.products].amount + appointment.gratuity) / 100).toFixed(2)}</p>
+                  <p>Total: ${((product_list[appointment.products].price + appointment.gratuity) / 100).toFixed(2)}</p>
                 </div>
               }
             />

@@ -13,10 +13,11 @@ export function createOrder(address, payment_token, time, products, phone_number
 		})
 
 		return createOrderApi(address, payment_token, time, products, phone_number, email_address).then((appointment) => {
+			debugger
 			dispatch({
 				type: ACTION_TYPES.APPOINTMENT_CREATED.value,
 				payload: {
-					appointment: keyBy(appointment, '_id')
+					appointment: keyBy([appointment], '_id')
 				}
 			})
 		})

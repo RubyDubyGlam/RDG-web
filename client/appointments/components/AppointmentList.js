@@ -52,7 +52,7 @@ var product_list = {
 		duration: 120,
 		name: 'Lash Extensions',
 	},
-	'lashstrip+fill': {
+	'lashextensions+fill': {
 		price: 32500,
 		duration: 120,
 		name: 'Lash Extensions & Fill',

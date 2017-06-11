@@ -51,7 +51,8 @@ export default class LoginContainer extends Component {
       <div style={styles.container}>
         { this.state.is_loading ? <Loader /> : null }
         <div style={styles.container_redux}>
-          <p style={{fontSize: 26}}>Login with</p>
+          <p style={{fontSize: 36, fontFamily: "'Great Vibes', cursive", color: 'pink' }}>RubyDubyGlam</p>
+          <p style={{fontSize: 16, color: 'white', margin: 0}}>Login with:</p>
           <Button onClick={this.authFacebook} color='facebook' style={{marginTop: 36, width: '60%'}}>
             <Icon name='facebook' /> Facebook
           </Button>
