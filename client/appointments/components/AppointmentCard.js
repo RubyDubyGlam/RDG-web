@@ -267,12 +267,16 @@ class AppointmentCard extends Component {
               onClick={e => this.setState({is_editing_phone_number: true})}
             />
           </List>
-          <RaisedButton 
-            secondary 
-            style={{width: '60%'}} 
-            label="Add Tip" 
-            onClick={() => this.setState({is_tip_modal_open: true})} 
-          />
+          {
+            appointment.status === 4 && (
+              <RaisedButton 
+                secondary 
+                style={{width: '60%'}} 
+                label="Add Tip" 
+                onClick={() => this.setState({is_tip_modal_open: true})} 
+              />
+            )
+          }
           <RaisedButton 
             secondary 
             style={{width: '60%', marginTop: 12}} 

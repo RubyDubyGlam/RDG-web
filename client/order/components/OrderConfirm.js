@@ -94,6 +94,7 @@ class ChangePhoneNumberModal extends Component {
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={styles.phone_number_style}
+        bodyStyle={{minHeight: 90 }}
       >
         <TextField
           hintText="Phone number"
@@ -130,6 +131,7 @@ class ChangeEmailAddressModal extends Component {
         primary={true}
         keyboardFocused={true}
         onTouchTap={() => props.handleSubmit(this.state.email_address)}
+        bodyStyle={{minHeight: 90 }}
       />,
     ]
 
