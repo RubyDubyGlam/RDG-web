@@ -41,8 +41,8 @@ class OrderFlow extends Component {
 						<img src={'/assets/15.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Blowout</span>
-							<p style={{marginTop: 4, fontSize: '.8em'}} >Add-ons: Braid </p>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Prices: $50 - $85</p>
+							<p style={{marginTop: 4, fontSize: '.8em'}} >Add-ons: Braid </p>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Durations: 60-90 mins </p>
 						</div>
 					</div>
@@ -51,8 +51,8 @@ class OrderFlow extends Component {
 					<div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'flex-end' }} >
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column', flexGrow: 1 }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Makeup</span>
-							<p style={{marginTop: 4, fontSize: '.8em'}} >Add-ons: Lash Strip</p>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Prices: $65 - $90</p>
+							<p style={{marginTop: 4, fontSize: '.8em'}} >Add-ons: Lash Strip</p>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Durations: 60 mins </p>
 						</div>
 						<img src={'/assets/11.jpg'} height={'100%'} />
