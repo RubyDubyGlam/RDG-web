@@ -99,8 +99,22 @@ class OrderDateTimePlaceSelection extends Component {
   	}
 
   	handleSetTime = (event, raw_time) => {
-		const beginningTime = moment('8:00am', 'h:mma');
-		const endTime = moment('8:00pm', 'h:mma');
+  		let beginningTime
+  		let endTime
+  		let invalidTime
+
+  		if (this.state.date) {
+  			if(parseInt(moment(this.state.date).format('e')) > 4 ) {
+				beginningTime = moment('8:00am', 'h:mma');
+				endTime = moment('7:00pm', 'h:mma');
+				invalidTime = 'Please choose a time between 8am and 7pm'
+  			} else {
+				beginningTime = moment('9:00am', 'h:mma');
+				endTime = moment('5:00pm', 'h:mma'); 
+				invalidTime = 'Please choose a time between 9am and 5pm'				
+  			}
+  		}
+
 		const rawTime = moment(moment(raw_time).format('h:mma'), 'h:mma')
 
 		const is_after_eight = rawTime.isAfter(beginningTime)
@@ -114,7 +128,7 @@ class OrderDateTimePlaceSelection extends Component {
 			this.setState({
 				display_time: '',
 				time: '',
-				error: 'Please choose a time between 8am and 6pm'
+				error: invalidTime
 			})
 		}
   	}
@@ -184,10 +198,12 @@ class OrderDateTimePlaceSelection extends Component {
 			        </div>
 			        <div style={{marginTop: 12, padding: 12}}>
 				        <p style={{color:'white', fontSize: 24, width:'100%', textAlign: 'left', margin: 0}}>Hours of operation</p>
-			        	<p style={{color:'white', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>8am to 8pm</p>
+			        	<p style={{color:'white', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>Monday - Thursday 9am to 5pm</p>
+					    <p style={{color:'white', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>Friday - Sunday 8am to 7pm</p>
 				        <p style={{color:'white', width:'100%', textAlign: 'left'}}>
 				        	If you desire appointments before our business hours or after we are 
-				        	happy to assist you, but there will be a 50% additional cost to the services desired
+				        	happy to assist you, but there will be a 50% additional cost to the services desired.
+				        	Please contact us at reservations@rubydubyglam.com to schedule.
 				        </p>
 				        <p style={{color:'white', fontSize: 24, width:'100%', textAlign: 'left', marginBottom: 3}}>Cancellation Policy</p>
 				        <p style={{color:'white', width:'100%', textAlign: 'left'}}>
