@@ -26,6 +26,16 @@ const styles = {
     display: 'flex',
     flexDirection: 'column'
   },
+  bad_container: {
+    height: '100%',
+    width: '100%',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }, 
 }
 
 class MobileLayoutIphone extends Component {
@@ -49,6 +59,15 @@ class MobileLayoutIphone extends Component {
   }
 
   render() {
+    if (true) {
+      return (
+        <div style={styles.bad_container}>
+          <p style={{fontSize: 46, textAlign: 'center'}} >Web view is not currently supported. Please access this application through a modern mobile smartphone.</p>
+        </div>
+      )
+    }
+
+
     return (
 		<div style={styles.container}>
 			{ this.props.user ? <WebHeader /> : null }
