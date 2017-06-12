@@ -10,7 +10,7 @@ var appointment_controller = require('../controllers/appointment-controller')
 var user_controller = require('../controllers/user-controller')
 
 var stripe = require("stripe")(
-  "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
+  process.env.STRIPE_SECRET || "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
 );
 
 function registerRoutes(app, db, twilio_client, cache) {

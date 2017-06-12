@@ -1,5 +1,5 @@
 var stripe = require("stripe")(
-  "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
+  process.env.STRIPE_SECRET || "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
 );
 
 var product_list = {

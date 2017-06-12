@@ -83,7 +83,7 @@ class OrderPaymentSelection extends Component {
 			is_valid_card: false,
 			is_loading: false
 		}
-		Stripe.setPublishableKey('pk_test_BTRrj2yjVesTnchX9JbiYJE3')
+		Stripe.setPublishableKey('pk_live_StmsYeM1MHShCtaqySy02iz4')
 	}
 
 	createToken = () => {
