@@ -31,13 +31,18 @@ class AppointmentActions extends Component {
 	render() {
 		const {
 			_id, 
-			status
+			status,
+			latitude,
+            longitude,
 		} = this.props.appointment
 
 		if (status === 2) {
 			return (
 			  <div style={{display: 'flex', width: '100%'}}>
-		        <RaisedButton secondary style={{flexGrow: 1}} label="On my way" onClick={() => this.props.appointmentStateChange(_id, 'enroute')}/>
+			  	<RaisedButton primary style={{flexGrow: 1, width: '50%', paddingRight: 3}} label="Get Directions" onClick={() => {
+			  		window.location.href = `http://maps.apple.com/?q=${latitude},${longitude}`
+			  	}}/>
+		        <RaisedButton secondary style={{flexGrow: 1, width: '50%', paddingLeft: 3}} label="On my way" onClick={() => this.props.appointmentStateChange(_id, 'enroute')}/>
 		      </div>
 			)			
 		}

@@ -38,9 +38,11 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 
 		appointment_controller.get(
-			{stylist_id: req.user._id},
+			req.params.id,
 			function(appointment) {
-				if (appointment.customer_id === req.user._id) {
+
+				console.log(appointment.stylist_id, req.user._id)
+				if (appointment.stylist_id == req.user._id) {
 					return next()
 				}
 
@@ -56,7 +58,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 
 		appointment_controller.get(
-			{customer_id: req.user._id},
+			req.params.id,
 			function(appointment) {
 				if (appointment.customer_id === req.user._id) {
 					return next()

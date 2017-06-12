@@ -17,6 +17,9 @@ import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 
 const recentsIcon = <FontIcon className="material-icons">account_box</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">book</FontIcon>;
+const contactUsIcon = <FontIcon className="material-icons">email</FontIcon>;
+const logoutIcon = <FontIcon className="material-icons">exit_to_app</FontIcon>;
+const faqsIcon = <FontIcon className="material-icons">subject</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
 
 class MobileHeaderAndroid extends React.Component {
@@ -65,13 +68,12 @@ class MobileHeaderAndroid extends React.Component {
 	        	<div style={{ width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
 	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Home" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/')}/>
-        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/order')}/>
+        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/')}/>
         		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
         		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Contact Us" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/contact-us')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/faqs')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Logout" leftIcon={recentsIcon} onTouchTap={this.props.logout} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={faqsIcon} onTouchTap={() => this.navigate('/faqs')} />
+            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Logout" leftIcon={logoutIcon} onTouchTap={this.props.logout} />
 	        </Drawer>
       </div>
     );

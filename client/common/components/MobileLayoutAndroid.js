@@ -63,7 +63,6 @@ class MobileLayoutIphone extends Component {
       {
         this.props.user && (
           <Switch>
-            <Route path='/order' render={() => <OrderContainer user={this.props.user}/>}  />
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />

@@ -164,22 +164,22 @@ class OrderDateTimePlaceSelection extends Component {
 			          onRequestClose={this.closeSnackbar}
 			          style={{width: '100%'}}
 			        />
-			        <div style={{minHeight: 40, marginTop: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-			        	<div style={{color:'white'}}> {this.state.display_date || "Select Date"} </div>
+			        <div style={{minHeight: 80, marginTop: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<div style={{color:'white', height: 0, marginTop: 30, fontSize: 26}}> {this.state.display_date || "Select Date"} </div>
 			        	<DatePicker 
 			        		onChange={this.handleSetDate} 
 			        		hintText={"Select a date"} 
-			        		style={{opacity: 0, height: 40}}
+			        		style={{opacity: 0, height: 80}}
 			        	    shouldDisableDate={(date) => moment(date).isBefore(today)}
 			        	/>
 		        	</div>
-			        <div style={{minHeight: 40, marginTop: 24, marginBottom: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-			        	<div style={{color:'white'}}> {this.state.display_time || "Select Time"} </div>
+			        <div style={{minHeight: 80, marginTop: 24, marginBottom: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
+			        	<div style={{color:'white', height: 0, marginTop: 30, fontSize: 26}}> {this.state.display_time || "Select Time"} </div>
 			        	<TimePicker 
 			        		defaultTime={this.state.time || null} 
 			        		onChange={this.handleSetTime} 
 			        		hintText="Select a time" 
-			        		style={{opacity: 0, height: 40}}
+			        		style={{opacity: 0, height: 80}}
 						/>
 			        </div>
 			        <div style={{marginTop: 12, padding: 12}}>

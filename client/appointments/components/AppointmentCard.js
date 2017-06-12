@@ -18,6 +18,8 @@ import moment from 'moment'
 
 import { connect } from 'react-redux'
 
+import navigate from '../../common/actions/router-actions'
+
 import AppointmentActions from './AppointmentActions'
 import AppointmentActionsAdmin from './AppointmentActionsAdmin'
 import AppointmentActionsStylist from './AppointmentActionsStylist'
@@ -181,16 +183,40 @@ class AddTipModal extends Component {
             iconStyle = {{ fill: 'pink' }}
             inputStyle = {{ color: 'pink' }}
           />
-          <RadioButton
-            value="custom"
-            label="Custom"
-            style={{ marginBottom: 16 }}
-            labelStyle = {{ color: 'white' }}
-            iconStyle = {{ fill: 'pink' }}
-            inputStyle = {{ color: 'pink' }}
-          />
         </RadioButtonGroup>
-        <div style={{ textAlign: 'center', fontSize: 32, color: 'white', marginTop: 24 }} >price: ${((product_list[this.props.product].price + this.state.gratuity) / 100).toFixed(2)}</div>
+        <div style={{ textAlign: 'center', fontSize: 32, color: 'white', marginTop: 24 }} >Amount: ${((this.state.gratuity) / 100).toFixed(2)}</div>
+      </Dialog>
+    )
+  }
+}
+
+class CancelModal extends Component {
+  render() {
+    const {
+      props
+    } = this
+
+    const actions = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onTouchTap={props.handleDialogClose}
+      />
+    ]
+
+    return (
+      <Dialog
+        title={<div style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Cancel Reservation</div>}
+        actions={actions}
+        modal={false}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={styles.container}
+        bodyStyle={{ backgroundColor: 'rgba(0,0,0,0.9)', maxHeight: '100%' }}
+        titleStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+        actionsContainerStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+      >
+        <p style={{color: 'white'}} >Please send us an email at reservations@rubydubyglam.com to cancel </p>
       </Dialog>
     )
   }
@@ -244,6 +270,11 @@ class AppointmentCard extends Component {
 
     const appointment = props.appointments[props.match.params.id]
 
+    if (!appointment) {
+      this.props.navigate('/appointment')
+      return null
+    }
+
     if (!props.user.roles.admin && !props.user.roles.stylist) {
       return (
         <div style={styles.root}>
@@ -253,6 +284,7 @@ class AppointmentCard extends Component {
             handleSubmitTip={this.handleSubmitTip}
             product={appointment.products}
           />
+          <CancelModal open={this.state.cancel_modal_open} handleDialogClose={() => this.setState({cancel_modal_open: false})}/>
           <List>
             <ListItem
               primaryText="Services"
@@ -311,9 +343,9 @@ class AppointmentCard extends Component {
           }
           <RaisedButton 
             secondary 
-            style={{width: '60%', marginTop: 12}} 
-            label="Cancel" 
-            onClick={() => this.setState({is_drawer_open: true})} 
+            style={{width: '60%', marginTop: 12, marginBottom: 12}} 
+            label="Cancel Order" 
+            onClick={() => this.setState({cancel_modal_open: true})} 
           />
         </div>
       )
@@ -330,15 +362,15 @@ class AppointmentCard extends Component {
         <CardTitle title={moment(props.appointments[props.match.params.id].time).format('MMMM Do, h:mm a')} subtitle={props.appointments[props.match.params.id].address} />
         <CardText style={{paddingTop: 0}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-        Services: {this.populateIcons(props.appointments[props.match.params.id])}
+        Services: {product_list[props.appointments[props.match.params.id].products].name}
         </div>
         {props.user.roles.admin &&
           <div style={{marginTop: 12}}>
-            Stylist: {props.appointments[props.match.params.id].stylist_full_name || 'None'}
+            Stylist: {props.appointments[props.match.params.id].stylist_full_name || 'Unassigned'}
           </div>
         }
         </CardText>
-        <CardActions style={{width: '100%', display: 'flex', position: 'absolute', bottom: 56}}>
+        <CardActions>
         { actions }
         </CardActions>
       </Card>
@@ -353,6 +385,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-let AppointmentCardComponent = withRouter(connect( mapStateToProps, {addTip} ,undefined,{pure: false} )(AppointmentCard))
+let AppointmentCardComponent = withRouter(connect( mapStateToProps, {addTip, navigate} ,undefined,{pure: false} )(AppointmentCard))
 
 export default AppointmentCardComponent

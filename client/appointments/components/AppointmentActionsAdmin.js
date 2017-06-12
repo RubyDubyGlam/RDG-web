@@ -20,7 +20,7 @@ import AppointmentActionsStylist from './AppointmentActionsStylist'
 function AssignDrawer(props){
     return (
       <div>
-        <Drawer docked={false} open={props.open} width={'50%'} onRequestChange={(open) => props.onRequestChange(open)}>
+        <Drawer style={{top: 65, height: 'calc(100% - 65px)'}} containerStyle={{top: 65, height: 'calc(100% - 65px)'}} docked={false} open={props.open} width={'50%'} onRequestChange={(open) => props.onRequestChange(open)}>
           <MenuItem onClick={props.onAssignStylistClick}>Assign stylist</MenuItem>
           <MenuItem onClick={props.onAssignToMe}>Assign to me</MenuItem>
         </Drawer>

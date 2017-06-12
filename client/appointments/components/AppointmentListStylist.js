@@ -21,6 +21,44 @@ import Makeup from '../../../public/assets/lipstick.svg'
 
 import moment from 'moment'
 
+var product_list = {
+	'blowout': {
+		price: 5000,
+		duration: 45,
+		name: 'Blowout',
+	},
+	'blowout+braid': {
+		price: 7500,
+		duration: 50,
+		name: 'Blowout & Braid',
+	},
+	'blowout+updo': {
+		price: 8500,
+		duration: 90,
+		name: 'Blowout & Up-do',
+	},
+	'makeup': {
+		price: 6500,
+		duration: 60,
+		name: 'Makeup',
+	},
+	'makeup+lashstrip': {
+		price: 8500,
+		duration: 60,
+		name: 'Makeup & Lash Strip',
+	},
+	'lashextensions': {
+		price: 20000,
+		duration: 120,
+		name: 'Lash Extensions',
+	},
+	'lashextensions+fill': {
+		price: 32500,
+		duration: 120,
+		name: 'Lash Extensions & Fill',
+	},
+}
+
 function AppointmentList(props) {
 
 	let appointments = groupBy(props.appointments, 'status')
@@ -40,78 +78,106 @@ function AppointmentList(props) {
 	return (
 		<div style={{width: '100%', overflowY: 'scroll'}}>
 			<List>
-			    { props.user.roles.admin && <Subheader inset={true}>Unassigned appointments</Subheader> }
-			    { 
-			    	appointments[0] && map(appointments[0], (appointment) => {
-					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
-					  )
-			    	})
-			    }
-			    <Subheader inset={true}>Assigned appointments - pending</Subheader>
+			    {appointments[1] && appointments[1].length && <Subheader style={{color: 'pink'}} >{`Pending Assigned Appointments ( ${appointments[1] && appointments[1].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[1] && map(appointments[1], (appointment) => {
 					  return (
 					  	  <div>
 					  	  <Divider />
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+							<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 						  <Divider />
 						  </div>
 					  )
 			    	})
 			    }
-			    <Subheader inset={true}>Assigned appointments - accepted</Subheader>
+			    {appointments[2] && appointments[2].length && <Subheader style={{color: 'pink'}} >{`Accepted Appointments ( ${appointments[2] && appointments[2].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[2] && map(appointments[2], (appointment) => {
 					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }
-			    <Subheader inset={true}>In-progress appointments</Subheader>
+			    {appointments[3] && appointments[3].length && <Subheader style={{color: 'pink'}} >{`In-Progress Appointments ( ${appointments[3] && appointments[3].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[3] && map(appointments[3], (appointment) => {
 					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }
 			    { 
 			    	appointments[4] && map(appointments[4], (appointment) => {
 					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }
-			    <Subheader inset={true}>Completed appointments</Subheader>
+			    {appointments[5] && appointments[5].length && <Subheader style={{color: 'pink'}} >{`My Pending Appointments ( ${appointments[5] && appointments[5].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[5] && map(appointments[5], (appointment) => {
 					  return ( 
-						  <ListItem
-						    rightIcon={populateIcons(appointment)}
-						    primaryText={moment(appointment.time).format('MMMM Do, h:mm a')}
-						    onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  /> 
+						  	<div 
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+						  	>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
+					  			</div>
+					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+					  			</div>
+			  				</div>
 					  )
 			    	})
 			    }

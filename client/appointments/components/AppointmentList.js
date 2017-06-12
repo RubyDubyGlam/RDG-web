@@ -86,7 +86,7 @@ function AppointmentList(props) {
 	return (
 		<div style={{width: '100%', overflowY: 'scroll'}}>
 			<List>
-			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader>
+			    { appointments['future'] && appointments['future'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader> : null }
 			    { 
 			    	appointments['future'] && map(appointments['future'], (appointment) => {
 					  return ( 
@@ -106,7 +106,7 @@ function AppointmentList(props) {
 					  )
 			    	})
 			    }
-			    <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My previous appointments</Subheader>
+			    { appointments['past'] && appointments['past'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My previous appointments</Subheader> : null }
 			    { 
 			    	appointments['past'] && map(appointments['past'], (appointment) => {
 					  return ( 

@@ -133,13 +133,47 @@ class ChangeEmailAddressModal extends Component {
 }
 
 
+class CancelModal extends Component {
+  render() {
+    const {
+      props
+    } = this
+
+    const actions = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onTouchTap={props.handleDialogClose}
+      />
+    ]
+
+    return (
+      <Dialog
+        title={<div style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Delete Account</div>}
+        actions={actions}
+        modal={false}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={{minWidth: '100%'}}
+        bodyStyle={{ backgroundColor: 'rgba(0,0,0,0.9)', maxHeight: '100%' }}
+        titleStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+        actionsContainerStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
+      >
+        <p style={{color: 'white'}} >Please send us an email at info@rubydubyglam.com to delete your account </p>
+      </Dialog>
+    )
+  }
+}
+
+
 class ListExampleSettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
       is_editing_phone_number: false,
       is_editing_email_address: false,
-      error: ''
+      error: '',
+      delete_account_modal: false
     }
   }
 
@@ -209,25 +243,7 @@ class ListExampleSettings extends Component {
           handleDialogClose={this.handleChangeEmailAddressModalClose}
           handleSubmit={this.changeSubmitEmailAddress}
         />
-        <List style={{marginTop: 8}}>
-          <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>General</Subheader>
-          <ListItem
-            primaryText="Link a Facebook account"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>Link a Facebook account for quicker login</span>}
-          />
-          <ListItem
-            primaryText="Link a Google+ account"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>Link a Google+ account for quicker login</span>}
-          />
-          <ListItem
-            primaryText="Link a Instagram account"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>Link a Instagram account for quicker login</span>}
-          />
-        </List>
-        <Divider />
+        <CancelModal open={this.state.delete_account_modal} handleDialogClose={() => this.setState({delete_account_modal: false})}/>
         <List>
           <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
           <ListItem
@@ -251,7 +267,7 @@ class ListExampleSettings extends Component {
         </List>
         <List>
           <ListItem>
-            <RaisedButton expand secondary label="Delete my account" />
+            <RaisedButton expand secondary label="Delete my account" onClick={() => this.setState({delete_account_modal: true})}/>
           </ListItem>
         </List>
           <Snackbar
