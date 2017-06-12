@@ -199,7 +199,7 @@ class OrderConfirm extends Component {
 		this.state = {
 			is_loading: false,
 			is_valid_phone_number: props.user.phone_number ? true : false,
-			phone_number: props.user.phsone_number || '',
+			phone_number: props.user.phone_number || '',
 			email_address: props.user.email_address || '', 
 			has_agreed_to_tos: false
 		}
@@ -215,8 +215,8 @@ class OrderConfirm extends Component {
 			appointment.payment_token, 
 			appointment.date_time, 
 			this.props.match.params.service,
-			this.state.phone_number,
-			this.state.email_address,
+			this.props.user.phone_number || this.state.phone_number,
+			this.props.user.email_address || this.state.email_address,
 		).catch((response) => {
 			this.setState({ is_loading: false })			
 		}).then((response) => {
@@ -247,9 +247,10 @@ class OrderConfirm extends Component {
 	  }
 
   handleSubmitChangePhoneNumber = (phone_number) => {
-    this.props.changePhoneNumber(phone_number).then(() => {
+    this.props.changePhoneNumber(phone_number).then((data) => {
       this.setState({
-        is_editing_phone_number: false
+        is_editing_phone_number: false,
+        phone_number: phone_number
       })       
     })   
   }
