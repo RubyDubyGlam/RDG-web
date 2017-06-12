@@ -53,10 +53,10 @@ var product_list = {
     duration: 50,
     name: 'Blowout & Braid',
   },
-  'blowout+updo': {
+  'updo': {
     price: 8500,
     duration: 90,
-    name: 'Blowout & Up-do',
+    name: 'Up-do',
   },
   'makeup': {
     price: 6500,
@@ -73,10 +73,10 @@ var product_list = {
     duration: 120,
     name: 'Lash Extensions',
   },
-  'lashextensions+fill': {
-    price: 32500,
+  'lashfill': {
+    price: 12500,
     duration: 120,
-    name: 'Lash Extensions & Fill',
+    name: 'Lash Fill',
   },
 }
 
@@ -344,12 +344,11 @@ class OrderConfirm extends Component {
 		            onClick={e => this.setState({is_editing_phone_number: true})}
 		          />
 		          <ListItem
-		            leftCheckbox={<Checkbox onCheck={this.toggleTOS}/>}
-		            primaryText="I agree to the terms of service"
-		            style={{color: 'white'}}
+		            leftCheckbox={<Checkbox iconStyle = {{ fill: 'pink' }} onCheck={this.toggleTOS}/>}
+		            primaryText={<span style={{ color: 'white' }} >I agree to the terms of service</span>}
 		          />
 		        </List>
-				<div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
+				  <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
 			        <RaisedButton
 			            primary={true}
 			            label={button_text}

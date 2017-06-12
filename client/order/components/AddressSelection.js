@@ -48,10 +48,10 @@ var product_list = {
     duration: 50,
     name: 'Blowout & Braid',
   },
-  'blowout+updo': {
+  'updo': {
     price: 8500,
     duration: 90,
-    name: 'Blowout & Up-do',
+    name: 'Up-do',
   },
   'makeup': {
     price: 6500,
@@ -68,10 +68,10 @@ var product_list = {
     duration: 120,
     name: 'Lash Extensions',
   },
-  'lashextensions+fill': {
-    price: 32500,
+  'lashfill': {
+    price: 12500,
     duration: 120,
-    name: 'Lash Extensions & Fill',
+    name: 'Lash Fill',
   },
 }
 
@@ -93,13 +93,14 @@ class SelectAddressModal extends Component {
       >
         <List>
 		  <Subheader style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Select an Address</Subheader>
+		  <Subheader style={{color: 'white', fontSize: 16, textAlign: 'center'}}>Click on your address to select it</Subheader>
 		  {
 		  	map(props.possible_addresses, (address) => {
 		  		return (
 		          <ListItem
-		            primaryText={<span style={{color: 'white', fontSize: 12}}>{address.formatted_address}</span>}
+		            primaryText={<span style={{color: 'white', fontSize: 12, textAlign: 'center'}}>{address.formatted_address}</span>}
+		            style={{textAlign: 'center'}}
 		            onClick={e => props.setAddress(address.formatted_address)}
-
 		          />
 		  		)
 		    })
@@ -144,12 +145,13 @@ class OrderPaymentSelection extends Component {
   		const address = this.state.addressone + ' , ' + this.state.city + ' , ' + this.state.state + ' ' + this.state.zip
 
   		this.geocoder.geocode({ address }, (possible_addresses) => {
-  			console.log(possible_addresses)
+
 
   			if (possible_addresses.length) {
   				this.setState({ 
   					possible_addresses,
-  					possible_addresses_open: true
+  					possible_addresses_open: true,
+  					is_loading: false
   				})
   			} else {
   				console.log(possible_addresses)

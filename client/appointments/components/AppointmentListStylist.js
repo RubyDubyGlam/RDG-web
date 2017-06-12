@@ -32,10 +32,10 @@ var product_list = {
 		duration: 50,
 		name: 'Blowout & Braid',
 	},
-	'blowout+updo': {
+	'updo': {
 		price: 8500,
 		duration: 90,
-		name: 'Blowout & Up-do',
+		name: 'Up-do',
 	},
 	'makeup': {
 		price: 6500,
@@ -52,10 +52,10 @@ var product_list = {
 		duration: 120,
 		name: 'Lash Extensions',
 	},
-	'lashextensions+fill': {
-		price: 32500,
+	'lashfill': {
+		price: 12500,
 		duration: 120,
-		name: 'Lash Extensions & Fill',
+		name: 'Lash Fill',
 	},
 }
 

@@ -11,6 +11,7 @@ import LashesContainer from '../../order/components/LashesContainer'
 import BlowoutContainer from '../../order/components/BlowoutContainer'
 import FAQSContainer from '../../faqs/components/FAQContainer'
 import ContactUsContainer from '../../contact-us/components/ContactUsContainer'
+import UpdoContainer from '../../order/components/UpdoContainer'
 
 import { me } from '../../user/action/user-action'
 import { connect } from 'react-redux'
@@ -68,6 +69,8 @@ class MobileLayoutIphone extends Component {
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
             <Route path='/contact-us' render={() => <ContactUsContainer user={this.props.user}/>}  />
+            <Route path='/updo/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
+            <Route path='/updo/' render={() => <UpdoContainer user={this.props.user}/>} /> 
             <Route path='/blowout/:service' render={() => <OrderContainer user={this.props.user}/>} />           
             <Route path='/blowout' render={() => <BlowoutContainer user={this.props.user}/>}  />
             <Route path='/makeup/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
