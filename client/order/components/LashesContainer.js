@@ -41,8 +41,8 @@ class OrderFlow extends Component {
 						<img src={'/assets/10.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '1.5em' }}>{'Lash Fill'}</span>
-							<p style={{marginTop: 4}} >{'Duration: 120mins'}</p>
 							<p style={{marginTop: 4}} >{'Price: $125'}</p>
+							<p style={{marginTop: 4}} >{'Duration: 120mins'}</p>
 						</div>
 					</div>
 				</Paper>

@@ -31,8 +31,8 @@ class OrderFlow extends Component {
 						<img src={'/assets/11.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: 32, lineHeight: '32px'}}>Makeup</span>
-							<p style={{marginTop: 4}} >{'Duration: 45mins'}</p>
 							<p style={{marginTop: 4}} >{'Price: $65'}</p>
+							<p style={{marginTop: 4}} >{'Duration: 45mins'}</p>
 						</div>
 					</div>
 				</Paper>
@@ -41,8 +41,8 @@ class OrderFlow extends Component {
 						<img src={'/assets/08.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '1.5em', lineHeight: '32px'}}>{'Makeup + Lash Strip'}</span>
-							<p style={{marginTop: 4}} >{'Duration: 50mins'}</p>
 							<p style={{marginTop: 4}} >{'Price: $75'}</p>
+							<p style={{marginTop: 4}} >{'Duration: 50mins'}</p>
 						</div>
 					</div>
 				</Paper>

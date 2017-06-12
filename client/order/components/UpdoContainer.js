@@ -32,7 +32,7 @@ class OrderFlow extends Component {
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: 32, lineHeight: '32px'}}>Updo</span>
 							<p style={{marginTop: 4}} >{'Price: $85'}</p>
-							<p style={{marginTop: 4}} >{'Duration: 60mins'}</p>
+							<p style={{marginTop: 4}} >{'Duration: 90mins'}</p>
 						</div>
 					</div>
 				</Paper>

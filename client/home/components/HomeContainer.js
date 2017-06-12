@@ -31,7 +31,7 @@ class OrderFlow extends Component {
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column', flexGrow: 1 }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Up-do</span>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Prices: $85</p>
-							<p style={{marginTop: 4, fontSize: '.8em'}} >Durations: 90 mins </p>
+							<p style={{marginTop: 4, fontSize: '.8em'}} >Duration: 90 mins </p>
 						</div>
 						<img src={'/assets/13.jpg'} height={'100%'} />
 					</div>
