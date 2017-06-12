@@ -216,7 +216,6 @@ class OrderPaymentSelection extends Component {
 			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
 				    <TextField
-
 			      		floatingLabelText="Address line 2"
 			      		onChange={e => this.setState({addresstwo: e.target.value})}
 			      		inputStyle={{ color: 'white', fontSize: '1em' }}
@@ -224,7 +223,7 @@ class OrderPaymentSelection extends Component {
 				      	underlineStyle={{ borderWidth: 0 }}
 			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
 			    	/>
-			    	<div style={{display: 'flex', width: '90%', minHeight: 80}} >
+			    	<div style={{display: 'flex', width: '90%', minHeight: 80, marginBottom: 24}} >
 					    <TextField
 			      		floatingLabelText="City"
 			      		onChange={e => this.setState({city: e.target.value})}

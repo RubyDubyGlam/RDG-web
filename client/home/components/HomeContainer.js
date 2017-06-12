@@ -44,12 +44,12 @@ class OrderFlow extends Component {
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Prices: $65 - $90</p>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Durations: 60 mins </p>
 						</div>
-						<img src={'/assets/05.jpg'} height={'100%'} />
+						<img src={'/assets/06.jpg'} height={'100%'} />
 					</div>
 				</Paper>
 				<Paper zDepth={1} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 3, background: 'transparent', width: '100%', zIndex: 0 }} onClick={() => this.props.navigate('/lashes')}>
 					<div style={{height: '100%', display: 'flex', alignItems: 'center'}} >
-						<img src={'/assets/06.jpg'} height={'100%'} />
+						<img src={'/assets/05.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Lash Extensions</span>
 							<p style={{marginTop: 4, fontSize: '.8em'}} >Add-ons: Lash Fill</p>

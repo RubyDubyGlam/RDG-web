@@ -26,6 +26,44 @@ import moment from 'moment'
 
 import navigate from '../../common/actions/router-actions'
 
+var product_list = {
+	'blowout': {
+		price: 5000,
+		duration: 45,
+		name: 'Blowout',
+	},
+	'blowout+braid': {
+		price: 7500,
+		duration: 50,
+		name: 'Blowout & Braid',
+	},
+	'blowout+updo': {
+		price: 8500,
+		duration: 90,
+		name: 'Blowout & Up-do',
+	},
+	'makeup': {
+		price: 6500,
+		duration: 60,
+		name: 'Makeup',
+	},
+	'makeup+lashstrip': {
+		price: 8500,
+		duration: 60,
+		name: 'Makeup & Lash Strip',
+	},
+	'lashextensions': {
+		price: 20000,
+		duration: 120,
+		name: 'Lash Extensions',
+	},
+	'lashextensions+fill': {
+		price: 32500,
+		duration: 120,
+		name: 'Lash Extensions & Fill',
+	},
+}
+
 class AppointmentAssign extends Component {
 
 	constructor(props) {
@@ -72,6 +110,10 @@ class AppointmentAssign extends Component {
 		})
 	}
 
+	handleClose = () => {
+		this.props.navigate(`appointment/${this.props.match.params.id}`)
+	}
+
 	populateIcons = (appointment) => {
 		return (
 			<div>
@@ -107,10 +149,10 @@ class AppointmentAssign extends Component {
 		    		map(stylists, (stylist) => {
 			    		return (
 					      <ListItem
-					        primaryText={`${stylist.first_name} ${stylist.last_name}`}
+					        primaryText={<span style={{ color: 'white' }}>{`${stylist.first_name} ${stylist.last_name}`}</span>}
 					        leftIcon={ stylist.permissions === 2 ? <ActionGrade color={pinkA200} /> : null }
-					        rightAvatar={<Avatar src="images/chexee-128.jpg" />}
 					        onClick={this.handleAssignClick(stylist)}
+					        style={{ borderColor: 'pink', borderStyle: 'solid', borderWidth: 1 }}
 					      />
 			    		)
 		    		})
@@ -129,8 +171,7 @@ class AppointmentAssign extends Component {
 				        <p>{`${this.props.appointments[this.props.match.params.id].address}`}</p>
 				        <p style={{fontSize: 18}}>Time:</p>
 				        <p>{`${moment(this.props.appointments[this.props.match.params.id].time).format('MMMM Do, h:mm a')}`}</p>
-				        <p style={{fontSize: 18}}>Services:</p>
-				        {this.populateIcons(this.props.appointments[this.props.match.params.id])}
+				        <p style={{fontSize: 18}}>Services: {product_list[this.props.appointments[this.props.match.params.id].products].name}</p>
 			        </Dialog>
 		      </div>
 	    	</List>
