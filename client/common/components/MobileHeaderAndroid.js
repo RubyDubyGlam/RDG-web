@@ -41,11 +41,6 @@ class MobileHeaderAndroid extends React.Component {
   		props
   	} = this
 
-  	let picture_url = props.user.profile_picture
-  	const parsed_picture = picture_url.split('sz=')
-  	parsed_picture[1] = 'sz=200'
-  	picture_url = parsed_picture.join('')
-
 
     return (
       <div>
