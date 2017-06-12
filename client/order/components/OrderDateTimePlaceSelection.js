@@ -44,7 +44,7 @@ var product_list = {
     name: 'Blowout & Braid',
   },
   'updo': {
-    price: 8500,
+    price: 9000,
     duration: 90,
     name: 'Up-do',
   },
@@ -54,7 +54,7 @@ var product_list = {
     name: 'Makeup',
   },
   'makeup+lashstrip': {
-    price: 8500,
+    price: 9000,
     duration: 60,
     name: 'Makeup & Lash Strip',
   },
