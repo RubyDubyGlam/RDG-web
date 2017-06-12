@@ -100,7 +100,7 @@ class OrderDateTimePlaceSelection extends Component {
 
   	handleSetTime = (event, raw_time) => {
 		const beginningTime = moment('8:00am', 'h:mma');
-		const endTime = moment('6:00pm', 'h:mma');
+		const endTime = moment('8:00pm', 'h:mma');
 		const rawTime = moment(moment(raw_time).format('h:mma'), 'h:mma')
 
 		const is_after_eight = rawTime.isAfter(beginningTime)
