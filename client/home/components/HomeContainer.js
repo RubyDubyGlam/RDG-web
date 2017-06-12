@@ -25,8 +25,8 @@ class OrderFlow extends Component {
 	render() {
 		return (
 			<div style={styles.container}>
-				<div style={{fontSize: 26, height: '10%', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}} ><span>Click to select a service</span></div>
-				<Paper zDepth={3} style={{ height: '22.5%', maxHeight: '22.5%', flexGrow: 1, order: 0, background: 'transparent', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'flex-end' }} onClick={() => this.props.navigate('/updo')}>
+				<div style={{fontSize: 26, minHeight: '10%', height: '10%', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}} ><span>Click to select a service</span></div>
+				<Paper zDepth={3} style={{ minHeight: '33.33%', maxHeight: '33.33%', height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 0, background: 'transparent', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'flex-end' }} onClick={() => this.props.navigate('/updo')}>
 					<div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'flex-end' }} >
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column', flexGrow: 1 }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Up-do</span>
@@ -36,7 +36,7 @@ class OrderFlow extends Component {
 						<img src={'/assets/13.jpg'} height={'100%'} />
 					</div>
 				</Paper>
-				<Paper zDepth={5} style={{ height: '22.5%', maxHeight: '22.5%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }} onClick={() => this.props.navigate('/blowout')}>
+				<Paper zDepth={5} style={{ minHeight: '33.33%', height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }} onClick={() => this.props.navigate('/blowout')}>
 					<div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center'}} >
 						<img src={'/assets/15.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
@@ -47,7 +47,7 @@ class OrderFlow extends Component {
 						</div>
 					</div>
 				</Paper>
-				<Paper zDepth={3} style={{ height: '22.5%', maxHeight: '22.5%', flexGrow: 1, order: 2, background: 'transparent', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'flex-end' }} onClick={() => this.props.navigate('/makeup')}>
+				<Paper zDepth={3} style={{ minHeight: '33.33%', height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 2, background: 'transparent', width: '100%', zIndex: 1, display: 'flex', justifyContent: 'flex-end' }} onClick={() => this.props.navigate('/makeup')}>
 					<div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'flex-end' }} >
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column', flexGrow: 1 }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: '2em', marginBottom: 6, marginTop: 6 }}>Makeup</span>
@@ -58,7 +58,7 @@ class OrderFlow extends Component {
 						<img src={'/assets/11.jpg'} height={'100%'} />
 					</div>
 				</Paper>
-				<Paper zDepth={1} style={{ height: '22.5%', maxHeight: '22.5%', flexGrow: 1, order: 3, background: 'transparent', width: '100%', zIndex: 0 }} onClick={() => this.props.navigate('/lashes')}>
+				<Paper zDepth={1} style={{ minHeight: '33.33%', height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 3, background: 'transparent', width: '100%', zIndex: 0 }} onClick={() => this.props.navigate('/lashes')}>
 					<div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center'}} >
 						<img src={'/assets/12.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
