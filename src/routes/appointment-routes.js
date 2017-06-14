@@ -92,6 +92,22 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 	}
 
+	function createHandleSuccessCreate(req, res, notification) {
+		return function(appointment) {
+			twilio_client.messages.create({
+			    body: 'You have successfully placed your order. We look forward to seeing you soon!',
+			    to: appointment.phone_number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			twilio_client.messages.create({
+			    body: 'A new order has been placed.',
+			    to: process.env.ADMIN_PHONE || '+18059158479',  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			res.json(appointment)
+		}
+	}
+
 	function createHandleError(req, res) {
 		return function(err) {
 			res.status(400).send(err)

@@ -75,7 +75,8 @@ function initializeController(app, Appointment) {
 				  source: appointment.payment_token,
 				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity),
 				  currency: "usd",
-				  description: "Example charge",
+				  description: product_list[appointment.products].name,
+				  email: appointment.email_address,
 				  metadata: {
 				  	gratuity: appointment.gratuity,
 				  	subtotal: product_list[appointment.products].price,

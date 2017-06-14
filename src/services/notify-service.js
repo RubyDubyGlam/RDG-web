@@ -29,7 +29,7 @@ function notifyCritical(app, db, twilio_client){
 		if (critical_appointments) {
 			twilio_client.messages.create({
 			    body: 'You have ' + critical_appointments + ' appointment(s) less than 4 hours away with no assigned stylist',
-			    to: '+18059158479', // Text this number
+			    to: process.env.ADMIN_PHONE || '+18059158479', // Text this number
 			    from: '+18052108161' // From a valid Twilio number
 			})
 		}
@@ -65,7 +65,7 @@ function notifyCompleted(app, db, twilio_client){
 		if (critical_appointments) {
 			twilio_client.messages.create({
 			    body: 'You have ' + critical_appointments + ' appointment(s) that have starting times over 1.5 hours ago, but have not been marked complete. Please follow up with ' + stylists.join(', ') + ' on their appointments',
-			    to: '+18059158479', // Text this number
+			    to: process.env.ADMIN_PHONE || '+18059158479', // Text this number
 			    from: '+18052108161' // From a valid Twilio number
 			})
 		}

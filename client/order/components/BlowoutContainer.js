@@ -38,7 +38,7 @@ class OrderFlow extends Component {
 				</Paper>
 				<Paper zDepth={5} style={{ height: '33.33%', maxHeight: '33.33%', flexGrow: 1, order: 1, background: 'transparent', width: '100%', zIndex: 2 }} onClick={() => this.props.navigate('/blowout/blowout+braid')}>
 					<div style={{height: '100%', display: 'flex', alignItems: 'center'}} >
-						<img src={'/assets/09.jpg'} height={'100%'} />
+						<img src={'/assets/18.jpg'} height={'100%'} />
 						<div style={{height: '100%', color: 'white', display: 'flex', padding: 16, flexDirection: 'column' }} >
 							<span style={{fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px'}}>{'Blowout + Braid'}</span>
 							<p style={{marginTop: 4}} >{'Price: $75'}</p>

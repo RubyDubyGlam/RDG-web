@@ -50,7 +50,10 @@ class AppointmentActions extends Component {
 		if (status === 3) {
 			return (
 			  <div style={{display: 'flex', width: '100%'}}>
-		        <RaisedButton secondary style={{flexGrow: 1}} label="Begin" onClick={() => this.props.appointmentStateChange(_id, 'begin')}/>
+			  	<RaisedButton primary style={{flexGrow: 1, width: '50%', paddingRight: 3}} label="Get Directions" onClick={() => {
+			  		window.location.href = `http://maps.apple.com/?q=${latitude},${longitude}`
+			  	}}/>
+		        <RaisedButton secondary style={{flexGrow: 1, width: '50%', paddingLeft: 3}} label="Begin" onClick={() => this.props.appointmentStateChange(_id, 'begin')}/>
 		      </div>
 			)			
 		}
