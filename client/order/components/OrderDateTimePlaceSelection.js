@@ -44,7 +44,7 @@ var product_list = {
     name: 'Blowout & Braid',
   },
   'updo': {
-    price: 9000,
+    price: 8500,
     duration: 90,
     name: 'Up-do',
   },
