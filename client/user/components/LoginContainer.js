@@ -59,9 +59,6 @@ export default class LoginContainer extends Component {
           <Button onClick={this.authGoogle} color='google plus' style={{marginTop: 36, width: '60%'}}>
             <Icon name='google plus' /> Google Plus
           </Button>
-          <Button onClick={this.authInstagram} color='instagram' style={{marginTop: 36, width: '60%'}}>
-            <Icon name='instagram' /> Instagram
-          </Button>
         </div>
       </div>
     )
