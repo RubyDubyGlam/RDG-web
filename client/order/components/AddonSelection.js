@@ -193,9 +193,6 @@ class OrderFlow extends Component {
 		return (
 			<div style={styles.container}>
 				<SimpleSlider changeSelection = {this.changeSelection} selectService={this.props.selectService}/>
-				<div style={{marginTop: 30}}>
-					<SimpleSliderTwo selection={this.state.selection} selectService={this.props.selectService}/>
-				</div>
 	        </div>
 		)		
 	}
