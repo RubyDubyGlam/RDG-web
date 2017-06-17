@@ -159,6 +159,10 @@ class OrderDateTimePlaceSelection extends Component {
 		
 		const product = this.props.match.params.service
 
+		if (!product) {
+			return null
+		}
+
 		return (
 			<div style={styles.root}>
 				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>

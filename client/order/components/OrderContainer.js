@@ -16,21 +16,20 @@ import OrderDateTimePlaceSelection from './OrderDateTimePlaceSelection'
 import OrderPaymentSelection from './OrderPaymentSelection'
 import OrderConfirm from './OrderConfirm'
 import AddressSelection from './AddressSelection'
+import HomeContainer from '../../home/components/HomeContainer'
+import AddonSelection from './AddonSelection'
 
-import MobileFooterIphone from '../../common/components/MobileFooterIphone'
+import ReactTransitions from 'react-transitions';
 
 const styles = {
 	container: {
-		height: '100%',
-		width: '100%',
+		height: '100vh',
+		width: '100vw',
 		padding: 0,
+		position: 'absolute',
+		top: 0,
 		margin: 0,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		overflowY: 'scroll',
-		backgroundImage: 'url("/assets/black-gradient.jpg")'
-	},
+	}
 }
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -43,7 +42,7 @@ export default class OrderFlow extends Component {
 
 		console.log(props)
 		this.state = {
-			step: 1,
+			step: 0,
 			date_time: '',
 			products: {
 				nails: false,
@@ -90,16 +89,31 @@ export default class OrderFlow extends Component {
 		this.setState({address})
 	}
 
+	selectService = () => {
+		console.log('ehhh')
+		this.setState({step: 1})
+	}
+
 	render() {
+
+		const states = [
+			<HomeContainer key='-1' selectService={this.selectService} />,
+			<AddonSelection key='-2' selectService={this.selectService} />,
+			<OrderDateTimePlaceSelection key='1' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} />,
+			<AddressSelection key='2' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} />,
+			<OrderPaymentSelection key='3' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} />,
+			<OrderConfirm key='4' form_data={this.state} goForward={this.goForward} goBack={this.goBack} />
+		]
+
 		return (
 			<div style={styles.container}>
-					{ this.state.step === 1 ? <OrderDateTimePlaceSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} /> : null }
-
-					{ this.state.step === 2 ? <AddressSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} /> : null }
-
-					{ this.state.step === 3 ? <OrderPaymentSelection form_data={this.state} goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} /> : null }
-
-					{ this.state.step === 4 ? <OrderConfirm form_data={this.state} goForward={this.goForward} goBack={this.goBack} /> : null }
+				<ReactTransitions
+				  transition="move-to-left-move-from-right"
+				  width={ '100vw' }
+				  height={ '100vh' }
+				>
+					{states[this.state.step]}
+				</ReactTransitions>
 	        </div>
 		)		
 	}

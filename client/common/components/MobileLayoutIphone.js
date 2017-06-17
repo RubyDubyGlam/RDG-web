@@ -30,8 +30,7 @@ const styles = {
     padding: 0,
     margin: 0,
     display: 'flex',
-    flexDirection: 'column',
-    backgroundImage: 'url("/assets/black-gradient.jpg")'    
+    flexDirection: 'column',  
   },
 }
 
@@ -66,6 +65,7 @@ class MobileLayoutIphone extends Component {
         this.props.user && (
           <Switch>
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
+            <Route path='order' render={() => <OrderContainer user={this.props.user}/>} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
             <Route path='/contact-us' render={() => <ContactUsContainer user={this.props.user}/>}  />
@@ -77,7 +77,7 @@ class MobileLayoutIphone extends Component {
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
             <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
-            <Route path='/' render={() => <HomeContainer user={this.props.user}/>}  />
+            <Route path='/' render={() => <OrderContainer user={this.props.user}/>}  />
           </Switch>
         )
       }

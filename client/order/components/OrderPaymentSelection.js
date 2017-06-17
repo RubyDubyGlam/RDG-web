@@ -128,6 +128,10 @@ class OrderPaymentSelection extends Component {
 	render() {
 		const product = this.props.match.params.service
 
+		if (!product) {
+			return null
+		}
+
 		const appointment = this.props.form_data
 
 		const display_time = (moment(appointment.date_time).format('hh:mm A'))
