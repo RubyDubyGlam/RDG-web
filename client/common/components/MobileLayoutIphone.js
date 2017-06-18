@@ -55,10 +55,16 @@ class MobileLayoutIphone extends Component {
     this.props.me()
   }
 
+  goFullScreen = (e) => {
+
+
+  }
+
   render() {
     console.log(this.props.user)
     return (
-		<div style={styles.container}>
+		<div style={styles.container} ref={(ref) => this.reffers = ref}>
+      <button style={{height: 0, width: 0, margin: 0}} ref={(ref) => this.button_ref = ref} onClick={this.goFullScreen}/>
       {
         this.props.user && <MobileHeaderAndroid />
       }

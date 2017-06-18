@@ -30,6 +30,22 @@ const styles = {
 }
 
 class OrderFlow extends Component {
+
+	onClick = (e) => {
+
+      if(document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if(document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+      } else if(document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if(document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      }
+    
+      this.props.navigate('/book')
+	}
+
 	state = { selection: 0 }
 
 	render() {
@@ -43,7 +59,7 @@ class OrderFlow extends Component {
 					    <FlatButton
 					        label="Let's get started"
 					        primary={true}
-					        onTouchTap={() => this.props.navigate('/book')}
+					        onTouchTap={this.onClick}
 					        style={{marginTop: 26, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: '10vh'}}
 				      	/>
 				</div>
