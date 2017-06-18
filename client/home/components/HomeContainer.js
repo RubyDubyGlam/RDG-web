@@ -14,8 +14,8 @@ import { connect } from 'react-redux'
 
 const styles = {
 	container: {
-		height: '100vh',
-		width: '100vw',
+		height: '100%',
+		width: '100%',
 		padding: 0,
 		margin: 0,
 	},
@@ -53,6 +53,7 @@ var product_list = {
 }
 
 class SimpleSlider extends React.Component {
+
   render() {
     var settings = {
       dots: true,
@@ -68,7 +69,7 @@ class SimpleSlider extends React.Component {
       <Slider {...settings}>
       	{ 
       		map(product_list, (product, product_name) => (
-		        <div style={{height: '95vh'}}>
+		        <div style={{height: '90vh'}}>
 		        	<img src={product.image} style={{height: '100vw'}} />
 		        	<div style={{height: 50, width: '100%', backgroundColor: 'black', marginTop: -50, opacity: .9, color: 'white', textAlign: 'center', fontSize: 20, padding: 26}}>
 		        	</div>
@@ -113,9 +114,14 @@ class SimpleSlider extends React.Component {
 class OrderFlow extends Component {
 	state = { selection: 0 }
 
+  	componentDidMount = () => {
+
+  		window.scrollTo(0, 40000);
+  	}
+
 	render() {
 		return (
-			<div style={styles.container}>
+			<div style={styles.container} ref={ (ref) => this.reffer = ref }>
 				<SimpleSlider  
 					selectService={this.props.selectService}
 				/>

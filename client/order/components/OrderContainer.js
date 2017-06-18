@@ -23,8 +23,8 @@ import ReactTransitions from 'react-transitions';
 
 const styles = {
 	container: {
-		height: '100vh',
-		width: '100vw',
+		height: '100%',
+		width: '100%',
 		padding: 0,
 		position: 'absolute',
 		top: 0,
