@@ -54,6 +54,10 @@ const styles = {
     overflowY: 'scroll',
     textAlign: 'center'
   },
+  phone_number_style: {
+    width: '100%',
+    maxWidth: 'none',
+  }
 };
 
 var product_list = {
@@ -556,6 +560,35 @@ class OrderDateTimePlaceSelection extends Component {
 		})
   	}
 
+ 	  handleChangePhoneNumberModalClose = () => {
+	    this.setState({
+	      is_editing_phone_number: false
+	    })
+	  }
+
+	  handleChangeEmailAddressModalClose = () => {
+	    this.setState({
+	      is_editing_email_address: false
+	    })
+	  }
+
+	  handleSubmitChangePhoneNumber = (phone_number) => {
+	    this.props.changePhoneNumber(phone_number).then((data) => {
+	      this.setState({
+	        is_editing_phone_number: false,
+	        phone_number: phone_number
+	      })       
+	    })   
+	  }
+
+	  changeSubmitEmailAddress = (email_address) => {
+	    this.props.changeEmailAddress(email_address).then(() => {
+	      this.setState({
+	        is_editing_email_address: false
+	      })       
+	    })   
+	  }
+
 	render() {
 		const today = moment().startOf('day')
 		
@@ -582,7 +615,7 @@ class OrderDateTimePlaceSelection extends Component {
 							      <Subheader>Services and addons</Subheader>
 							      <ListItem
 							        primaryText={product.name}
-							        rightIcon={<span style={{marginRight: 12}}>${product.price / 100}</span>}
+							        rightIcon={<span style={{marginRight: 16}}>${product.price / 100}</span>}
 							      />
 							      <Subheader>Reservation Address</Subheader>
 							      {
@@ -625,11 +658,13 @@ class OrderDateTimePlaceSelection extends Component {
 							      <ListItem
 							        secondaryText={"Phone number"}
 							        primaryText={this.props.user.phone_number}
+							        onClick={() => this.setState({is_editing_phone_number: true})}
 							        rightIcon={this.props.user.phone_number ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							      <ListItem
 							        secondaryText={"Email address"}
 							        primaryText={this.props.user.email_address}
+							        onClick={() => this.setState({is_editing_email_address: true})}
 							        rightIcon={this.props.user.email_address ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							      <Subheader>Terms of Service</Subheader>
@@ -663,6 +698,16 @@ class OrderDateTimePlaceSelection extends Component {
 		          autoHideDuration={4000}
 		          onRequestClose={this.closeSnackbar}
 		          style={{width: '100%'}}
+		        />
+		        <ChangePhoneNumberModal 
+		          open={this.state.is_editing_phone_number}
+		          handleDialogClose={this.handleChangePhoneNumberModalClose}
+		          handleSubmit={this.handleSubmitChangePhoneNumber}
+		        />
+		        <ChangeEmailAddressModal 
+		          open={this.state.is_editing_email_address}
+		          handleDialogClose={this.handleChangeEmailAddressModalClose}
+		          handleSubmit={this.changeSubmitEmailAddress}
 		        />
 		    </div>
 		    

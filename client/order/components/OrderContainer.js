@@ -116,8 +116,6 @@ export default class OrderFlow extends Component {
 			<OrderConfirm key='4' form_data={this.state} goForward={this.goForward} goBack={this.goBack} />
 		]
 
-		console.log(this.state.step)
-
 		return (
 			<div style={styles.container}>
 				{ this.state.step === 0 && <HomeContainer key='-1' selectService={this.selectService} /> }
@@ -136,10 +134,3 @@ export default class OrderFlow extends Component {
 	}
 }
 
-				// <ReactTransitions
-				//   transition="move-to-left-move-from-right"
-				//   width={ '100vw' }
-				//   height={ '100vh' }
-				// >
-				// 	{states[this.state.step]}
-				// </ReactTransitions>

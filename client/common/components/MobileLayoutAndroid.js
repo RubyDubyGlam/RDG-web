@@ -11,6 +11,7 @@ import LashesContainer from '../../order/components/LashesContainer'
 import BlowoutContainer from '../../order/components/BlowoutContainer'
 import UpdoContainer from '../../order/components/UpdoContainer'
 import FAQSContainer from '../../faqs/components/FAQContainer'
+import InitOrderContainer from '../../order/components/InitOrderContainer'
 
 import { me } from '../../user/action/user-action'
 import { connect } from 'react-redux'
@@ -65,7 +66,7 @@ class MobileLayoutIphone extends Component {
         this.props.user && (
           <Switch>
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
-            <Route path='order' render={() => <OrderContainer user={this.props.user}/>} />
+            <Route path='/book' render={() => <OrderContainer user={this.props.user}/>} />
             <Route path='/updo/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/updo/' render={() => <UpdoContainer user={this.props.user}/>} /> 
             <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
@@ -76,7 +77,7 @@ class MobileLayoutIphone extends Component {
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
             <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
-            <Route path='/' render={() => <OrderContainer user={this.props.user}/>}  />
+            <Route path='/' render={() => <InitOrderContainer user={this.props.user}/>}  />
           </Switch>
         )
       }
