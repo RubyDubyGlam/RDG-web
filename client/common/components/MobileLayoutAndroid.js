@@ -81,7 +81,6 @@ class MobileLayoutIphone extends Component {
         )
       }
       { !this.props.user ? <LoginContainer /> : null}
-      <img style={{zIndex: -1, opacity: .05, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
     </div>
     )
   }

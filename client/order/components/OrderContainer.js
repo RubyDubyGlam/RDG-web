@@ -52,6 +52,7 @@ export default class OrderFlow extends Component {
 			address: '',
 			payment_token: '',
 			phone_number: props.user.phone_number || '',
+			service_with_addons: '',
 		}
 	}
 
@@ -89,32 +90,47 @@ export default class OrderFlow extends Component {
 		this.setState({address})
 	}
 
-	selectService = () => {
-		console.log('ehhh')
-		this.setState({step: 1})
+	selectService = (base_service) => {
+		this.setState({step: 1, base_service})
+	}
+
+	selectSerivceAndAddons = (service_with_addons) => {
+		this.setState({service_with_addons, step: 2})
 	}
 
 	render() {
 
 		const states = [
-			<HomeContainer key='-1' selectService={this.selectService} />,
-			<AddonSelection key='-2' selectService={this.selectService} />,
-			<OrderDateTimePlaceSelection key='1' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} />,
+			<OrderDateTimePlaceSelection user={this.props.user} key='1' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} />,
 			<AddressSelection key='2' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} />,
 			<OrderPaymentSelection key='3' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} />,
 			<OrderConfirm key='4' form_data={this.state} goForward={this.goForward} goBack={this.goBack} />
 		]
 
+		console.log(this.state.step)
+
 		return (
 			<div style={styles.container}>
-				<ReactTransitions
-				  transition="move-to-left-move-from-right"
-				  width={ '100vw' }
-				  height={ '100vh' }
-				>
-					{states[this.state.step]}
-				</ReactTransitions>
+				{ this.state.step === 0 && <HomeContainer key='-1' selectService={this.selectService} /> }
+				{ this.state.step === 1 && <AddonSelection key='-2' base_service={this.state.base_service} selectService={this.selectSerivceAndAddons} /> }
+				{ this.state.step > 1 && (
+					<ReactTransitions
+					  transition="move-to-left-move-from-right"
+					  width={ '100vw' }
+					  height={ '100vh' }
+					>
+						{states[this.state.step - 2]}
+					</ReactTransitions>
+				) }
 	        </div>
 		)		
 	}
 }
+
+				// <ReactTransitions
+				//   transition="move-to-left-move-from-right"
+				//   width={ '100vw' }
+				//   height={ '100vh' }
+				// >
+				// 	{states[this.state.step]}
+				// </ReactTransitions>
