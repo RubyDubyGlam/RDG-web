@@ -34,6 +34,10 @@ const store = createStore(reducer, applyMiddleware(thunk, router))
 import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
+  componentDidMount() {
+    document.body.requestFullscreen()
+  }
+
   render() {
     let agent = <Route path="/" component={WebLayout} />
 
