@@ -7,6 +7,11 @@ import {
   StepContent,
 } from 'material-ui/Stepper'
 
+import navigate from '../../common/actions/router-actions'
+import { createOrder } from '../action/order-action'
+
+import { connect } from 'react-redux'
+
 import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker'
 import AutoComplete from 'material-ui/AutoComplete'
@@ -15,6 +20,8 @@ import FlatButton from 'material-ui/FlatButton'
 import Snackbar from 'material-ui/Snackbar'
 import TextField from 'material-ui/TextField'
 import Loader from '../../common/components/Loader'
+
+import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../user/action/user-action'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -197,7 +204,6 @@ class ElementsCard extends React.Component {
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken().then(({token, err, error}) => {
-      console.log('Received Stripe token:', token, error);
       this.props.handleStripeToken(token, error)
     });
 
@@ -274,6 +280,101 @@ class SelectAddressModal extends Component {
     )
   }
 }
+
+class TOSModal extends Component {
+  render() {
+    const {
+      props
+    } = this
+
+    const actions = [
+      <FlatButton
+        label="I disagree"
+        primary={true}
+        onTouchTap={props.handleDialogClose}
+      />,
+      <FlatButton
+        label="I agree"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={() => props.handleSubmit()}
+        bodyStyle={{minHeight: 90 }}
+      />,
+    ]
+
+    return (
+      <Dialog
+        modal={true}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={{minWidth: '100%'}}
+        title={'Terms of Service'}
+        actions={actions}
+      >	
+      	<div style={{overflow: 'scroll', maxHeight: 364}}>
+		<p>
+			Acceptance of Contract Terms
+		</p>
+		<p>
+			The following are terms of a legal agreement between you and Ruby Duby Glam and its subsidiries. By accessing, browsing and/or using this site ("Site"), you acknowledge that you have read, understood, and agree to be bound by these terms and to comply with all applicable laws and regulations, including U.S. export and re-export control laws and regulations. If you do not agree to these terms, do not use this Site. The material provided on this Site is protected by law, including, but not limited to, United States Copyright Law and international treaties. This Site is controlled and operated by Ruby Duby Glam from its offices. Those who choose to access this Site from other locations do so with their own initiative in mind and are responsible for compliance with applicable local laws.
+		</p>
+
+		<p>
+			Copyright
+		</p>
+		<p>
+			The copyright in all material provided on this site ("Site") is held by Ruby Duby Glam, or by the original creator of the material. Except as stated herein, none of the material may be copied, reproduced, distributed, republished, downloaded, displayed, posted or transmitted in any form. Permission is granted to display, copy, distribute and download the materials on this Site for personal or non-commercial use only, provided materials are left un-modified and that all copyright and other proprietary notices contained in the materials are retained. You also may not, without Ruby Duby Glam permission, "mirror" any material contained on this Site on any other server. Any unauthorized use of any material contained on this Site may violate copyright laws, trademark laws, the laws of privacy and publicity, and communications regulations and statutes.
+		</p>	
+
+		<p>Cookies</p>
+		<p>
+			"Cookies" implement a unique, random ID by storing small text files onto a user's computer hard drive via his/her browser. Cookies enable a web site to track user's website activities.
+			For example, Ruby Duby Glam uses cookies on its home page to save users time- so they do not have to choose a country site each time they visit Ruby Duby Glam’s web site. Ruby Duby Glam also uses cookies on some download pages to speed up users' activities and won’t have to register more than once. These are just a few examples of how Ruby Duby Glam uses cookies. Ruby Duby Glam may use cookies in other areas on its web site now and in the future without notice. RubyDubyGlam.com cookies do not contain personally identifying information. Users are free to change their web browsers to prevent the acceptance of cookies.
+		</p>
+		
+		<p>Personal Information</p>
+		
+		<p>
+			When you submit personal information to RubyDubyGlam.com, you understand that you are agreeing to allow Ruby Duby Glam, its subsidiaries and its affiliates, access to, storage of and use of the data in any of the countries where Ruby Duby Glam, its subsidiaries and its affiliates do business, whether inside or outside of the United States.
+			Ruby Duby Glam may use the personal information you submit for any purposes related to Ruby Duby Glam’s business including, but not limited to, generating statistical studies, conducting market research, improving products and services, sending surveys, and product upgrade and update notifications, new products, special offers, seminars or conventions and any other changes within RubyDubyGlam.com that may affect you.
+		</p>
+		
+		<p>Privacy Policy</p>
+		
+		<p>
+			At Ruby Duby Glam we respect your right to privacy and understand that, as a visitor to RubyDubyGlam.com, you prefer to control your own personal information and preferences. For this reason, we may ask you to register or to provide personal information and preferences when visiting specific areas of RubyDubyGlam.com, download free software, request information, or subscribe to the Ruby Duby Glam Newsletter.
+		</p> 
+		
+		<p>
+			We will guard any personal information you choose to share with us so as to ensure the provided content, services, and advertising on RubyDubyGlam.com are always tailored to your currently designated preferences.
+			When you provide Ruby Duby Glam with your name (or alias), e-mail address, mailing address or telephone number, and do not 'opt out,' Ruby Duby Glam and its representatives or affiliates may use the provided information to alert you regarding product upgrades, special offers, updated information, classes, new services, and other Ruby Duby Glam information. Representatives and affiliates may include value-added resellers and authorized training partners. Beyond its representatives and affiliates, Ruby Duby Glam does not offer or allow the selling of any user-provided information to third parties.
+			Ruby Duby Glam respects the rights users provide when opting to receive e-mail communications and enforces internal policies to preserve those rights. It is our objective to retain the long-term ability to continue communication with our users.
+			If you do not want Ruby Duby Glam or Ruby Duby Glam representatives to contact you, you may "opt out" of this preference at any time, whether you're online or contacting Ruby Duby Glam directly. As part of your preference flexibility, you'll always have the option to opt back in and have Ruby Duby Glam contact you based on your previous or new preferences. For instructions, please see the section "Contact Us," below. If you choose not to register or provide personal information, you can still visit most Ruby Duby Glam websites; however, you will not have access to areas that require personal identification.
+			If a user elects to use our “Tell a Friend” application for forwarding a Ruby Duby Glam e-mail or informing a friend about our website, we will ask for the friend in question’s name and e-mail address. Ruby Duby Glam will automatically send that friend the specified e-mail or website information. Ruby Duby Glam will not use relayed information to contact said friend in the future.
+		</p>
+		
+		<p>
+			Ruby Duby Glam membership and the use of log files (cookies)
+		</p>
+		<p>
+			Ruby Duby Glam offers free membership to all RubyDubyGlam.com visitors. In order to establish membership, visitors are requested to provide both personal information and preferences. This information is stored and protected via user-established Member ID and Password.
+			There is an additional "Remember Me" option. By choosing this selection, you are allowing Ruby Duby Glam to store your Member ID and password for quick access to certain areas of the website without having to sign in repetitively. The sign-in information is stored until you explicitly take action to sign out. It also allows you to return to any Ruby Duby Glam website on subsequent visits without having to re-enter that subsequent information. Ruby Duby Glam remembers you by placing a log file (cookie) which contains only enough information to identify you upon return visits. A "cookie" is a small line of text that is stored within your web browser for record-keeping purposes and helps Ruby Duby Glam provide you more effective service. Your browser has options to accept, reject, or provide you notices when cookies are sent.
+			No information, other than that found in the Membership cookie, will be accessed by any Ruby Duby Glam system. Access to your membership information always requires use of both a Member ID and Password.
+			Ruby Duby Glam also utilizes visitor log files (cookies) with our website. Once a user enters our site, a cookie follows them through their click stream path. Examples of information being collected by these cookies include the number of times a user came to our site(s), and the paths they took to get there.
+			Ruby Duby Glam uses the data collected from website visitor cookies only in aggregate form and does not collect any personally identifiable information. Use of this information helps us better understand what exactly users are seeking and learning while on our website(s) and helps us better identify potential navigation issues.
+		</p>
+		
+		<p>
+			How Ruby Duby Glam will protect your personal information
+			Ruby Duby Glam will always protect the personal information that you share with us. Ruby Duby Glam stores information internally in a controlled, secure environment. If, for example, you make a purchase online, we route all transactions through SSL (Secure Socket Layers) and process your credit card number only to secure a current payment. The SSL transaction does not retain your credit card number, subsequent to the transaction at hand, and will not use said number for marketing purposes.
+			We occasionally hire other companies to provide limited services on our behalf, including: packaging, mailing and delivering purchases, answering customer questions about products or services, sending postal mail and processing event registration. We will only provide those companies the information they need to deliver a service, and they are prohibited from using that information for any other purpose.
+			If Ruby Duby Glam requests general demographic information, this information is limited to reporting purposes only; members remain anonymous. Phone numbers, e-mail addresses, and postal addresses are never shared for demographic reports with outside entities.
+      	</p>
+      	</div>
+      </Dialog>
+    )
+  }
+}
  
 class OrderDateTimePlaceSelection extends Component {
 
@@ -290,7 +391,9 @@ class OrderDateTimePlaceSelection extends Component {
 			address: props.form_data.address,
 			error: '',
 			is_entering_stripe: false,
-			address_input: ''
+			address_input: '',
+			is_tos_modal_open: false,
+			has_accepted_tos: false
 		}
 
 		this.autocompleteService = new google.maps.places.AutocompleteService()
@@ -365,11 +468,16 @@ class OrderDateTimePlaceSelection extends Component {
 		if (is_after_eight && is_before_six) {
 			const display_time = (moment(raw_time).format('hh:mm A'))
 			const time = (moment(raw_time).format('kk:mm'))
-	  		this.setState({display_time, time, error: ''})			
+	  		this.setState({display_time, time, error: ''})
+
+	  		this.props.setDateTimeAddress(this.state.date, this.state.time)
+
 		} else {
 			this.setState({
 				display_time: '',
 				time: '',
+				display_date: '',
+				date: '',
 				error: invalidTime
 			})
 		}
@@ -407,7 +515,45 @@ class OrderDateTimePlaceSelection extends Component {
 
   	handleAddressSubmit = (e) => {
   		e.preventDefault(),
+  		this.setState({
+  			is_editing_address: false
+  		})
   		this.handleLocationSelect()
+  	}
+
+  	shouldDisplaySubmitText = () => {
+  		const order = this.props.form_data
+  		const user = this.props.user
+
+  		if (!user.phone_number || !user.email_address || !order.date_time || !order.address || !order.payment_token || !this.state.has_accepted_tos || !order.service_with_addons) {
+  			return null
+  		}
+
+  		return (
+	    	<div onClick={this.onSubmit} style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+	    		<div style={{color: 'white'}} >Your order is ready to be submitted</div>
+	    		<div style={{color: 'white'}} >Please review your order and click here to submit</div>
+	    	</div>
+  		)
+  	}
+
+  	onSubmit = () => {
+		const appointment = this.props.form_data
+
+		this.setState({ is_loading: true })
+
+		this.props.createOrder(
+			appointment.address, 
+			appointment.payment_token, 
+			appointment.date_time, 
+			this.props.form_data.service_with_addons,
+			this.props.user.phone_number,
+			this.props.user.email_address,
+		).catch((response) => {
+			this.setState({ is_loading: false })			
+		}).then((response) => {
+			this.props.navigate('/appointment')
+		})
   	}
 
 	render() {
@@ -420,11 +566,13 @@ class OrderDateTimePlaceSelection extends Component {
 		}
 
 		return (
-			<StripeProvider apiKey="pk_live_StmsYeM1MHShCtaqySy02iz4">
+			<StripeProvider apiKey="pk_test_eSDPAIsmcSkiqYvR4tGeFa6W">
 		    <div style={{height: '95vh', width: '100vw'}}>
 		    	{ this.state.is_loading && <Loader /> }
+		    	<TOSModal open={this.state.is_tos_modal_open} handleSubmit={() => this.setState({has_accepted_tos: true, is_tos_modal_open: false})} handleDialogClose={() => this.setState({is_tos_modal_open: false})}/>
 		    	<img src={'/assets/hair-salon.jpg'} style={{height: '70vw'}} />
 		    	<div style={{height: '70vw', width: '100vw', top: 0, opacity: 0.8, position: 'absolute', backgroundColor: 'black'}} />
+		    	{this.shouldDisplaySubmitText()}
 				<div style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '70vw'}} >
 					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
 		   				<div style={{display: 'flex', width: '100%'}} >
@@ -486,8 +634,9 @@ class OrderDateTimePlaceSelection extends Component {
 							      />
 							      <Subheader>Terms of Service</Subheader>
 							      <ListItem
-							        primaryText={"Please click here to read our terms of service"}
-							        rightIcon={this.state.has_read_tos ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
+							        primaryText={this.state.has_accepted_tos ?  "You have accepted the terms of service" : "Please click here to read our terms of service"}
+							        onClick={() => this.setState({is_tos_modal_open: true})}
+							        rightIcon={this.state.has_accepted_tos ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							    </List>
 			  				</div>
@@ -519,79 +668,20 @@ class OrderDateTimePlaceSelection extends Component {
 		    
 		    </StripeProvider>
 		)
-
-						// <FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.date_picker_ref.openDialog()}>
-	     //  					<span> Add time </span>
-	   		// 			</FloatingActionButton>
-
-		// return (
-		// 	<div style={styles.root}>
-		// 	  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
-		//   			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-			// 	  			<p style={{fontSize: '1em'}}>{product_list[product].name}</p>
-			// 	  			<p style={{fontSize: '1em'}}>Price: ${product_list[product].price / 100}</p>
-		//   			</div>
-		//   			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-			// 	  			<p style={{fontSize: '1em'}}>Duration: {product_list[product].duration} min</p>
-			// 	  			<p style={{fontSize: '1em'}}>{`${this.state.display_date} @ ${this.state.display_time || ''}`}</p>
-		//   			</div>
-  // 				</div>
-		// 		<Snackbar
-		//           open={this.state.error}
-		//           message={this.state.error ? this.state.error : null}
-		//           autoHideDuration={4000}
-		//           onRequestClose={this.closeSnackbar}
-		//           style={{width: '100%'}}
-		//         />
-		//         <div style={{minHeight: 80, marginTop: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-		//         	<div style={{color:'black', height: 0, marginTop: 30, fontSize: 26}}> {this.state.display_date || "Select Date"} </div>
-		//         	<DatePicker 
-		//         		onChange={this.handleSetDate} 
-		//         		hintText={"Select a date"} 
-		//         		style={{opacity: 0, height: 80}}
-		//         	    shouldDisableDate={(date) => moment(date).isBefore(today)}
-		//         	/>
-	 //        		</div>
-		//         <div style={{minHeight: 80, marginTop: 24, marginBottom: 50, justifyContent: 'center', alignItems: 'center', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray'}}>
-		//         	<div style={{color:'black', height: 0, marginTop: 30, fontSize: 26}}> {this.state.display_time || "Select Time"} </div>
-		//         	<TimePicker 
-		//         		defaultTime={this.state.time || null} 
-		//         		onChange={this.handleSetTime} 
-		//         		hintText="Select a time" 
-		//         		style={{opacity: 0, height: 80}}
-		// 			/>
-		//         </div>
-		//         <div style={{marginTop: 12, padding: 12}}>
-		// 	        <p style={{color:'black', fontSize: 24, width:'100%', textAlign: 'left', margin: 0}}>Hours of operation</p>
-		//         	<p style={{color:'black', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>Monday - Thursday 9am to 5pm</p>
-		// 		    <p style={{color:'black', fontSize: 18, width:'100%', textAlign: 'left', marginBottom: 2}}>Friday - Sunday 8am to 7pm</p>
-		// 	        <p style={{color:'black', width:'100%', textAlign: 'left'}}>
-		// 	        	If you desire appointments before our business hours or after we are 
-		// 	        	happy to assist you, but there will be a 50% additional cost to the services desired.
-		// 	        	Please contact us at reservations@rubydubyglam.com to schedule.
-		// 	        </p>
-		// 	        <p style={{color:'black', fontSize: 24, width:'100%', textAlign: 'left', marginBottom: 3}}>Cancellation Policy</p>
-		// 	        <p style={{color:'black', width:'100%', textAlign: 'left'}}>
-		// 	        	We understand that the unexpected can happen. If you need to cancel 
-		// 	        	or reschedule your appointment, please do so by sending an email to 
-		// 	        	reservations@rubydubyglam.com. Cancellation within four (4) hours will be charged
-		// 	        	a 50% fee. Changes made less than four (4) hours will be charged the full fee.
-		// 	        </p>
-		//         </div>
-		// 	    <div style={{ minHeight: 60, bottom: 0, width: '100%', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', flexGrow: 1}}>
-		// 	        <RaisedButton
-		// 	            primary={true}
-		// 	            disabled= {!this.state.date || !this.state.time}
-		// 	            label={!this.state.date || !this.state.time ? 'Select a date and time' : "Next" }
-		// 	            onTouchTap={this.handleNavigateNext}
-		// 	            labelStyle={{ color:'pink'}}
-		// 	            overlayStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")'}}
-		// 	            style={{width: '100%', height: 60 }}
-		// 	        />
-		//         </div>
-	 //        </div>
-		// )	
 	}
 }
 
-export default withRouter(OrderDateTimePlaceSelection)
+const mapStateToProps = (state) => {
+  return {
+  	user: state.user.user
+  }
+}
+
+let OrderDateTimePlaceSelectionComponent = connect(mapStateToProps, {
+	navigate,
+	createOrder,
+	changePhoneNumber, 
+	changeEmailAddress,
+})(OrderDateTimePlaceSelection)
+
+export default withRouter(OrderDateTimePlaceSelectionComponent)

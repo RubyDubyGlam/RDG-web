@@ -121,13 +121,18 @@ class SimpleSlider extends React.Component {
       <Slider {...settings}>
 		    <div style={{height: '95vh'}}>
 		    	<img src={base_product.image} style={{height: '100vw'}} />
-		    	<div style={{height: 80, width: '100%', backgroundColor: 'black', marginTop: -80, opacity: .9, color: 'white', textAlign: 'center', fontSize: 24, padding: 26}}>
+		        	<div style={{height: 50, width: '100%', backgroundColor: 'black', marginTop: -50, opacity: .9, color: 'white', textAlign: 'center', fontSize: 20, padding: 26}}>
 		    	</div>
 				<div style={{display: 'flex', width: '100%'}} >
 					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
-						<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.props.selectService(this.props.base_service)}>
-		      				<span> No add-on </span>
-		   				</FloatingActionButton>
+						<div style={{display: 'flex', width: '100%'}} >
+							<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.props.selectService(this.props.base_service)}>
+			      				<span> No Add-ons </span>
+			   				</FloatingActionButton>
+			   				<div style={{color: 'white', justifyContent: 'center', marginTop: -50, zIndex: 2400, display: 'flex', alignItems: 'center', height: 50, fontSize: 26, flexGrow: 1}}>
+			   					{base_product.name}
+			   				</div>
+		   				</div>
 		   				<div style={{display: 'flex', width: '100%', marginTop: -60}} >
 							<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 								<p style={{fontWeight: 500, fontSize: 24}} >Price</p>
@@ -145,17 +150,22 @@ class SimpleSlider extends React.Component {
 		  	map(base_product.addons, (addon, addon_name) => (
 			    <div style={{height: '95vh'}}>
 			    	<img src={addon.image} style={{height: '100vw'}} />
-			    	<div style={{height: 80, width: '100%', backgroundColor: 'black', marginTop: -80, opacity: .9, color: 'white', textAlign: 'center', fontSize: 24, padding: 26}}>
+		        		<div style={{height: 50, width: '100%', backgroundColor: 'black', marginTop: -50, opacity: .9, color: 'white', textAlign: 'center', fontSize: 20, padding: 26}}>
 			    	</div>
 					<div style={{display: 'flex', width: '100%'}} >
 						<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
-							<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.props.selectService('thingy')}>
-			      				<span> Select add-on </span>
-			   				</FloatingActionButton>
+							<div style={{display: 'flex', width: '100%'}} >
+								<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.props.selectService(this.props.base_service)}>
+				      				<span> Add add-on </span>
+				   				</FloatingActionButton>
+				   				<div style={{color: 'white', justifyContent: 'center', marginTop: -50, zIndex: 2400, display: 'flex', alignItems: 'center', height: 50, fontSize: 26, flexGrow: 1}}>
+				   					{addon.name}
+				   				</div>
+			   				</div>
 			   				<div style={{display: 'flex', width: '100%', marginTop: -60}} >
 								<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 									<p style={{fontWeight: 500, fontSize: 24}} >Price</p>
-									<p>${addon.price[0]}</p>
+									<p>${addon.price[0] / 100}</p>
 								</div>
 								<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 									<p style={{fontWeight: 500, fontSize: 24}} >Duration</p>

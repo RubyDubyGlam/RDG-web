@@ -73,14 +73,19 @@ class SimpleSlider extends React.Component {
 		        	<div style={{height: 50, width: '100%', backgroundColor: 'black', marginTop: -50, opacity: .9, color: 'white', textAlign: 'center', fontSize: 20, padding: 26}}>
 		        	</div>
 					<div style={{display: 'flex', width: '100%'}} >
-						<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
-							<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={
-								() => {
-									this.props.selectService(product_name)
-								}}
-							>
-			      				<span> Add Service </span>
-			   				</FloatingActionButton>
+						<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', width:'100%'}}>
+							<div style={{display: 'flex', width: '100%'}} >
+								<FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={
+									() => {
+										this.props.selectService(product_name)
+									}}
+								>
+				      				<span> Add Service </span>
+				   				</FloatingActionButton>
+				   				<div style={{color: 'white', justifyContent: 'center', marginTop: -50, zIndex: 2400, display: 'flex', alignItems: 'center', height: 50, fontSize: 26, flexGrow: 1}}>
+				   					{product.name}
+				   				</div>
+			   				</div>
 			   				<div style={{display: 'flex', width: '100%', marginTop: -60}} >
 								<div style={{marginTop: 80, flexGrow: 1, maxWidth:'33.33%', textAlign: 'center'}}>
 									<p style={{fontWeight: 500, fontSize: 20}} >Price</p>
