@@ -12,7 +12,9 @@ import DatePicker from 'material-ui/DatePicker'
 import AutoComplete from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from 'material-ui/Snackbar'
+import TextField from 'material-ui/TextField'
+import Loader from '../../common/components/Loader'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -180,6 +182,96 @@ class ChangeEmailAddressModal extends Component {
     )
   }
 }
+
+import {CardElement} from 'react-stripe-elements';
+import {StripeProvider} from 'react-stripe-elements';
+import {Elements} from 'react-stripe-elements';
+import {injectStripe} from 'react-stripe-elements';
+
+class ElementsCard extends React.Component {
+  handleSubmit = (ev) => {
+    // We don't want to let default form submission happen here, which would refresh the page.
+    ev.preventDefault();
+
+    // Within the context of `Elements`, this call to createToken knows which Element to
+    // tokenize, since there's only one in this group.
+    this.props.stripe.createToken().then(({token, err, error}) => {
+      console.log('Received Stripe token:', token, error);
+      this.props.handleStripeToken(token, error)
+    });
+
+    // However, this line of code will do the same thing:
+    // this.props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <CardElement 
+        	style = {
+        		{
+        			base: {fontSize: '14px', maxWidth: '80vw'},
+           			invalid: { color: 'red'}
+           		}
+           	} 
+        />
+      </form>
+    );
+  }
+}
+
+const InjectedCardElement = injectStripe(ElementsCard);
+
+class ElementsWrapper extends React.Component {
+  render() {
+    return (
+      <Elements>
+        <InjectedCardElement handleStripeToken={this.props.handleStripeToken}/>
+      </Elements>
+    );
+  }
+}
+
+class CardSection extends React.Component {
+  render() {
+    return (
+	    <ElementsWrapper handleStripeToken={this.props.handleStripeToken} />
+    );
+  }
+};
+
+class SelectAddressModal extends Component {
+  render() {
+    const {
+      props
+    } = this
+
+    return (
+      <Dialog
+        modal={true}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={{minWidth: '100%'}}
+      >
+        <List>
+		  <Subheader style={{fontSize: 32, textAlign: 'center'}}>Select an Address</Subheader>
+		  <Subheader style={{color: 'black', fontSize: 16, textAlign: 'center'}}>Click on your address to select it</Subheader>
+		  {
+		  	map(props.possible_addresses, (address) => {
+		  		return (
+		          <ListItem
+		            primaryText={<span style={{color: 'black', fontSize: 12, textAlign: 'center'}}>{address.formatted_address}</span>}
+		            style={{textAlign: 'center'}}
+		            onClick={e => props.setAddress(address.formatted_address)}
+		          />
+		  		)
+		    })
+		  }
+        </List>
+      </Dialog>
+    )
+  }
+}
  
 class OrderDateTimePlaceSelection extends Component {
 
@@ -194,7 +286,9 @@ class OrderDateTimePlaceSelection extends Component {
 			date: date_time ? (moment(date_time).format('YYYY-MM-DD')) : '',
 			display_date: date_time ? (moment(date_time).format('dddd MMM do')) : '',
 			address: props.form_data.address,
-			error: ''
+			error: '',
+			is_entering_stripe: false,
+			address_input: ''
 		}
 
 		this.autocompleteService = new google.maps.places.AutocompleteService()
@@ -206,6 +300,41 @@ class OrderDateTimePlaceSelection extends Component {
   			this.setState({
   				address: thingy[0].formatted_address
   			})
+  		})
+  	}
+
+  	componentDidMount = () => {
+  		window.scrollTo(0, document.body.scrollHeight);
+  	}
+
+	setAddress = (address) => {
+		this.props.setAddress(address)
+		this.setState({
+			possible_addresses_open: false,
+			is_editing_address: false,
+			address_input: ''
+		})
+	}
+
+   	handleLocationSelect = () => {
+  		this.setState({
+  			is_loading: true
+  		})
+  
+  		const address = this.state.address_input
+
+  		this.geocoder.geocode({ address }, (possible_addresses) => {
+
+
+  			if (possible_addresses.length) {
+  				this.setState({ 
+  					possible_addresses,
+  					possible_addresses_open: true,
+  					is_loading: false
+  				})
+  			} else {
+  				this.setState({ is_loading: false })
+  			}
   		})
   	}
 
@@ -252,7 +381,15 @@ class OrderDateTimePlaceSelection extends Component {
   	}
 
   	handleSetAddress = (address) => {
-  		this.setState({address}) 
+  		this.setState({address})
+  	}
+
+  	handleStripeToken = (token, error) => {
+  		if (error) {
+  			return this.setState({error: error.message})
+  		}
+
+  		this.props.setPayment(token.id, token.card.last4)
   	}
 
   	handleNavigateNext = () => {
@@ -266,6 +403,11 @@ class OrderDateTimePlaceSelection extends Component {
  		this.props.goForward()
   	}
 
+  	handleAddressSubmit = (e) => {
+  		e.preventDefault(),
+  		this.handleLocationSelect()
+  	}
+
 	render() {
 		const today = moment().startOf('day')
 		
@@ -276,37 +418,59 @@ class OrderDateTimePlaceSelection extends Component {
 		}
 
 		return (
+			<StripeProvider apiKey="pk_live_StmsYeM1MHShCtaqySy02iz4">
 		    <div style={{height: '95vh', width: '100vw'}}>
-		    	<img src={'/assets/hair-salon.jpg'} style={{height: '80vw'}} />
-		    	<div style={{height: '80vw', width: '100vw', top: 0, opacity: 0.8, position: 'absolute', backgroundColor: 'black'}} />
-				<div style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '80vw'}} >
+		    	{ this.state.is_loading && <Loader /> }
+		    	<img src={'/assets/hair-salon.jpg'} style={{height: '70vw'}} />
+		    	<div style={{height: '70vw', width: '100vw', top: 0, opacity: 0.8, position: 'absolute', backgroundColor: 'black'}} />
+				<div style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '70vw'}} >
 					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
 		   				<div style={{display: 'flex', width: '100%'}} >
 						  	<div style={{display: 'flex', width: '100%' }}>
 							    <List style={{width: '100%'}}>
+							    	<SelectAddressModal possible_addresses={this.state.possible_addresses || ''} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
 							      <Subheader>Services and addons</Subheader>
 							      <ListItem
-							        primaryText="Brendan Lim"
-							        rightIcon={<span>$400</span>}
+							        primaryText={product.name}
+							        rightIcon={<span style={{marginRight: 12}}>${product.price / 100}</span>}
 							      />
-							      <Subheader>Address</Subheader>
+							      <Subheader>Reservation Address</Subheader>
+							      {
+							      	this.state.is_editing_address ? (
+							      		<ListItem
+										    primaryText={
+										    	<form onSubmit={this.handleAddressSubmit}>
+											    	<TextField
+											      		floatingLabelText="Address line 1"
+											      		inputStyle={{ color: 'black', fontSize: '1em' }}
+											      		underlineStyle={{ borderWidth: 0 }}
+											      		autoFocus
+											      		onChange={(e) => this.setState({address_input: e.target.value})}
+										    		/>
+									    		</form>
+									    	}
+									    />
+							      	) : (
+									      <ListItem
+									        onClick={() => this.setState({is_editing_address: true})}
+									        primaryText={this.props.form_data.address ? <span style={{fontSize: 14}} >{this.props.form_data.address}</span> : 'Click here to enter address'}
+									        rightIcon={this.props.form_data.address ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
+									      />
+							      	)
+							      }
+							      <Subheader>Reservation Time</Subheader>
 							      <ListItem
-							        primaryText="Eric Hoffman"
-							        rightIcon={<FontIcon className="material-icons">clear</FontIcon>}
-							      />
-							      <Subheader>Time</Subheader>
-							      <ListItem
-							        secondaryText="Time"
 							        onClick={() => this.date_picker_ref.openDialog()}
 							        primaryText={(this.state.time && this.state.date) ? `${this.state.display_date} @ ${this.state.display_time}` : 'Click to reservation a time'}
 							        rightIcon={(this.state.time && this.state.date) ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							      <Subheader>Payment</Subheader>
-							      <ListItem
-							      	secondaryText="Card number"
-							        primaryText={this.props.form_data.payment_token || 'Click to add payment method'}
-							        rightIcon={this.props.form_data.payment_token ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
-							      />
+								      <ListItem
+								      	secondaryText={this.props.form_data.last_four ? "Card Number" : null}
+								      	onClick={() => this.setState({is_entering_stripe: true})}
+								        primaryText={this.props.form_data.last_four || <CardSection handleStripeToken={this.handleStripeToken} />}
+								        rightIcon={this.props.form_data.payment_token ? <FontIcon color={green500} className="material-icons">done</FontIcon> : null}
+								      />
 							      <Subheader>Contact</Subheader>
 							      <ListItem
 							        secondaryText={"Phone number"}
@@ -317,6 +481,11 @@ class OrderDateTimePlaceSelection extends Component {
 							        secondaryText={"Email address"}
 							        primaryText={this.props.user.email_address}
 							        rightIcon={this.props.user.email_address ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
+							      />
+							      <Subheader>Terms of Service</Subheader>
+							      <ListItem
+							        primaryText={"Please click here to read our terms of service"}
+							        rightIcon={this.state.has_read_tos ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							    </List>
 			  				</div>
@@ -345,6 +514,8 @@ class OrderDateTimePlaceSelection extends Component {
 		          style={{width: '100%'}}
 		        />
 		    </div>
+		    
+		    </StripeProvider>
 		)
 
 						// <FloatingActionButton secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50 }} onTouchTap={() => this.date_picker_ref.openDialog()}>

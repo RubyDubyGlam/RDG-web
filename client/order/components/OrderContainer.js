@@ -68,9 +68,10 @@ export default class OrderFlow extends Component {
 		this.setState({products})			
 	}
 
-	setPayment = (token_id) => {
+	setPayment = (token_id, last_four) => {
 		this.setState({
-			payment_token: token_id
+			payment_token: token_id,
+			last_four: last_four
 		})
 	}
 
@@ -101,8 +102,16 @@ export default class OrderFlow extends Component {
 	render() {
 
 		const states = [
-			<OrderDateTimePlaceSelection user={this.props.user} key='1' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setDateTimeAddress={this.setDateTimeAddress} />,
-			<AddressSelection key='2' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setAddress={this.setAddress} />,
+			<OrderDateTimePlaceSelection 
+				user={this.props.user} 
+				key='1' 
+				form_data={this.state} 
+				goForward={this.goForward} 
+				goBack={this.goBack} 
+				setDateTimeAddress={this.setDateTimeAddress} 
+				setPayment={this.setPayment}
+				setAddress={this.setAddress}
+			/>,
 			<OrderPaymentSelection key='3' form_data={this.state} goForward={this.goForward} goBack={this.goBack} setPayment={this.setPayment} />,
 			<OrderConfirm key='4' form_data={this.state} goForward={this.goForward} goBack={this.goBack} />
 		]
