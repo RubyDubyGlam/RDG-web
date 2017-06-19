@@ -217,9 +217,10 @@ class ElementsCard extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} ref={this.props.registerCardFormRef}>
         <CardElement 
         	onBlur={this.handleSubmit}
+        	ref={this.props.registerCardRef}
         	style = {
         		{
         			base: {fontSize: '14px', maxWidth: '80vw'},
@@ -238,7 +239,7 @@ class ElementsWrapper extends React.Component {
   render() {
     return (
       <Elements>
-        <InjectedCardElement handleStripeToken={this.props.handleStripeToken}/>
+        <InjectedCardElement registerCardFormRef={this.props.registerCardFormRef} registerCardRef={this.props.registerCardRef} handleStripeToken={this.props.handleStripeToken}/>
       </Elements>
     );
   }
@@ -247,7 +248,7 @@ class ElementsWrapper extends React.Component {
 class CardSection extends React.Component {
   render() {
     return (
-	    <ElementsWrapper handleStripeToken={this.props.handleStripeToken} />
+	    <ElementsWrapper registerCardFormRef={this.props.registerCardFormRef} registerCardRef={this.props.registerCardRef} handleStripeToken={this.props.handleStripeToken} />
     );
   }
 };
@@ -506,6 +507,12 @@ class OrderDateTimePlaceSelection extends Component {
   		this.props.setPayment(token.id, token.card.last4)
   	}
 
+  	registerCardRef = (ref) => {
+  		if (ref) {
+  			this.card_ref = ref._element
+  		}
+  	}
+
   	handleNavigateNext = () => {
   		const {
   			date,
@@ -529,14 +536,130 @@ class OrderDateTimePlaceSelection extends Component {
   		const order = this.props.form_data
   		const user = this.props.user
 
-  		if (!user.phone_number || !user.email_address || !order.date_time || !order.address || !order.payment_token || !this.state.has_accepted_tos || !order.service_with_addons) {
-  			return null
+  		if (!order.date_time) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >Let's get started!</p>
+		    		<p style={{color: 'white', textAlign: 'center'}} >We'll need to reserve a time for your appointment. Click below to choose a time.</p>
+						<FlatButton
+					        label="Reserve a time"
+					        primary={true}
+					        onTouchTap={() => this.date_picker_ref.openDialog()}
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
+  		}
+
+  		if (!order.address) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >RubyDubyGlam comes to you!</p>
+		    		<p style={{color: 'white', textAlign: 'center'}} >As part of our service, we'll send a stylist to your home or preferred location. Click below to let us know here to meet you.</p>
+						<FlatButton
+					        label="Select a place"
+					        primary={true}
+					        onTouchTap={(e) => {
+					        	e.preventDefault()
+					        	this.setState({is_editing_address: true})
+					        }}
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
+  		}
+
+
+  		if (!order.payment_token) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >
+		    			For your convenience, we accept payment from all major credit card processors.
+		    			Your card won't be charged until after your appointment has ended.
+		    		</p>
+						<FlatButton
+					        label="Enter payment information"
+					        primary={true}
+					        onTouchTap={(e) => {
+							    const scroll_to = this.card_form_ref.offsetTop
+				      			const target = this.card_ref
+				      			setTimeout(() => {
+				      				console.log(this.form_ref.offsetTop - scroll_to)
+				      				this.form_ref.scrollTop = this.form_ref.offsetTop - scroll_to + 100
+				      				target.focus()
+				      			}, 0)		        	
+					        }}
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
+  		}
+
+  		if (!user.phone_number) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >We'll need your phone number</p>
+		    		<p style={{color: 'white', textAlign: 'center'}} >
+		    			As our services are location-based, we'll need your phone number to provide our stylists a way to contact 
+		    			in case they get lost on their way.  If you have any questions,
+		    			you can check out our <a> Terms of service </a>.
+		    		</p>
+						<FlatButton
+					        label="Enter a phone number"
+					        primary={true}
+					        onTouchTap={ () => this.setState({is_editing_phone_number: true}) }
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
+  		}
+
+  		if (!user.email_address) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >Let's get an email address on record</p>
+		    		<p style={{color: 'white', textAlign: 'center'}} >
+		    			We'll need your email address to send you a copy of your receipt once we've completed your services. If you have any questions,
+		    			you can check out our <a> Terms of service </a>.
+		    		</p>
+						<FlatButton
+					        label="Enter an email address"
+					        primary={true}
+					        onTouchTap={ () => this.setState({is_editing_email_address : true}) }
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
+  		}
+
+  		if (!this.state.has_accepted_tos) {
+	    	return (
+		    	<div style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+		    		<p style={{color: 'white', textAlign: 'center'}} >We'll almost done!</p>
+		    		<p style={{color: 'white', textAlign: 'center'}} >
+		    			You'll need to agree to our terms and services before we can process your order. If you have any questions
+		    			that aren't answered in our terms, you can email us at info@rubydubyglam.com
+		    		</p>
+						<FlatButton
+					        label="Terms of Service"
+					        primary={true}
+					        onTouchTap={ () => this.setState({is_tos_modal_open : true}) }
+					        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+				      	/>
+		    	</div> 
+	    	) 			
   		}
 
   		return (
 	    	<div onClick={this.onSubmit} style={{flexDirection: 'column', height: '70vw', width: '100vw', top: 0, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-	    		<div style={{color: 'white'}} >Your order is ready to be submitted</div>
-	    		<div style={{color: 'white'}} >Please review your order and click here to submit</div>
+	    		<p style={{color: 'white'}} >Your order is ready to be submitted!</p>
+	    		<p style={{color: 'white'}} >Please review your order and click here to submit</p>
+					<FlatButton
+				        label="Book my appointment"
+				        primary={true}
+				        onTouchTap={this.onSubmit}
+				        style={{marginTop: 12, color: 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1 }}
+			      	/>
 	    	</div>
   		)
   	}
@@ -559,6 +682,11 @@ class OrderDateTimePlaceSelection extends Component {
 			this.props.navigate('/appointment')
 		})
   	}
+
+	registerCardFormRef = (ref) => {
+		console.log(ref)
+		this.card_form_ref = ref
+	}
 
  	  handleChangePhoneNumberModalClose = () => {
 	    this.setState({
@@ -592,11 +720,9 @@ class OrderDateTimePlaceSelection extends Component {
 	render() {
 		const today = moment().startOf('day')
 		
-		const product = product_list[this.props.form_data.service_with_addons]
+		const products = this.props.form_data.services
+		const addons = this.props.form_data.addons
 
-		if (!product) {
-			return null
-		}
 
 		return (
 			<StripeProvider apiKey="pk_test_eSDPAIsmcSkiqYvR4tGeFa6W">
@@ -606,17 +732,23 @@ class OrderDateTimePlaceSelection extends Component {
 		    	<img src={'/assets/hair-salon.jpg'} style={{height: '70vw'}} />
 		    	<div style={{height: '70vw', width: '100vw', top: 0, opacity: 0.8, position: 'absolute', backgroundColor: 'black'}} />
 		    	{this.shouldDisplaySubmitText()}
-				<div style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '70vw'}} >
+				<div ref={(ref) => this.form_ref = ref} style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '70vw'}} >
 					<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'100%'}}>
 		   				<div style={{display: 'flex', width: '100%'}} >
 						  	<div style={{display: 'flex', width: '100%' }}>
 							    <List style={{width: '100%'}}>
-							    	<SelectAddressModal possible_addresses={this.state.possible_addresses || ''} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
+							     <SelectAddressModal possible_addresses={this.state.possible_addresses || ''} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
 							      <Subheader>Services and addons</Subheader>
-							      <ListItem
-							        primaryText={product.name}
-							        rightIcon={<span style={{marginRight: 16}}>${product.price / 100}</span>}
-							      />
+
+							      {
+							      	map(products, (product) => (
+								      <ListItem
+								        primaryText={product_list[product].name}
+								        rightIcon={<span style={{marginRight: 16}}>${product_list[product].price / 100}</span>}
+								      />
+							      	))
+							      }
+
 							      <Subheader>Reservation Address</Subheader>
 							      {
 							      	this.state.is_editing_address ? (
@@ -629,6 +761,14 @@ class OrderDateTimePlaceSelection extends Component {
 											      		underlineStyle={{ borderWidth: 0 }}
 											      		autoFocus
 											      		onChange={(e) => this.setState({address_input: e.target.value})}
+											      		onFocus={(e) => {
+											      			const scroll_to = e.currentTarget.offsetTop
+											      			const target = e.currentTarget
+											      			setTimeout(() => {
+											      				this.form_ref.scrollTop = this.form_ref.offsetTop - scroll_to - 70
+											      				target.focus()
+											      			}, 0)
+											      		}}
 										    		/>
 									    		</form>
 									    	}
@@ -648,12 +788,12 @@ class OrderDateTimePlaceSelection extends Component {
 							        rightIcon={(this.state.time && this.state.date) ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							      <Subheader>Payment</Subheader>
-								      <ListItem
-								      	secondaryText={this.props.form_data.last_four ? "Card Number" : null}
-								      	onClick={() => this.setState({is_entering_stripe: true})}
-								        primaryText={this.props.form_data.last_four || <CardSection handleStripeToken={this.handleStripeToken} />}
-								        rightIcon={this.props.form_data.payment_token ? <FontIcon color={green500} className="material-icons">done</FontIcon> : null}
-								      />
+							      <ListItem
+							      	secondaryText={this.props.form_data.last_four ? "Card Number" : null}
+							      	onClick={() => this.setState({is_entering_stripe: true})}
+							        primaryText={this.props.form_data.last_four || <CardSection registerCardFormRef={this.registerCardFormRef} registerCardRef={this.registerCardRef} handleStripeToken={this.handleStripeToken} />}
+							        rightIcon={this.props.form_data.payment_token ? <FontIcon color={green500} className="material-icons">done</FontIcon> : null}
+							      />
 							      <Subheader>Contact</Subheader>
 							      <ListItem
 							        secondaryText={"Phone number"}

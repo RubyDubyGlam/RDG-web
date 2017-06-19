@@ -52,7 +52,8 @@ export default class OrderFlow extends Component {
 			address: '',
 			payment_token: '',
 			phone_number: props.user.phone_number || '',
-			service_with_addons: '',
+			services: [],
+			addons: [],
 		}
 	}
 
@@ -95,8 +96,8 @@ export default class OrderFlow extends Component {
 		this.setState({step: 1, base_service})
 	}
 
-	selectSerivceAndAddons = (service_with_addons) => {
-		this.setState({service_with_addons, step: 2})
+	selectServiceAndAddons = (services, addons) => {
+		this.setState({services, addons, step: 2})
 	}
 
 	render() {
@@ -118,8 +119,8 @@ export default class OrderFlow extends Component {
 
 		return (
 			<div style={styles.container}>
-				{ this.state.step === 0 && <HomeContainer key='-1' selectService={this.selectService} /> }
-				{ this.state.step === 1 && <AddonSelection key='-2' base_service={this.state.base_service} selectService={this.selectSerivceAndAddons} /> }
+				{ this.state.step === 0 && <HomeContainer key='-1' selectService={this.selectServiceAndAddons} /> }
+				{ this.state.step === 1 && <AddonSelection key='-2' base_service={this.state.base_service} selectService={this.selectServiceAndAddons} /> }
 				{ this.state.step > 1 && (
 					<ReactTransitions
 					  transition="move-to-left-move-from-right"

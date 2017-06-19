@@ -5,6 +5,7 @@ import navigate from '../../common/actions/router-actions'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Slider from 'react-slick'
+import FlatButton from 'material-ui/FlatButton'
 
 import moment from 'moment'
 
@@ -35,6 +36,7 @@ var product_list = {
 	    	prices: [2500],
 	    	durations: [30],
 	    	name: 'Braid',
+	    	parent: 'blowout'
     	}
     },
     image: '/assets/15.jpg',
@@ -81,7 +83,7 @@ class SimpleSlider extends React.Component {
   		})
   	})
 
-  	this.props.handleSubtotalChange(subtotal)
+  	this.props.handleSubtotalChange(subtotal, this.state.services, this.state.addons)
   }
 
   render() {
@@ -224,20 +226,48 @@ class SimpleSlider extends React.Component {
 }
 
 class OrderFlow extends Component {
-	state = { selection: 0, subtotal: 0 }
+	state = { selection: 0, subtotal: 0, products: [], addons: [] }
 
-	handleSubtotalChange = (subtotal) => {
-		this.setState({ subtotal })
+	handleSubtotalChange = (subtotal, products, addons) => {
+		this.setState({ subtotal, products, addons })
+	}
+
+	handleSubmit = () => {
+		const products = []
+		
+		forEach(this.state.products, (product, product_name) => {
+			products.push(product_name)
+		})
+
+		const addons = []
+		
+		forEach(this.state.addons, (addon, addon_name) => {
+			addons.push(addon_name)
+		})
+
+		this.props.selectService(products, addons)
 	}
 
 	render() {
 		return (
 			<div style={styles.container} ref={ (ref) => this.reffer = ref }>
+
 				<SimpleSlider  
 					selectService={this.props.selectService}
 					handleSubtotalChange={this.handleSubtotalChange}
 				/>
-				<div style={{position: 'absolute', bottom: 0, width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 50}} >Subtotal: ${this.state.subtotal / 100}</div>
+				<div style={{position: 'absolute', bottom: 0, width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 50}} >
+					<span>Subtotal: ${this.state.subtotal / 100}</span>
+
+					{
+						this.state.subtotal ? (
+							<div onClick={this.handleSubmit} style={{position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 15}} >
+								<span style={{fontSize: 14, marginBottom: 1}} >Next</span>
+								<FontIcon style={{fontSize: 24, color: 'black', zIndex: 400, }} className="material-icons">navigate_next</FontIcon>
+							</div>
+						) : null
+					}
+				</div>
 	        </div>
 		)		
 	}
