@@ -146,10 +146,6 @@ class SimpleSlider extends React.Component {
 												<p>${product.prices[0] / 100}</p>
 											</div>
 											<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
-												<p style={{fontWeight: 500, fontSize: 24}} >Duration</p>
-												<p>{product.durations[0]} mins</p>
-											</div>
-											<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 												<p style={{fontWeight: 500, fontSize: 24}} >Add-ons</p>
 												<p>{map(product.addons, (addon) => addon.name)}</p>
 											</div>
@@ -162,10 +158,6 @@ class SimpleSlider extends React.Component {
 											<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 												<p style={{fontWeight: 500, fontSize: 24}} >Price</p>
 												<p>${product.prices[0] / 100}</p>
-											</div>
-											<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
-												<p style={{fontWeight: 500, fontSize: 24}} >Duration</p>
-												<p>{product.durations[0]} mins</p>
 											</div>
 											<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 												<p style={{fontWeight: 500, fontSize: 24}} >Add-ons</p>
