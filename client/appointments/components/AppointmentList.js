@@ -10,6 +10,9 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import {blue500, yellow600} from 'material-ui/styles/colors';
 import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import { map, keyBy, groupBy, isArray, forEach } from 'lodash'
+import InitOrderContainer from '../../order/components/InitOrderContainer'
+
+import AppointmentUserCard from './AppointmentUserCard'
 
 import navigate from '../../common/actions/router-actions'
 
@@ -83,54 +86,39 @@ function AppointmentList(props) {
 		)
 	}
 
-	return (
-		<div style={{width: '100%', overflowY: 'scroll'}}>
-			<List>
-			    { appointments['future'] && appointments['future'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader> : null }
-			    { 
-			    	appointments['future'] && map(appointments['future'], (appointment) => {
-					  return ( 
-						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
-						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  	>
-					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
-					  			</div>
-					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
-						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
-					  			</div>
-			  				</div>
-					  )
-			    	})
-			    }
-			    { appointments['past'] && appointments['past'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My previous appointments</Subheader> : null }
-			    { 
-			    	appointments['past'] && map(appointments['past'], (appointment) => {
-					  return ( 
-						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
-						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
-						  	>
-					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
-						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
-					  			</div>
-					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
-						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
-						  			<p style={{fontSize: '1em'}}>Stylist: {appointment.stylist_full_name || 'Unassigned' }</p>
-					  			</div>
-			  				</div>
-					  )
-			    	})
-			    }
-			</List>
-		</div>
-	)
+	if (!appointments.future || !appointments.future.length) {
+		return <InitOrderContainer />
+	} else {
+		console.log(appointments.future)
+		return <AppointmentUserCard appointments={appointments.future}/>
+	}
+
+	// return (
+	// 	<div style={{width: '100%', overflowY: 'scroll'}}>
+	// 		<List>
+	// 		    { appointments['future'] && appointments['future'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader> : null }
+	// 		    { 
+	// 		    	appointments['future'] && map(appointments['future'], (appointment) => {
+	// 				  return ( 
+	// 					  	<div 
+	// 					  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+	// 					  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
+	// 					  	>
+	// 				  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
+	// 					  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+	// 					  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+	// 				  			</div>
+	// 				  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
+	// 					  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
+	// 					  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
+	// 				  			</div>
+	// 		  				</div>
+	// 				  )
+	// 		    	})
+	// 		    }
+	// 		</List>
+	// 	</div>
+	// )
 }
 
 const mapStateToProps = (state) => {

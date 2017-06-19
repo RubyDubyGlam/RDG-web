@@ -64,7 +64,7 @@ var product_list = {
     image: '/assets/16.jpg'
   },
   'lashextensions': {
-    price: [12500],
+    price: [20000],
     duration: [120],
     name: 'Lash Extensions',
     image: '/assets/12.jpg',
@@ -136,7 +136,7 @@ class SimpleSlider extends React.Component {
 		   				<div style={{display: 'flex', width: '100%', marginTop: -60}} >
 							<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 								<p style={{fontWeight: 500, fontSize: 24}} >Price</p>
-								<p>${base_product.price[0]}</p>
+								<p>${base_product.price[0] / 100}</p>
 							</div>
 							<div style={{marginTop: 80, flexGrow: 1, maxWidth:'50%', textAlign: 'center'}}>
 								<p style={{fontWeight: 500, fontSize: 24}} >Duration</p>
