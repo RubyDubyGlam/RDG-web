@@ -89,17 +89,17 @@ class AppointmentList extends Component {
 	return (
 		<div style={{width: '100%', overflowY: 'scroll', display: 'flex', flexDirection: 'column'}}>
 			<List>
-				{appointments[0] && appointments[0].length && <Subheader style={{color: 'pink'}} >{`Unassigned appointments ( ${appointments[0] && appointments[0].length || 0} )`}</Subheader> }
+				{appointments[0] && appointments[0].length && <Subheader style={{color: 'black'}} >{`Unassigned appointments ( ${appointments[0] && appointments[0].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[0] && map(appointments[0], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
@@ -112,17 +112,17 @@ class AppointmentList extends Component {
 			    	})
 			    }
 				{appointments[0] && appointments[0].length && <Divider />}
-			    {appointments[1] && appointments[1].length && <Subheader style={{color: 'pink'}}>{`Assigned appointments - pending ( ${appointments[1] && appointments[1].length || 0} )`}</Subheader> }
+			    {appointments[1] && appointments[1].length && <Subheader style={{color: 'black'}}>{`Assigned appointments - pending ( ${appointments[1] && appointments[1].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[1] && map(appointments[1], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
@@ -135,17 +135,17 @@ class AppointmentList extends Component {
 			    	})
 			    }
 			    {appointments[1] && appointments[1].length && <Divider />}
-			    {appointments[2] && appointments[2].length && <Subheader style={{color: 'pink'}}>{`Assigned appointments - accepted ( ${appointments[2] && appointments[2].length || 0} )`}</Subheader>}
+			    {appointments[2] && appointments[2].length && <Subheader style={{color: 'black'}}>{`Assigned appointments - accepted ( ${appointments[2] && appointments[2].length || 0} )`}</Subheader>}
 			    { 
 			    	appointments[2] && map(appointments[2], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
@@ -158,17 +158,17 @@ class AppointmentList extends Component {
 			    	})
 			    }
 				{appointments[2] && appointments[2].length && <Divider />}
-			    {appointments[3] && appointments[3].length && <Subheader style={{color: 'pink'}}>{`Enroute appointments ( ${appointments[3] && appointments[3].length || 0} )`}</Subheader>}
+			    {appointments[3] && appointments[3].length && <Subheader style={{color: 'black'}}>{`Enroute appointments ( ${appointments[3] && appointments[3].length || 0} )`}</Subheader>}
 			    { 
 			    	appointments[3] && map(appointments[3], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
@@ -181,17 +181,17 @@ class AppointmentList extends Component {
 			    	})
 			    }
 				{appointments[3] && appointments[3].length && <Divider />}
-			    {appointments[4] && appointments[4].length && <Subheader style={{color: 'pink'}}>{`In progress appointments ( ${appointments[4] && appointments[4].length || 0} )`}</Subheader>}
+			    {appointments[4] && appointments[4].length && <Subheader style={{color: 'black'}}>{`In progress appointments ( ${appointments[4] && appointments[4].length || 0} )`}</Subheader>}
 			    { 
 			    	appointments[4] && map(appointments[4], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
@@ -205,19 +205,19 @@ class AppointmentList extends Component {
 			    }
 				{appointments[4] && appointments[4].length && <Divider />}
 			    {appointments[5] && appointments[5].length && 
-			    	<Subheader style={{color: 'pink'}} rightIcon={<HairDryer />}>
+			    	<Subheader style={{color: 'black'}} rightIcon={<HairDryer />}>
 			    		{`Completed appointments ( ${appointments[5] && appointments[5].length || 0} )`}
 			    	</Subheader>}
 			    { 
 			    	appointments[5] && map(appointments[5], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-						  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
+						  			<p style={{fontSize: '1em'}}>{appointment.products}</p>
+						  			<p style={{fontSize: '1em'}}>Price: ${(appointment.sub_total - appointment.discount) / 100}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>

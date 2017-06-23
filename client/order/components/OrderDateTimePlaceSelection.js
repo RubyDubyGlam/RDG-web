@@ -60,6 +60,13 @@ const styles = {
   }
 };
 
+var coupon_codes = {
+  'rdglam10': {
+    price: 1000,
+    name: 'rdglam10'
+  }
+}
+
 var product_list = {
   'blowout': {
     price: 5000,
@@ -669,13 +676,16 @@ class OrderDateTimePlaceSelection extends Component {
 
 		this.setState({ is_loading: true })
 
+		console.log(this.props.form_data.service_with_addons)
+
 		this.props.createOrder(
 			appointment.address, 
 			appointment.payment_token, 
 			appointment.date_time, 
-			this.props.form_data.service_with_addons,
+			this.props.form_data.services,
 			this.props.user.phone_number,
 			this.props.user.email_address,
+      this.state.coupon,
 		).catch((response) => {
 			this.setState({ is_loading: false })			
 		}).then((response) => {
@@ -683,10 +693,10 @@ class OrderDateTimePlaceSelection extends Component {
 		})
   	}
 
-	registerCardFormRef = (ref) => {
-		console.log(ref)
-		this.card_form_ref = ref
-	}
+  	registerCardFormRef = (ref) => {
+  		console.log(ref)
+  		this.card_form_ref = ref
+  	}
 
  	  handleChangePhoneNumberModalClose = () => {
 	    this.setState({
@@ -717,6 +727,25 @@ class OrderDateTimePlaceSelection extends Component {
 	    })   
 	  }
 
+    handleCouponSubmit = (e) => {
+      if (e) e.preventDefault()
+
+      console.log(coupon_codes, this.state.coupon_code)
+
+      if (coupon_codes[this.state.coupon_code]) {
+        this.setState({
+          coupon: coupon_codes[this.state.coupon_code],
+          coupon_code: '',
+          is_editing_coupon: false
+        })
+      } else {
+        this.setState({
+          error: 'Invalid coupon',
+          coupon_code: ''
+        })
+      }
+    }
+
 	render() {
 		const today = moment().startOf('day')
 		
@@ -725,7 +754,7 @@ class OrderDateTimePlaceSelection extends Component {
 
 
 		return (
-			<StripeProvider apiKey="pk_test_eSDPAIsmcSkiqYvR4tGeFa6W">
+			<StripeProvider apiKey="pk_live_StmsYeM1MHShCtaqySy02iz4">
 		    <div style={{height: '95vh', width: '100vw'}}>
 		    	{ this.state.is_loading && <Loader /> }
 		    	<TOSModal open={this.state.is_tos_modal_open} handleSubmit={() => this.setState({has_accepted_tos: true, is_tos_modal_open: false})} handleDialogClose={() => this.setState({is_tos_modal_open: false})}/>
@@ -748,6 +777,44 @@ class OrderDateTimePlaceSelection extends Component {
 								      />
 							      	))
 							      }
+                    <Subheader>Coupon Code</Subheader>
+                    {
+                      this.state.is_editing_coupon ? (
+                        <ListItem
+                        primaryText={
+                          <form onSubmit={this.handleCouponSubmit}>
+                            <TextField
+                                floatingLabelText="Coupon code"
+                                inputStyle={{ color: 'black', fontSize: '1em' }}
+                                underlineStyle={{ borderWidth: 0 }}
+                                autoFocus
+                                onBlur={() => {
+                                  this.handleCouponSubmit()
+                                  this.setState({
+                                    is_editing_coupon: false,
+                                  })
+                                }}
+                                onChange={(e) => this.setState({coupon_code: e.target.value})}
+                                onFocus={(e) => {
+                                  const scroll_to = e.currentTarget.offsetTop
+                                  const target = e.currentTarget
+                                  setTimeout(() => {
+                                    this.form_ref.scrollTop = this.form_ref.offsetTop - scroll_to - 70
+                                    target.focus()
+                                  }, 0)
+                                }}
+                            />
+                          </form>
+                        }
+                      />
+                      ) : (
+                        <ListItem
+                          onClick={() => this.setState({is_editing_coupon: true})}
+                          primaryText={this.state.coupon ? <span style={{fontSize: 14}}>{this.state.coupon.name}</span> : 'Click here to enter coupon code'}
+                          rightIcon={this.state.coupon ? <span style={{marginRight: 16, width: 40}}>- ${this.state.coupon.price / 100}</span> : null}
+                        />
+                      )
+                    }
 
 							      <Subheader>Reservation Address</Subheader>
 							      {
@@ -760,6 +827,12 @@ class OrderDateTimePlaceSelection extends Component {
 											      		inputStyle={{ color: 'black', fontSize: '1em' }}
 											      		underlineStyle={{ borderWidth: 0 }}
 											      		autoFocus
+											      		onBlur={() => {
+											      			this.handleAddressSubmit()
+											      			this.setState({
+											      				is_editing_address: false,
+											      			})
+											      		}}
 											      		onChange={(e) => this.setState({address_input: e.target.value})}
 											      		onFocus={(e) => {
 											      			const scroll_to = e.currentTarget.offsetTop

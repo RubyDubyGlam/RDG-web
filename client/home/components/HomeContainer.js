@@ -28,7 +28,7 @@ const styles = {
 
 var product_list = {
   'blowout': {
-    prices: [4500],
+    prices: [5000],
     durations: [60],
     name: 'Blowout',
     addons: {

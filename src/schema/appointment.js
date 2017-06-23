@@ -49,7 +49,7 @@ module.exports = {
 		    	type: String,
 		    },
 		    products: {
-		    	type: String,
+		    	type: Array,
 		    	required: true
 		    },
 		    payment_token: {
@@ -64,6 +64,14 @@ module.exports = {
 		    	type: String,
 		    	required: true
 		    },
+		    sub_total: {
+		    	type: Number,
+		    	required: true,
+		    },
+		    discount: {
+		    	type: Number,
+		    	default: 0
+		    }
 		});
 
 		var BlogPostModel = mongoose.model('Appointment', Appointment)

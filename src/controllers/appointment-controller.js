@@ -1,5 +1,5 @@
 var stripe = require("stripe")(
-  process.env.STRIPE_SECRET || "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
+  process.env.STRIPE_SECRET || "sk_test_6vH37zGJp5ZIfHC0bEcMdEXa"
 );
 
 var product_list = {
@@ -73,13 +73,14 @@ function initializeController(app, Appointment) {
 
 				stripe.charges.create({
 				  source: appointment.payment_token,
-				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity),
+				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity - appointment.discount),
 				  currency: "usd",
 				  description: product_list[appointment.products].name,
 				  email: appointment.email_address,
 				  metadata: {
 				  	gratuity: appointment.gratuity,
-				  	subtotal: product_list[appointment.products].price,
+				  	subtotal: appointment.sub_total,
+				  	discount: appointment.discount,
 				  	service: appointment.products,
 				  	customer_id: appointment.customer_id.toString(),
 				  	stylist_id: appointment.stylist_id.toString(),
@@ -93,7 +94,7 @@ function initializeController(app, Appointment) {
 						}
 						Appointment.findByIdAndUpdate(
 							appointment_id, 
-							{settled: true, status: 5},
+							{settled: true, status: 6},
 							{new: true},
 							function(err, user) {
 								if (err) {

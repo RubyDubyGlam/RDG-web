@@ -282,7 +282,6 @@ class AppointmentCard extends Component {
             open={this.state.is_tip_modal_open}
             handleDialogClose={this.handleAddTipModalClose}
             handleSubmitTip={this.handleSubmitTip}
-            product={appointment.products}
           />
           <CancelModal open={this.state.cancel_modal_open} handleDialogClose={() => this.setState({cancel_modal_open: false})}/>
           <List>
@@ -296,9 +295,9 @@ class AppointmentCard extends Component {
               style={{color: 'white'}}
               secondaryText={
                 <div style={{color: 'pink', maxHeight: 85, height: ''}}>
-                  <p>Services: ${(product_list[appointment.products].price / 100).toFixed(2)}</p>
+                  <p>Services: ${(appointment.sub_total / 100).toFixed(2)}</p>
                   <p>Gratuity: ${(appointment.gratuity / 100).toFixed(2)}</p>
-                  <p>Total: ${((product_list[appointment.products].price + appointment.gratuity) / 100).toFixed(2)}</p>
+                  <p>Total: ${((appointment.sub_total + appointment.gratuity) / 100).toFixed(2)}</p>
                 </div>
               }
             />
