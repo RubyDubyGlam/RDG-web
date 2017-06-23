@@ -48,7 +48,7 @@ class MobileHeaderAndroid extends React.Component {
 		    iconClassNameRight="muidocs-icon-navigation-expand-more"
 		    onLeftIconButtonTouchTap={e => this.setState({open: true})}
 		    style={{
-          backgroundColor: 'transparent', boxShadow: null
+          backgroundColor: this.props.user.roles.admin ? 'black' : 'transparent', boxShadow: null
         }}
 		  />
 	        <Drawer
@@ -62,7 +62,7 @@ class MobileHeaderAndroid extends React.Component {
 	        	<div style={{ backgroundColor: 'black', marginBottom: 26, width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
 	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
-        		<MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/order')}/>
+        		<MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/book')}/>
         		<MenuItem primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
         		<MenuItem primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
             <MenuItem primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />

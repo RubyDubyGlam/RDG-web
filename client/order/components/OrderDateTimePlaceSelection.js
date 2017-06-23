@@ -482,7 +482,7 @@ class OrderDateTimePlaceSelection extends Component {
 			const time = (moment(raw_time).format('kk:mm'))
 	  		this.setState({display_time, time, error: ''})
 
-	  		this.props.setDateTimeAddress(this.state.date, this.state.time)
+	  		this.props.setDateTimeAddress(this.state.date, time)
 
 		} else {
 			this.setState({
