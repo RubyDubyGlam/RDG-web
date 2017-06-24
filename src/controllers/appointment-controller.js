@@ -71,11 +71,11 @@ function initializeController(app, Appointment) {
 					return error_cb(err)
 				}
 
-				console.log(err, appointment)
+				console.log(err, appointment, 'starting')
 
 				stripe.charges.create({
 				  source: appointment.payment_token,
-				  amount: parseInt(appointment.sub_total + appointment.gratuity - appointment.discount),
+				  amount: appointment.sub_total + appointment.gratuity - appointment.discount,
 				  currency: "usd",
 				  email: appointment.email_address,
 				  metadata: {
@@ -90,11 +90,12 @@ function initializeController(app, Appointment) {
 				  },
 				  source: appointment.payment_token,
 				}, function(err, order) {
-						console.log(err, order)
+						console.log(err, order, 'success!')
 
 						if (err && error_cb) {
 							return error_cb(err)
 						}
+
 						Appointment.findByIdAndUpdate(
 							appointment_id, 
 							{settled: true, status: 6},
