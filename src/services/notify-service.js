@@ -80,13 +80,16 @@ function notifyCompleted(app, db, twilio_client){
 function pollSettle(app, db, twilio_client){
 	var has_settled = false
 
+	settle(app, db)
+
 	setInterval(() => {
 		var now = moment()
 		var end_of_day = moment().endOf('day')
 
-		if (soon.diff(now, 'minutes') >= 61) {
+		if (soon.diff(now, 'minutes') <= 61) {
 			settle(app, db)
 		}
+
 	}, 3600000)	
 }
 
@@ -95,7 +98,7 @@ function settle(app, db, twilio_client){
 
 	Appointment.find({status: 5}, function(err, appointments) {
 		_.forEach(appointments, function(appointment) {
-			appointment_controller.settle(appointment.id)
+			appointment_controller.settle(appointment._id)
 		})
 	})		
 }
