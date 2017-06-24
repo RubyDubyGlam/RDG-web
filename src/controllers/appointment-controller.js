@@ -71,6 +71,8 @@ function initializeController(app, Appointment) {
 					return error_cb(err)
 				}
 
+				console.log(err, appointment)
+
 				stripe.charges.create({
 				  source: appointment.payment_token,
 				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity - appointment.discount),
@@ -89,6 +91,8 @@ function initializeController(app, Appointment) {
 				  },
 				  source: appointment.payment_token,
 				}, function(err, order) {
+						console.log(err, order)
+
 						if (err && error_cb) {
 							return error_cb(err)
 						}

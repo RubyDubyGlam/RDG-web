@@ -60,7 +60,6 @@ function settle(app, db, twilio_client){
 	Appointment.find({status: 5}, function(err, appointments) {
 
 		_.forEach(appointments, function(appointment) {
-			console.log(appointment)
 			appointment_controller.initializeController(app, Appointment).settle(appointment._id)
 		})
 	})		
