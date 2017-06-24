@@ -75,9 +75,8 @@ function initializeController(app, Appointment) {
 
 				stripe.charges.create({
 				  source: appointment.payment_token,
-				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity - appointment.discount),
+				  amount: parseInt(appointment.sub_total + appointment.gratuity - appointment.discount),
 				  currency: "usd",
-				  description: product_list[appointment.products].name,
 				  email: appointment.email_address,
 				  metadata: {
 				  	gratuity: appointment.gratuity,
