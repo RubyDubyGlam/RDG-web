@@ -88,7 +88,6 @@ function initializeController(app, Appointment) {
 				  // 	customer_full_name: appointment.customer_full_name,
 				  // 	stylist_full_name: appointment.stylist_full_name,
 				  // },
-				  source: appointment.payment_token,
 				}, function(err, order) {
 						console.log(err, order, 'success!')
 
