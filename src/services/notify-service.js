@@ -1,6 +1,8 @@
 var moment = require('moment')
 var notify_services = require('./notify-service')
+var appointment_controller = require('../controllers/appointment-controller')
 var _ = require('lodash')
+
 
 function pollCritical(app, db, twilio_client){
 	notifyCritical(app, db, twilio_client)
@@ -72,10 +74,38 @@ function notifyCompleted(app, db, twilio_client){
 	})		
 }
 
+
+
+
+function pollSettle(app, db, twilio_client){
+	var has_settled = false
+
+	setInterval(() => {
+		var now = moment()
+		var end_of_day = moment().endOf('day')
+
+		if (soon.diff(now, 'minutes') >= 61) {
+			settle(app, db)
+		}
+	}, 3600000)	
+}
+
+function settle(app, db, twilio_client){
+	var Appointment = db.model('Appointment')
+
+	Appointment.find({status: 5}, function(err, appointments) {
+		_.forEach(appointments, function(appointment) {
+			appointment_controller.settle(appointment.id)
+		})
+	})		
+}
+
 module.exports = {
 	notifyCompleted,
 	pollCompleted,
 	notifyCritical,
-	pollCritical
+	pollCritical,
+	pollSettle,
+	settle
 }
 

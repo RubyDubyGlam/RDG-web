@@ -89,7 +89,7 @@ function initializeController(app, Appointment) {
 				  },
 				  source: appointment.payment_token,
 				}, function(err, order) {
-						if (err) {
+						if (err && error_cb) {
 							return error_cb(err)
 						}
 						Appointment.findByIdAndUpdate(
@@ -97,11 +97,10 @@ function initializeController(app, Appointment) {
 							{settled: true, status: 6},
 							{new: true},
 							function(err, user) {
-								if (err) {
+								if (err && error_cb) {
 									return error_cb(err)
 								}
-
-								success_cb(user)
+								success_cb && success_cb(user)
 							}
 						)
 					})			  
