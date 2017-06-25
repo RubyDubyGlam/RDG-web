@@ -14,10 +14,6 @@ import { getAppointments } from '../action/appointment-action'
 
 class AppointmentRoute extends Component {
 
-	componentDidMount(props) {
-		this.props.getAppointments()
-	}
-
 	componentWillReceiveProps(nextProps) {
 		console.log('proppiiess', nextProps)
 	}
@@ -25,7 +21,7 @@ class AppointmentRoute extends Component {
 	render() {
 		if (this.props.user.roles.admin) return <AppointmentListAdmin />
 		if (this.props.user.roles.stylist) return <AppointmentListStylist />
-		return <AppointmentList />
+		return <AppointmentList {...this.props}/>
 	}
 }
 

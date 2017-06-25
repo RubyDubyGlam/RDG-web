@@ -12,17 +12,16 @@ import { Button, Icon } from 'semantic-ui-react'
 
 const styles = {
   container: {
-    height: '100%',
-    width: '100%',
+    height: '100vh',
+    width: '100vw',
     padding: 0,
     margin: 0,
-    textAlign: 'center'
+    position: 'absolute',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundImage: 'url("/assets/hair-salon-port.jpg")'
   },
-  container_redux: {
-    position: 'relative',
-    top: '45%',
-    transform: 'translateY(-50%)'
-  }
 }
 
 export default class LoginContainer extends Component {
@@ -34,10 +33,16 @@ export default class LoginContainer extends Component {
   }
 
   authFacebook = () => {
+    this.setState({
+      is_loading: true
+    })
     window.location.href = '/v1/auth/facebook'
   }
 
   authGoogle = () => {
+    this.setState({
+      is_loading: true
+    })
     window.location.href = '/v1/auth/google'    
   }
 
@@ -50,8 +55,9 @@ export default class LoginContainer extends Component {
     return (
       <div style={styles.container}>
         { this.state.is_loading ? <Loader /> : null }
-        <div style={styles.container_redux}>
-          <p style={{fontSize: 36, fontFamily: "'Great Vibes', cursive", color: 'pink' }}>RubyDubyGlam</p>
+        <div style={{position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 2, backgroundColor: 'black', opacity: .9}} />
+        <div style={{flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 3, color: 'white'}}>
+          <p style={{fontSize: 24}}>Welcome to RubyDubyGlam!</p>
           <p style={{fontSize: 16, color: 'white', margin: 0}}>Login with:</p>
           <Button onClick={this.authFacebook} color='facebook' style={{marginTop: 36, width: '60%'}}>
             <Icon name='facebook' /> Facebook

@@ -227,6 +227,7 @@ class ElementsCard extends React.Component {
       <form onSubmit={this.handleSubmit} ref={this.props.registerCardFormRef}>
         <CardElement 
         	onBlur={this.handleSubmit}
+
         	ref={this.props.registerCardRef}
         	style = {
         		{
@@ -480,10 +481,11 @@ class OrderDateTimePlaceSelection extends Component {
 		if (is_after_eight && is_before_six) {
 			const display_time = (moment(raw_time).format('hh:mm A'))
 			const time = (moment(raw_time).format('kk:mm'))
-	  		this.setState({display_time, time, error: ''})
+	  	this.setState({display_time, time, error: ''})
 
-	  		this.props.setDateTimeAddress(this.state.date, time)
+      console.log(moment().diff(moment(this.state.date + ' ' + time), 'hours'))
 
+	  	this.props.setDateTimeAddress(this.state.date, time)
 		} else {
 			this.setState({
 				display_time: '',
@@ -676,8 +678,6 @@ class OrderDateTimePlaceSelection extends Component {
 
 		this.setState({ is_loading: true })
 
-		console.log(this.props.form_data.service_with_addons)
-
 		this.props.createOrder(
 			appointment.address, 
 			appointment.payment_token, 
@@ -754,8 +754,8 @@ class OrderDateTimePlaceSelection extends Component {
 
 
 		return (
-			<StripeProvider apiKey="pk_live_StmsYeM1MHShCtaqySy02iz4">
-		    <div style={{height: '95vh', width: '100vw'}}>
+			<StripeProvider apiKey="pk_test_eSDPAIsmcSkiqYvR4tGeFa6W">
+		    <div style={{height: '100vh', width: '100vw'}}>
 		    	{ this.state.is_loading && <Loader /> }
 		    	<TOSModal open={this.state.is_tos_modal_open} handleSubmit={() => this.setState({has_accepted_tos: true, is_tos_modal_open: false})} handleDialogClose={() => this.setState({is_tos_modal_open: false})}/>
 		    	<img src={'/assets/hair-salon.jpg'} style={{height: '70vw'}} />
@@ -780,6 +780,7 @@ class OrderDateTimePlaceSelection extends Component {
                     <Subheader>Coupon Code</Subheader>
                     {
                       this.state.is_editing_coupon ? (
+                        <div ref={ref => this.coupon_ref = ref}>
                         <ListItem
                         primaryText={
                           <form onSubmit={this.handleCouponSubmit}>
@@ -788,25 +789,23 @@ class OrderDateTimePlaceSelection extends Component {
                                 inputStyle={{ color: 'black', fontSize: '1em' }}
                                 underlineStyle={{ borderWidth: 0 }}
                                 autoFocus
-                                onBlur={() => {
-                                  this.handleCouponSubmit()
+                                onBlur={(e) => {
+                                  this.handleCouponSubmit(e)
                                   this.setState({
                                     is_editing_coupon: false,
                                   })
                                 }}
                                 onChange={(e) => this.setState({coupon_code: e.target.value})}
                                 onFocus={(e) => {
-                                  const scroll_to = e.currentTarget.offsetTop
-                                  const target = e.currentTarget
                                   setTimeout(() => {
-                                    this.form_ref.scrollTop = this.form_ref.offsetTop - scroll_to - 70
-                                    target.focus()
+                                    this.form_ref.scrollTop = this.coupon_ref.offsetTop
                                   }, 0)
                                 }}
                             />
                           </form>
                         }
                       />
+                      </div>
                       ) : (
                         <ListItem
                           onClick={() => this.setState({is_editing_coupon: true})}
@@ -819,6 +818,7 @@ class OrderDateTimePlaceSelection extends Component {
 							      <Subheader>Reservation Address</Subheader>
 							      {
 							      	this.state.is_editing_address ? (
+                        <div ref={ref => this.address_ref = ref}>
 							      		<ListItem
 										    primaryText={
 										    	<form onSubmit={this.handleAddressSubmit}>
@@ -827,8 +827,8 @@ class OrderDateTimePlaceSelection extends Component {
 											      		inputStyle={{ color: 'black', fontSize: '1em' }}
 											      		underlineStyle={{ borderWidth: 0 }}
 											      		autoFocus
-											      		onBlur={() => {
-											      			this.handleAddressSubmit()
+											      		onBlur={(e) => {
+											      			this.handleAddressSubmit(e)
 											      			this.setState({
 											      				is_editing_address: false,
 											      			})
@@ -838,7 +838,7 @@ class OrderDateTimePlaceSelection extends Component {
 											      			const scroll_to = e.currentTarget.offsetTop
 											      			const target = e.currentTarget
 											      			setTimeout(() => {
-											      				this.form_ref.scrollTop = this.form_ref.offsetTop - scroll_to - 70
+											      				this.form_ref.scrollTop = this.address_ref.offsetTop
 											      				target.focus()
 											      			}, 0)
 											      		}}
@@ -846,6 +846,7 @@ class OrderDateTimePlaceSelection extends Component {
 									    		</form>
 									    	}
 									    />
+                      </div>
 							      	) : (
 									      <ListItem
 									        onClick={() => this.setState({is_editing_address: true})}
@@ -861,12 +862,13 @@ class OrderDateTimePlaceSelection extends Component {
 							        rightIcon={(this.state.time && this.state.date) ? <FontIcon color={green500} className="material-icons">done</FontIcon> : <FontIcon color={red500} className="material-icons">clear</FontIcon>}
 							      />
 							      <Subheader>Payment</Subheader>
+                    <div ref={ref => this.payment_ref = ref}>
 							      <ListItem
 							      	secondaryText={this.props.form_data.last_four ? "Card Number" : null}
-							      	onClick={() => this.setState({is_entering_stripe: true})}
 							        primaryText={this.props.form_data.last_four || <CardSection registerCardFormRef={this.registerCardFormRef} registerCardRef={this.registerCardRef} handleStripeToken={this.handleStripeToken} />}
 							        rightIcon={this.props.form_data.payment_token ? <FontIcon color={green500} className="material-icons">done</FontIcon> : null}
 							      />
+                    </div>
 							      <Subheader>Contact</Subheader>
 							      <ListItem
 							        secondaryText={"Phone number"}

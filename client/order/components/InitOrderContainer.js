@@ -5,7 +5,7 @@ import Slider from 'react-slick'
 
 import moment from 'moment'
 
-import { map } from 'lodash'
+import { map, forEach } from 'lodash'
 
 import { connect } from 'react-redux'
 
@@ -48,7 +48,25 @@ class OrderFlow extends Component {
 
 	state = { selection: 0 }
 
+	shouldRedirect = () => {
+		let should_renav = false
+		forEach(this.props.appointments, appointment => {
+			if (appointment.status !== 6) {
+				should_renav = true
+				return false
+			}
+		}) 
+
+		return should_renav
+	}
+
 	render() {
+
+		if (this.shouldRedirect()) {
+			this.props.navigate('/appointment')
+			return null
+		}
+
 		return (
 			<div style={styles.container}>
 				<div style={{position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 2, backgroundColor: 'black', opacity: .9}}>

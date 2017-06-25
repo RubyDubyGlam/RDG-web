@@ -39,15 +39,11 @@ function notifyCritical(app, db, twilio_client){
 }
 
 function pollSettle(app, db, twilio_client){
-	var has_settled = false
-
-	settle(app, db)
-
 	setInterval(() => {
 		var now = moment()
 		var end_of_day = moment().endOf('day')
 
-		if (soon.diff(now, 'minutes') <= 61) {
+		if (end_of_day.diff(now, 'minutes') <= 61) {
 			settle(app, db)
 		}
 
@@ -58,8 +54,6 @@ function settle(app, db, twilio_client){
 	var Appointment = db.model('Appointment')
 
 	Appointment.find({status: 5}, function(err, appointments) {
-
-		console.log(Array.isArray(appointments))
 
 		if (Array.isArray(appointments)) {
 			_.forEach(appointments, function(appointment) {

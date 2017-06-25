@@ -22,6 +22,8 @@ import Subheader from 'material-ui/Subheader';
 
 import { addTip } from '../action/appointment-action'
 
+import FontIcon from 'material-ui/FontIcon';
+
 const styles = {
 	container: {
 		height: '100%',
@@ -173,8 +175,7 @@ class SimpleSlider extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       swipeToSlide: true,
-      afterChange: (from, to) => console.log(from, to),
-      beforeChange: (from, to) => console.log()
+      infinite: false
     };
 
     return (
@@ -182,10 +183,14 @@ class SimpleSlider extends React.Component {
       	{ 
       		map(this.props.appointments, (appointment, appointment_id) => (
 		        <div>
-		        	<GettingStartedGoogleMap 
-			          lat={Number(appointment.latitude)}
-			          lng={Number(appointment.longitude)}
-			        />
+					{ 
+						appointment.stylist_id ? (
+							<div style={{zIndex: 6, height: '100vw', fontSize: '80vw', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >
+								<img style={{height: '60vw', borderRadius: '50%', zIndex: 12 }} src={`/assets/${appointment.stylist_id}.jpg`} />
+							</div>
+							) : <FontIcon style={{zIndex: 4, height: '100vw', fontSize: '80vw', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}} className="material-icons">person_outline</FontIcon> }
+					<img src={'/assets/19.jpg'} style={{width: '100vw', marginTop: '-100vw'}} />
+					<div style={{width: '100vw', zIndex: 3, marginTop: '-100vw', height: '100vw', backgroundColor: 'black', opacity: .8}} />
 			      	<AddTipModal 
 			            open={this.state.is_tip_modal_open === appointment_id}
 			            handleDialogClose={this.handleAddTipModalClose}
@@ -193,12 +198,9 @@ class SimpleSlider extends React.Component {
 			            sub_total={appointment.sub_total}
 			            appointment_id={appointment._id}
           			/>
-          			{
-          				// <div style={{position: 'absolute', top: 0, height: '100vw', width: '100%', backgroundColor: 'black', opacity: 0.4, color: 'white', textAlign: 'center', fontSize: 20, padding: 26, zIndex: 2}}> 		        	</div>
-          			}
 					<div style={{display: 'flex', width: '100%'}} >
 						<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', width:'100%'}}>
-							<div style={{display: 'flex', width: '100%'}} >
+							<div style={{display: 'flex', width: '100%', paddingLeft: 6}} >
 								{
 									(appointment.gratuity === 0 && appointment.status !== 6) && (
 										<FloatingActionButton onTouchTap={() => this.setState({is_tip_modal_open: appointment_id})} secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50,  zIndex: 3000 }} >
@@ -206,7 +208,14 @@ class SimpleSlider extends React.Component {
 						   				</FloatingActionButton>
 									)
 								}
-
+				   				<div style={{flexDirection: 'column', color: 'white', justifyContent: 'center', marginTop: -50, zIndex: 2400, display: 'flex', alignItems: 'center', height: 100, fontSize: 26, flexGrow: 1}}>
+					   				<div style={{color: 'white', justifyContent: 'center', zIndex: 2400, display: 'flex', alignItems: 'center', height: 50, fontSize: 26 }}>
+					   					{appointment.stylist_id && appointment.stylist_full_name }
+					   				</div>
+					   				<div style={{color: 'black', justifyContent: 'center', zIndex: 2400, display: 'flex', alignItems: 'center', height: 50, fontSize: '.5em' }}>
+					   					{!appointment.stylist_id && "You'll be assigned a stylist shortly" }
+					   				</div>
+				   				</div>
 			   				</div>
 			   				<List>
 					            <ListItem

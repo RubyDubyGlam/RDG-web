@@ -14,7 +14,7 @@ import ACTION_TYPES from './user-action-enum'
 
 export function me() {
 	return function(dispatch, getState) {
-		meApi().then((response) => {
+		return meApi().then((response) => {
 			dispatch({
 				type: ACTION_TYPES.AUTH_USER.value,
 				payload: {

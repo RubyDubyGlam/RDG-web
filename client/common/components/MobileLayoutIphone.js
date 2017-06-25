@@ -15,9 +15,12 @@ import UpdoContainer from '../../order/components/UpdoContainer'
 import InitOrderContainer from '../../order/components/InitOrderContainer'
 
 import { me } from '../../user/action/user-action'
+import { getAppointments } from '../../appointments/action/appointment-action'
 import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router'
+
+import Loader from './Loader'
 
 import {
   Route,
@@ -42,6 +45,8 @@ class MobileLayoutIphone extends Component {
 
     this.state = {
       view: 1,
+      has_fetched: false,
+      is_loading: true
     }
   }
 
@@ -53,25 +58,33 @@ class MobileLayoutIphone extends Component {
 
   componentDidMount() {
     this.props.me()
-  }
-
-  goFullScreen = (e) => {
-
-
+    .catch(() => this.setState({
+      has_fetched: true,
+      is_loading: false
+    }))   
+    .then(() => {
+      this.props.getAppointments().then(() => {
+        this.setState({
+          has_fetched: true,
+          is_loading: false
+        })        
+      })
+    })
   }
 
   render() {
     console.log(this.props.user)
     return (
 		<div style={styles.container} ref={(ref) => this.reffers = ref}>
-      <button style={{height: 0, width: 0, margin: 0}} ref={(ref) => this.button_ref = ref} onClick={this.goFullScreen}/>
       {
         this.props.user && <MobileHeaderAndroid />
       }
+      { this.state.is_loading ? <Loader /> : null }
       {
-        this.props.user && (
+        this.props.user && !this.state.is_loading && (
           <Switch>
-            <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
+            <Route path='/appointment' render={({match}) => <AppointmentContainer appointments={this.props.appointments} match={match} user={this.props.user} />} />
+            <Route path='/client-appointment/:tense' render={({match}) => <AppointmentContainer appointments={this.props.appointments} match={match} user={this.props.user} />} />
             <Route path='/book' render={() => <OrderContainer user={this.props.user}/>} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
@@ -84,11 +97,11 @@ class MobileLayoutIphone extends Component {
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
             <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
-            <Route path='/' render={() => <InitOrderContainer user={this.props.user}/>}  />
+            <Route path='/' render={() => <InitOrderContainer appointments={this.props.appointments} user={this.props.user}/>}  />
           </Switch>
         )
       }
-			{ !this.props.user ? <LoginContainer /> : null}
+			{ !this.props.user && this.state.has_fetched ? <LoginContainer /> : null}
 		</div>
     )
   }
@@ -102,7 +115,8 @@ const mapStateToProps = (state) => {
 }
 
 let MobileLayoutIphoneComponent = withRouter(connect( mapStateToProps, {
-	me: me
+	me: me,
+  getAppointments
 }, undefined, {pure:false})(MobileLayoutIphone))
 
 

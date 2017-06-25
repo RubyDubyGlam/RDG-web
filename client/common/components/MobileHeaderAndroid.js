@@ -63,7 +63,8 @@ class MobileHeaderAndroid extends React.Component {
 	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
         		<MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/book')}/>
-        		<MenuItem primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
+        		<MenuItem primaryText="Future Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/future')}/>
+            <MenuItem primaryText="Past Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/past')}/>
         		<MenuItem primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
             <MenuItem primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />
             <MenuItem primaryText="FAQS" leftIcon={faqsIcon} onTouchTap={() => this.navigate('/faqs')} />

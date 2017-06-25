@@ -77,17 +77,17 @@ function initializeController(app, Appointment) {
 				  source: appointment.payment_token,
 				  amount: appointment.sub_total + appointment.gratuity - appointment.discount,
 				  currency: "usd",
-				  // email: appointment.email_address,
-				  // metadata: {
-				  // 	gratuity: appointment.gratuity,
-				  // 	subtotal: appointment.sub_total,
-				  // 	discount: appointment.discount,
-				  // 	service: appointment.products,
-				  // 	customer_id: appointment.customer_id.toString(),
-				  // 	stylist_id: appointment.stylist_id.toString(),
-				  // 	customer_full_name: appointment.customer_full_name,
-				  // 	stylist_full_name: appointment.stylist_full_name,
-				  // },
+				  email: appointment.email_address,
+				  metadata: {
+				  	gratuity: appointment.gratuity,
+				  	subtotal: appointment.sub_total,
+				  	discount: appointment.discount,
+				  	service: appointment.products,
+				  	customer_id: appointment.customer_id.toString(),
+				  	stylist_id: appointment.stylist_id.toString(),
+				  	customer_full_name: appointment.customer_full_name,
+				  	stylist_full_name: appointment.stylist_full_name,
+				  },
 				}, function(err, order) {
 						console.log(err, order, 'success!')
 

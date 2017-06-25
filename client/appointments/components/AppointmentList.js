@@ -64,10 +64,12 @@ var product_list = {
 
 function AppointmentList(props) {
 
+	console.log(props, 'peeerrps')
+
 	let appointments = groupBy(props.appointments, (appointment) => {
 		if (appointment.status === -1) {
 			return 'canceled'
-		} else if(appointment.status !== 5) {
+		} else if(appointment.status !== 6) {
 			return 'future'
 		} else {
 			return 'past'			
@@ -89,36 +91,18 @@ function AppointmentList(props) {
 	if (!appointments.future || !appointments.future.length) {
 		return <InitOrderContainer />
 	} else {
-		console.log(appointments.future)
-		return <AppointmentUserCard appointments={appointments.future}/>
-	}
+		let tense = props.match.params.tense
 
-	// return (
-	// 	<div style={{width: '100%', overflowY: 'scroll'}}>
-	// 		<List>
-	// 		    { appointments['future'] && appointments['future'].length ? <Subheader style={{marginBottom: 12, fontFamily: "'Great Vibes', cursive", fontSize: 24, lineHeight: '32px', color: 'pink'}} inset={true}>My future appointments</Subheader> : null }
-	// 		    { 
-	// 		    	appointments['future'] && map(appointments['future'], (appointment) => {
-	// 				  return ( 
-	// 					  	<div 
-	// 					  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
-	// 					  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
-	// 					  	>
-	// 				  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-	// 					  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
-	// 					  			<p style={{fontSize: '1em'}}>Price: ${product_list[appointment.products].price / 100}</p>
-	// 				  			</div>
-	// 				  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-	// 					  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
-	// 					  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
-	// 				  			</div>
-	// 		  				</div>
-	// 				  )
-	// 		    	})
-	// 		    }
-	// 		</List>
-	// 	</div>
-	// )
+		if (!tense) {
+			tense = 'future'
+		}
+
+		if (tense === 'past' && !appointments.past) {
+			return <InitOrderContainer />
+		}
+
+		return <AppointmentUserCard appointments={tense === 'future' ? appointments.future : appointments.past}/>
+	}
 }
 
 const mapStateToProps = (state) => {

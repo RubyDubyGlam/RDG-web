@@ -288,7 +288,7 @@ class AppointmentCard extends Component {
             <ListItem
               primaryText="Services"
               style={{color: 'white'}}
-              secondaryText={<span style={{color: 'pink'}}>{product_list[appointment.products].name}</span>}
+              secondaryText={<span style={{color: 'pink'}}>{appointment.products.join(' , ')}</span>}
             />
             <ListItem
               primaryText="Total"

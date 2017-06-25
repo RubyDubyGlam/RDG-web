@@ -16,7 +16,7 @@ export default function Loader() {
 	        	display: 'flex',
 	        	alignItems: 'center',
 	        	justifyContent: 'center',
-	        	zIndex: 3
+	        	zIndex: 1400
 	        }}>
 		        <CircularProgress size={120} thickness={12} />
 		</div>

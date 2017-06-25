@@ -19,10 +19,12 @@ import {blue500, red500, green500} from 'material-ui/styles/colors';
 
 const styles = {
 	container: {
-		height: '100%',
+		height: '100vh',
 		width: '100%',
 		padding: 0,
 		margin: 0,
+		display: 'flex', 
+		flexDirection: 'column',
 	},
 }
 
@@ -95,7 +97,8 @@ class SimpleSlider extends React.Component {
       slidesToScroll: 1,
       swipeToSlide: true,
       afterChange: (from, to) => console.log(from, to),
-      beforeChange: (from, to) => console.log()
+      beforeChange: (from, to) => console.log(),
+      style: {flexGrow: 1}
     };
     return (
       <Slider {...settings}>
@@ -104,7 +107,7 @@ class SimpleSlider extends React.Component {
 
 
 		        return (
-		        	<div style={{height: '90vh'}}>
+		        	<div>
 			        	<img src={product.image} style={{height: '100vw'}} />
 			        	<div style={{height: this.state.services[product_name] ? '100vw' : 50, width: '100%', backgroundColor: 'black', marginTop: this.state.services[product_name] ? '-100vw' : -50, opacity: .8, color: 'white', textAlign: 'center', fontSize: 20, padding: 26, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 							{ this.state.services[product_name] && <FontIcon style={{fontSize: 160, color: 'pink'}} className="material-icons">check_circle</FontIcon> }
@@ -256,18 +259,21 @@ class OrderFlow extends Component {
 					selectService={this.props.selectService}
 					handleSubtotalChange={this.handleSubtotalChange}
 				/>
-				<div style={{position: 'absolute', bottom: 0, width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 50}} >
-					<span>Subtotal: ${this.state.subtotal / 100}</span>
+				{
+					<div style={{position: 'relative', marginTop: 24, width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50}} >
+						<span>Subtotal: ${this.state.subtotal / 100}</span>
 
-					{
-						this.state.subtotal ? (
-							<div onClick={this.handleSubmit} style={{position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 15}} >
-								<span style={{fontSize: 14, marginBottom: 1}} >Next</span>
-								<FontIcon style={{fontSize: 24, color: 'black', zIndex: 400, }} className="material-icons">navigate_next</FontIcon>
-							</div>
-						) : null
-					}
-				</div>
+						{
+							this.state.subtotal ? (
+								<div onClick={this.handleSubmit} style={{position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 15}} >
+									<span style={{fontSize: 14, marginBottom: 1}} >Next</span>
+									<FontIcon style={{fontSize: 24, color: 'black', zIndex: 400, }} className="material-icons">navigate_next</FontIcon>
+								</div>
+							) : null
+						}
+					</div>
+				}
+
 	        </div>
 		)		
 	}

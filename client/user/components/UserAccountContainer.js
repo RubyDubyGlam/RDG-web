@@ -17,6 +17,8 @@ import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../actio
 
 import { withRouter } from 'react-router'
 
+import FontIcon from 'material-ui/FontIcon';
+
 const styles = {
   root: {
     height: '100%',
@@ -27,8 +29,9 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     overflowY: 'scroll',
-    backgroundImage: 'url("/assets/black-gradient.jpg")',
-    color: 'white'
+    color: 'black',
+    position: 'absolute',
+    top: 0
   },
   phone_number_style: {
     width: '100%',
@@ -149,17 +152,14 @@ class CancelModal extends Component {
 
     return (
       <Dialog
-        title={<div style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Delete Account</div>}
+        title={<div style={{fontSize: 32, textAlign: 'center'}}>Delete Account</div>}
         actions={actions}
         modal={false}
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={{minWidth: '100%'}}
-        bodyStyle={{ backgroundColor: 'rgba(0,0,0,0.9)', maxHeight: '100%' }}
-        titleStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
-        actionsContainerStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
       >
-        <p style={{color: 'white'}} >Please send us an email at info@rubydubyglam.com to delete your account </p>
+        <p>Please send us an email at info@rubydubyglam.com to delete your account </p>
       </Dialog>
     )
   }
@@ -233,6 +233,7 @@ class ListExampleSettings extends Component {
 
    return ( 
       <div style={styles.root}>
+        <div style={{width: '100%', height: '60px', backgroundColor: 'black', marginBottom: '2em'}} />
         <ChangePhoneNumberModal 
           open={this.state.is_editing_phone_number}
           handleDialogClose={this.handleChangePhoneNumberModalClose}
@@ -245,24 +246,21 @@ class ListExampleSettings extends Component {
         />
         <CancelModal open={this.state.delete_account_modal} handleDialogClose={() => this.setState({delete_account_modal: false})}/>
         <List>
-          <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
+          <Subheader style={{fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
           <ListItem
             primaryText="Change my phone number"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
+            secondaryText={<span>{user.email_address}</span>}
             onClick={e => this.setState({is_editing_email_address: true})}
           />
           <ListItem
             primaryText="Change my phone number"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
+            secondaryText={<span>{user.phone_number}</span>}
             onClick={e => this.setState({is_editing_phone_number: true})}
           />
           <ListItem
             leftCheckbox={<Checkbox checked={user.subscribed} onCheck={this.changeSubmitToggleSubscribe}/>}
             primaryText="Subscribed"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>Subscribed to offers</span>}
+            secondaryText={<span>Subscribed to offers</span>}
           />
         </List>
         <List>
