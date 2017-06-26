@@ -38,10 +38,16 @@ const styles = {
 
 var product_list = {
   'blowout': {
-    prices: [4500, 8500],
+    prices: [5000, 7500],
     durations: [60, 90],
     name: 'Blowout',
     addons: ['Braid'],
+    image: '/assets/15.jpg',
+  },
+  'blowout+braid': {
+    prices: [7500],
+    durations: [90],
+    name: 'Blowout & Braid',
     image: '/assets/15.jpg',
   },
   'updo': {
@@ -58,10 +64,23 @@ var product_list = {
     addons: ['Lashstrip'],
     image: '/assets/16.jpg'
   },
+  'makeup+lashstrip': {
+    prices: [9000],
+    durations: [60],
+    name: 'Makeup & Lashstrip',
+    image: '/assets/16.jpg'
+  },
   'lashextensions': {
-    prices: [12500, 20000],
+    prices: [20000],
     durations: [120],
     name: 'Lash Extensions',
+    image: '/assets/12.jpg',
+    addons: [],
+  },
+  'lashfill': {
+    prices: [12500],
+    durations: [120],
+    name: 'Lash Fill',
     image: '/assets/12.jpg',
     addons: [],
   },
@@ -237,7 +256,7 @@ class SimpleSlider extends React.Component {
 					          <List>
 					            <ListItem
 					              secondaryText="Time"
-					              primaryText={<span>{moment(appointment.date_time).format('MMMM Do, h:mm a')}</span>}
+					              primaryText={<span>{moment(appointment.time).format('MMMM Do, h:mm a')}</span>}
 					            />
 					          </List>
 					          <List>

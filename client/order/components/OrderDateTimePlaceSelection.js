@@ -26,7 +26,7 @@ import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../us
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import { map } from 'lodash'
+import { map, forEach } from 'lodash'
 
 import moment from 'moment'
 
@@ -483,7 +483,15 @@ class OrderDateTimePlaceSelection extends Component {
 			const time = (moment(raw_time).format('kk:mm'))
 	  	this.setState({display_time, time, error: ''})
 
-      console.log(moment().diff(moment(this.state.date + ' ' + time), 'hours'))
+      if (moment().diff(moment(this.state.date + ' ' + time), 'hours') > -4) {
+        this.setState({
+          display_time: '',
+          time: '',
+          display_date: '',
+          date: '',
+          error: 'Please contact us to schedule at this time.'
+        }, setTimeout(() => this.setState({error: ''}), 4000))
+      }
 
 	  	this.props.setDateTimeAddress(this.state.date, time)
 		} else {
@@ -493,7 +501,7 @@ class OrderDateTimePlaceSelection extends Component {
 				display_date: '',
 				date: '',
 				error: invalidTime
-			})
+			}, setTimeout(() => this.setState({error: ''}), 4000))
 		}
   	}
 
@@ -510,7 +518,7 @@ class OrderDateTimePlaceSelection extends Component {
 
   	handleStripeToken = (token, error) => {
   		if (error) {
-  			return this.setState({error: error.message})
+  			return this.setState({error: error.message}, setTimeout(() => this.setState({error: ''}), 4000))
   		}
 
   		this.props.setPayment(token.id, token.card.last4)
@@ -730,8 +738,6 @@ class OrderDateTimePlaceSelection extends Component {
     handleCouponSubmit = (e) => {
       if (e) e.preventDefault()
 
-      console.log(coupon_codes, this.state.coupon_code)
-
       if (coupon_codes[this.state.coupon_code]) {
         this.setState({
           coupon: coupon_codes[this.state.coupon_code],
@@ -742,7 +748,7 @@ class OrderDateTimePlaceSelection extends Component {
         this.setState({
           error: 'Invalid coupon',
           coupon_code: ''
-        })
+        }, setTimeout(() => this.setState({error: ''}), 4000))
       }
     }
 
@@ -770,12 +776,14 @@ class OrderDateTimePlaceSelection extends Component {
 							      <Subheader>Services and addons</Subheader>
 
 							      {
-							      	map(products, (product) => (
-								      <ListItem
-								        primaryText={product_list[product].name}
-								        rightIcon={<span style={{marginRight: 16}}>${product_list[product].price / 100}</span>}
-								      />
-							      	))
+							      	map(products, (product) => {
+								      return (
+                        <ListItem
+  								        primaryText={product_list[product].name}
+  								        rightIcon={<span style={{marginRight: 16}}>${product_list[product].price / 100}</span>}
+  								      />
+                      )
+							      	})
 							      }
                     <Subheader>Coupon Code</Subheader>
                     {

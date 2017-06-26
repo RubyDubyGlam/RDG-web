@@ -50,15 +50,29 @@ var product_list = {
     image: '/assets/13.jpg'
   },
   'makeup': {
-    prices: [6500, 9000],
+    prices: [6500],
     durations: [60],
     name: 'Makeup',
-    image: '/assets/16.jpg'
+    image: '/assets/16.jpg',
+    addons: {
+    	'lashstrip' : {
+	    	prices: [2500],
+	    	durations: [60],
+	    	name: 'Lash Strip',
+	    	parent: 'makeup'
+    	}
+    },
   },
   'lashextensions': {
-    prices: [12500, 20000],
+    prices: [20000],
     durations: [120],
     name: 'Lash Extensions',
+    image: '/assets/12.jpg',
+  },
+  'lashfill': {
+    prices: [12500],
+    durations: [120],
+    name: 'Lash Fill',
     image: '/assets/12.jpg',
   },
 }
@@ -236,7 +250,7 @@ class OrderFlow extends Component {
 	}
 
 	handleSubmit = () => {
-		const products = []
+		let products = []
 		
 		forEach(this.state.products, (product, product_name) => {
 			products.push(product_name)
@@ -246,6 +260,23 @@ class OrderFlow extends Component {
 		
 		forEach(this.state.addons, (addon, addon_name) => {
 			addons.push(addon_name)
+		})
+
+		products = map(products, (product) => {
+          let product_type = product
+
+          forEach(addons, (addon) => {
+          	console.log(addon)
+            if (product_list[product].addons && product_list[product].addons[addon]) {
+              product_type = product + '+' + addon
+
+              console.log(product_type)
+              return false
+            }
+          })
+
+          return product_type
+
 		})
 
 		this.props.selectService(products, addons)
