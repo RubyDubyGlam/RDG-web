@@ -62,9 +62,13 @@ class MobileHeaderAndroid extends React.Component {
 	        	<div style={{ backgroundColor: 'black', marginBottom: 26, width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
 	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
-        		<MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/book')}/>
-        		<MenuItem primaryText="Future Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/future')}/>
-            <MenuItem primaryText="Past Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/past')}/>
+        		{ 
+              !this.props.user.roles.admin && !this.props.user.roles.stylist ? [
+                <MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/book')}/>,
+                <MenuItem primaryText="Future Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/future')}/>,
+                <MenuItem primaryText="Past Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/past')}/>,
+              ] : <MenuItem primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
+            }
         		<MenuItem primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
             <MenuItem primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />
             <MenuItem primaryText="FAQS" leftIcon={faqsIcon} onTouchTap={() => this.navigate('/faqs')} />

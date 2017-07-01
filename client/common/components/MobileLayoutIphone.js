@@ -24,8 +24,8 @@ import Loader from './Loader'
 
 import {
   Route,
-  Switch
-
+  Switch,
+  Redirect
 } from 'react-router-dom'
 
 const styles = {
@@ -97,7 +97,7 @@ class MobileLayoutIphone extends Component {
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
             <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
-            <Route path='/' render={() => <InitOrderContainer appointments={this.props.appointments} user={this.props.user}/>}  />
+            <Route path='/' render={({match}) => this.props.user.roles.admin || this.props.user.roles.stylist ? <Redirect to='/appointment' /> : <InitOrderContainer appointments={this.props.appointments} user={this.props.user}/>}  />
           </Switch>
         )
       }
