@@ -149,10 +149,10 @@ class AppointmentAssign extends Component {
 		    		map(stylists, (stylist) => {
 			    		return (
 					      <ListItem
-					        primaryText={<span style={{ color: 'white' }}>{`${stylist.first_name} ${stylist.last_name}`}</span>}
+					        primaryText={<span>{`${stylist.first_name} ${stylist.last_name}`}</span>}
 					        leftIcon={ stylist.permissions === 2 ? <ActionGrade color={pinkA200} /> : null }
 					        onClick={this.handleAssignClick(stylist)}
-					        style={{ borderColor: 'pink', borderStyle: 'solid', borderWidth: 1 }}
+					        style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1 }}
 					      />
 			    		)
 		    		})
