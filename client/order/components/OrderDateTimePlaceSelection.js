@@ -760,7 +760,7 @@ class OrderDateTimePlaceSelection extends Component {
 
 
 		return (
-			<StripeProvider apiKey="pk_test_eSDPAIsmcSkiqYvR4tGeFa6W">
+			<StripeProvider apiKey="pk_live_StmsYeM1MHShCtaqySy02iz4">
 		    <div style={{height: '100vh', width: '100vw'}}>
 		    	{ this.state.is_loading && <Loader /> }
 		    	<TOSModal open={this.state.is_tos_modal_open} handleSubmit={() => this.setState({has_accepted_tos: true, is_tos_modal_open: false})} handleDialogClose={() => this.setState({is_tos_modal_open: false})}/>
