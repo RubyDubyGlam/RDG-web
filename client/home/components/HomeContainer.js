@@ -41,19 +41,19 @@ var product_list = {
 	    	parent: 'blowout'
     	}
     },
-    image: '/assets/15.jpg',
+    image: '/assets/blowout.png',
   },
   'updo': {
     prices: [8500],
     durations: [90],
     name: 'Up-do',
-    image: '/assets/13.jpg'
+    image: '/assets/updo.jpg'
   },
   'makeup': {
-    prices: [6500],
+    prices: [7500],
     durations: [60],
     name: 'Makeup',
-    image: '/assets/16.jpg',
+    image: '/assets/makeup.jpg',
     addons: {
     	'lashstrip' : {
 	    	prices: [2500],
@@ -67,13 +67,13 @@ var product_list = {
     prices: [20000],
     durations: [120],
     name: 'Lash Extensions',
-    image: '/assets/12.jpg',
+    image: '/assets/lashextension.jpg',
   },
   'lashfill': {
     prices: [12500],
     durations: [120],
     name: 'Lash Fill',
-    image: '/assets/12.jpg',
+    image: '/assets/lashfill.jpg',
   },
 }
 

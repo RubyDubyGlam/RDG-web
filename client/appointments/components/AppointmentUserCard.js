@@ -58,14 +58,14 @@ var product_list = {
     image: '/assets/13.jpg'
   },
   'makeup': {
-    prices: [6500, 9000],
+    prices: [7500, 10000],
     durations: [60],
     name: 'Makeup',
     addons: ['Lashstrip'],
     image: '/assets/16.jpg'
   },
   'makeup+lashstrip': {
-    prices: [9000],
+    prices: [10000],
     durations: [60],
     name: 'Makeup & Lashstrip',
     image: '/assets/16.jpg'
@@ -100,8 +100,10 @@ class AddTipModal extends Component {
       return
     }
 
+    console.log(value, this.props.sub_total, this.props.discount)
+
     this.setState({
-      gratuity: (this.props.sub_total - this.props.discount) * value - (this.props.sub_total - this.props.discount)
+      gratuity: (this.props.sub_total - (this.props.discount || 0)) * value - (this.props.sub_total - (this.props.discount || 0))
     })
   }
 
@@ -221,7 +223,7 @@ class SimpleSlider extends React.Component {
 						<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', width:'100%'}}>
 							<div style={{display: 'flex', width: '100%', paddingLeft: 6}} >
 								{
-									(appointment.gratuity === 0 && appointment.status !== 6) && (
+									(!appointment.gratuity && appointment.status !== 6) && (
 										<FloatingActionButton onTouchTap={() => this.setState({is_tip_modal_open: appointment_id})} secondary={true} iconStyle={{ height: 100, width: 100 }} style={{ height: 100, width: 100, marginTop: -50,  zIndex: 3000 }} >
 						      				<span> Add Tip </span>
 						   				</FloatingActionButton>

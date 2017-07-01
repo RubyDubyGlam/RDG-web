@@ -22,41 +22,41 @@ import Makeup from '../../../public/assets/lipstick.svg'
 import moment from 'moment'
 
 var product_list = {
-	'blowout': {
-		price: 5000,
-		duration: 45,
-		name: 'Blowout',
-	},
-	'blowout+braid': {
-		price: 7500,
-		duration: 50,
-		name: 'Blowout & Braid',
-	},
-	'updo': {
-		price: 8500,
-		duration: 90,
-		name: 'Up-do',
-	},
-	'makeup': {
-		price: 6500,
-		duration: 60,
-		name: 'Makeup',
-	},
-	'makeup+lashstrip': {
-		price: 9000,
-		duration: 60,
-		name: 'Makeup & Lash Strip',
-	},
-	'lashextensions': {
-		price: 20000,
-		duration: 120,
-		name: 'Lash Extensions',
-	},
-	'lashfill': {
-		price: 12500,
-		duration: 120,
-		name: 'Lash Fill',
-	},
+  'blowout': {
+    price: 5000,
+    duration: 45,
+    name: 'Blowout',
+  },
+  'blowout+braid': {
+    price: 7500,
+    duration: 50,
+    name: 'Blowout & Braid',
+  },
+  'updo': {
+    price: 8500,
+    duration: 90,
+    name: 'Up-do',
+  },
+  'makeup': {
+    price: 7500,
+    duration: 60,
+    name: 'Makeup',
+  },
+  'makeup+lashstrip': {
+    price: 10000,
+    duration: 60,
+    name: 'Makeup & Lash Strip',
+  },
+  'lashextensions': {
+    price: 20000,
+    duration: 120,
+    name: 'Lash Extensions',
+  },
+  'lashfill': {
+    price: 12500,
+    duration: 120,
+    name: 'Lash Fill',
+  },
 }
 
 function AppointmentList(props) {

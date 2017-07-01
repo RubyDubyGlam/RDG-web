@@ -84,12 +84,12 @@ var product_list = {
     name: 'Up-do',
   },
   'makeup': {
-    price: 6500,
+    price: 7500,
     duration: 60,
     name: 'Makeup',
   },
   'makeup+lashstrip': {
-    price: 9000,
+    price: 10000,
     duration: 60,
     name: 'Makeup & Lash Strip',
   },
@@ -764,7 +764,7 @@ class OrderDateTimePlaceSelection extends Component {
 		    <div style={{height: '100vh', width: '100vw'}}>
 		    	{ this.state.is_loading && <Loader /> }
 		    	<TOSModal open={this.state.is_tos_modal_open} handleSubmit={() => this.setState({has_accepted_tos: true, is_tos_modal_open: false})} handleDialogClose={() => this.setState({is_tos_modal_open: false})}/>
-		    	<img src={'/assets/hair-salon.jpg'} style={{height: '70vw'}} />
+		    	<img src={'/assets/glam.jpg'} style={{height: '70vw'}} />
 		    	<div style={{height: '70vw', width: '100vw', top: 0, opacity: 0.8, position: 'absolute', backgroundColor: 'black'}} />
 		    	{this.shouldDisplaySubmitText()}
 				<div ref={(ref) => this.form_ref = ref} style={{display: 'flex', width: '100%', overflow: 'scroll', position: 'absolute', bottom: 0, top: '70vw'}} >

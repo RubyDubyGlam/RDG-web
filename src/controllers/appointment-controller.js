@@ -19,12 +19,12 @@ var product_list = {
 		name: 'Up-do',
 	},
 	'makeup': {
-		price: 6500,
+		price: 7500,
 		duration: 60,
 		name: 'Makeup',
 	},
 	'makeup+lashstrip': {
-		price: 9000,
+		price: 10000,
 		duration: 60,
 		name: 'Makeup & Lash Strip',
 	},
