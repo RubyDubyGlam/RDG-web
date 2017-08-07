@@ -18,7 +18,6 @@ var path = require('path')
 
 var app = express()
 
-app.use(express.static('public'))
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -43,9 +42,20 @@ initializeModels.initializeModels(mongoose)
 registerRoutes.registerRoutes(app, mongoose, twilio_client, cache)
 registerServices.registerServices(app, mongoose, twilio_client, cache)
 
-app.get('*', function(req, res) {
+app.get('/', function(req, res, next) {
+	console.log(req.isAuthenticated())
+	if (req.isAuthenticated()) {
+		next()
+	} else {
+		res.sendFile(path.join(__dirname, 'public/landing-index.html'))
+	}
+})
+
+app.get('/login', function(req, res) {
 	res.sendFile(path.join(__dirname, 'public/index.html'))
 })
+
+app.use(express.static('public'))
 
 app.listen(process.env.PORT || 8080, function () {
   console.log('Example app listening on port 8080!')

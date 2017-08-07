@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+
+        <title>RubyDubyGlam</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/animations.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+                $(function() {
+
+            $('#login-form-link').click(function(e) {
+                $("#login-form").delay(100).fadeIn(100);
+                $("#register-form").fadeOut(100);
+                $('#register-form-link').removeClass('active');
+                $(this).addClass('active');
+                e.preventDefault();
+            });
+            $('#register-form-link').click(function(e) {
+                $("#register-form").delay(100).fadeIn(100);
+                $("#login-form").fadeOut(100);
+                $('#login-form-link').removeClass('active');
+                $(this).addClass('active');
+                e.preventDefault();
+            });
+
+        });
+        </script>
+        <!--[if lt IE 9]>
+            <script src="js/vendor/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <nav id="header-nav" style="background-color:black">
+        <div class="">
+    		<a href="login.html">Register</a> &nbsp; | &nbsp; <a href="login.html">Sign In</a>
+    	</div>
+    </nav>
+
+    <header id="header" class="darkgrey_section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-12 mainmenu_wrap">
+                    <div class="main-menu-icon visible-xs">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <nav>
+                        <ul id="mainmenu" class="menu nav sf-menu responsive-menu superfish">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="">
+                                <a href="#info">How it works</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#folio">Services</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#belowcontent">Styles</a>
+                                <ul class="dropdown-menu">
+                                    <li class="">
+                                        <a href="blog.html">blog</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="./blog-single.html">Blog Post</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#folio">Packages</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-login">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a href="#" class="active" id="login-form-link">Login</a>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a href="#" id="register-form-link">Register</a>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: block;">
+                                        <div class="form-group">
+                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                            <label for="remember"> Remember Me</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="text-center">
+                                                        <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+                                        <div class="form-group">
+                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="preloader">
+        <div class="preloaderimg"></div>
+    </div>
+
+        <script src="js/vendor/jquery-1.11.1.min.js"></script>
+        <script src="js/vendor/jquery-migrate-1.2.1.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/placeholdem.min.js"></script>
+        <script src="js/vendor/hoverIntent.js"></script>
+        <script src="js/vendor/superfish.js"></script>
+        <script src="js/vendor/jquery.actual.min.js"></script>
+        <script src="js/vendor/jquery.appear.js"></script>
+        <script src="js/vendor/jquerypp.custom.js"></script>
+        <script src="js/vendor/jquery.elastislide.js"></script>
+        <script src="js/vendor/jquery.flexslider-min.js"></script>
+        <script src="js/vendor/jquery.prettyPhoto.js"></script>
+        <script src="js/vendor/jquery.easing.1.3.js"></script>
+        <script src="js/vendor/jquery.ui.totop.js"></script>
+        <script src="js/vendor/jquery.isotope.min.js"></script>
+        <script src="js/vendor/jquery.easypiechart.min.js"></script>
+        <script src='js/vendor/jflickrfeed.min.js'></script>
+        <script src="js/vendor/jquery.sticky.js"></script>
+        <script src='js/vendor/owl.carousel.min.js'></script>
+        <script src='js/vendor/jquery.nicescroll.min.js'></script>
+        <script src='js/vendor/jquery.fractionslider.min.js'></script>
+        <script src='js/vendor/jquery.scrollTo-min.js'></script>
+        <script src='js/vendor/jquery.localscroll-min.js'></script>
+        <script src='js/vendor/jquery.parallax-1.1.3.js'></script>
+        <script src='js/vendor/jquery.bxslider.min.js'></script>
+        <script src='js/vendor/jquery.funnyText.min.js'></script>
+        <script src='js/vendor/jquery.countTo.js'></script>
+        <script src="js/vendor/grid.js"></script>
+        <script src='twitter/jquery.tweet.min.js'></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+
+    </body>
+</html>

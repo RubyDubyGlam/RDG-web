@@ -114,7 +114,7 @@ function registerRoutes(app, db) {
 		req.session.destroy((err) => {
 			req.logout()
 
-			res.redirect(200)
+			res.redirect('/')
 		})
 	});
 }
