@@ -48,6 +48,8 @@ function pollSettle(app, db, twilio_client){
 		}
 
 	}, 3600000)	
+
+	settle(app, db)
 }
 
 function settle(app, db, twilio_client){
