@@ -55,6 +55,8 @@ function pollSettle(app, db, twilio_client){
 function settle(app, db, twilio_client){
 	var Appointment = db.model('Appointment')
 
+	console.log('poll')
+
 	Appointment.find({status: 5}, function(err, appointments) {
 
 		if (Array.isArray(appointments)) {

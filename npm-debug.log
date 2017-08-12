@@ -7,7 +7,7 @@
 6 silly lifecycle RubyDubyGlam-ui@0.1.0~prestart: no script for prestart, continuing
 7 info lifecycle RubyDubyGlam-ui@0.1.0~start: RubyDubyGlam-ui@0.1.0
 8 verbose lifecycle RubyDubyGlam-ui@0.1.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle RubyDubyGlam-ui@0.1.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/scottgago/Desktop/app/node_modules/.bin:/usr/local/bin:/Users/scottgago/anaconda/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+9 verbose lifecycle RubyDubyGlam-ui@0.1.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/scottgago/Desktop/app/node_modules/.bin:/usr/local/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Users/scottgago/anaconda/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 10 verbose lifecycle RubyDubyGlam-ui@0.1.0~start: CWD: /Users/scottgago/Desktop/app
 11 silly lifecycle RubyDubyGlam-ui@0.1.0~start: Args: [ '-c', 'node server.js' ]
 12 silly lifecycle RubyDubyGlam-ui@0.1.0~start: Returned: code: 1  signal: null
