@@ -171,7 +171,7 @@ class AppointmentAssign extends Component {
 				        <p>{`${this.props.appointments[this.props.match.params.id].address}`}</p>
 				        <p style={{fontSize: 18}}>Time:</p>
 				        <p>{`${moment(this.props.appointments[this.props.match.params.id].time).format('MMMM Do, h:mm a')}`}</p>
-				        <p style={{fontSize: 18}}>Services: {product_list[this.props.appointments[this.props.match.params.id].products].name}</p>
+				        <p style={{fontSize: 18}}>Services: {this.props.appointments[this.props.match.params.id].products.toString()}</p>
 			        </Dialog>
 		      </div>
 	    	</List>
