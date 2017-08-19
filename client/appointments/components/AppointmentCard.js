@@ -356,20 +356,20 @@ class AppointmentCard extends Component {
       <Card style={{width: '100%', flexGrow: 1}}>
         <CardMedia>
           <GettingStartedGoogleMap 
-            lat={Number(props.appointments[props.match.params.id].latitude)}
-            lng={Number(props.appointments[props.match.params.id].longitude)}
+            lat={Number(appointment.latitude)}
+            lng={Number(appointment.longitude)}
           />
         </CardMedia>
-        <CardTitle title={moment(props.appointments[props.match.params.id].time).format('MMMM Do, h:mm a')} subtitle={props.appointments[props.match.params.id].address} />
+        <CardTitle title={moment(appointment.time).format('MMMM Do, h:mm a')} subtitle={appointment.address} />
         <CardText style={{paddingTop: 0}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
         Services: {
-          map(props.appointments[props.match.params.id].products.split(''), product => product_list[product].name) 
+          map(appointment.products.split(''), product => product_list[product].name) 
         }
         </div>
         {props.user.roles.admin &&
           <div style={{marginTop: 12}}>
-            Stylist: {props.appointments[props.match.params.id].stylist_full_name || 'Unassigned'}
+            Stylist: {appointment.stylist_full_name || 'Unassigned'}
           </div>
         }
         </CardText>
