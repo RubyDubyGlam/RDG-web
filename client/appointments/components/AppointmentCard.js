@@ -32,6 +32,8 @@ import { withRouter } from 'react-router'
 
 import { addTip } from '../action/appointment-action'
 
+import { map } from lodash
+
 var product_list = {
   'blowout': {
     price: 5000,
@@ -361,7 +363,7 @@ class AppointmentCard extends Component {
         <CardTitle title={moment(props.appointments[props.match.params.id].time).format('MMMM Do, h:mm a')} subtitle={props.appointments[props.match.params.id].address} />
         <CardText style={{paddingTop: 0}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-        Services: {product_list[props.appointments[props.match.params.id].products].name}
+        Services: {map(props.appointments[props.match.params.id].products].split(''), (appointment) => product_list[appointment].name) }
         </div>
         {props.user.roles.admin &&
           <div style={{marginTop: 12}}>
