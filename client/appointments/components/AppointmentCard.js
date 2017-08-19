@@ -364,7 +364,7 @@ class AppointmentCard extends Component {
         <CardText style={{paddingTop: 0}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
         Services: {
-          map(appointment.products, product => `product_list[product].name, `) 
+          map(appointment.products, product => `${product_list[product].name} `) 
         }
         </div>
         {props.user.roles.admin &&
