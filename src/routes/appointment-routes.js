@@ -141,6 +141,17 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 	}
 
+	function createHandleSuccessStylistNotify(req, res, notification) {
+		return function(appointment) {
+			twilio_client.messages.create({
+			    body: notification,
+			    to: appointment.stylist_phone_number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			res.json(appointment)
+		}
+	}
+
 	function createHandleSuccessCreate(req, res, notification) {
 		return function(appointment) {
 			twilio_client.messages.create({
@@ -179,7 +190,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 					stylist_full_name: stylist.first_name + ' ' + stylist.last_name,
 					stylist_phone_number: stylist.phone_number
 				},
-				createHandleSuccess(req, res),
+				createHandleSuccessStylistNotify(req, res, 'You have been assigned an appointment. Please check the app and accept.'),
 		    	createHandleError(req, res)
 			)			
 		}
