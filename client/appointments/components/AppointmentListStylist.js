@@ -89,11 +89,10 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>{map(appointment.products, (product) => product_list[product].name).toString()}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
@@ -111,11 +110,10 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>{map(appointment.products, (product) => product_list[product].name).toString()}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
@@ -131,11 +129,10 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>{map(appointment.products, (product) => product_list[product].name).toString()}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
@@ -150,11 +147,10 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>{map(appointment.products, (product) => product_list[product].name).toString()}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
@@ -170,11 +166,10 @@ function AppointmentList(props) {
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
-						  			<p style={{fontSize: '1em'}}>{product_list[appointment.products].name}</p>
+						  			<p style={{fontSize: '1em'}}>{map(appointment.products, (product) => product_list[product].name).toString()}</p>
 						  			<p style={{fontSize: '1em'}}>Gratuity: ${appointment.gratuity / 100}</p>
 					  			</div>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'right'}}>
-						  			<p style={{fontSize: '1em'}}>Duration: {product_list[appointment.products].duration} min</p>
 						  			<p style={{fontSize: '1em'}}>{moment(appointment.time).format('MMMM Do, h:mm a')}</p>
 					  			</div>
 			  				</div>
