@@ -48,7 +48,7 @@ class MobileHeaderAndroid extends React.Component {
 		    iconClassNameRight="muidocs-icon-navigation-expand-more"
 		    onLeftIconButtonTouchTap={e => this.setState({open: true})}
 		    style={{
-          backgroundColor: this.props.user.roles.admin ? 'black' : 'transparent', boxShadow: null
+          backgroundColor: this.props.user.roles.admin || this.props.user.roles.stylist ? 'black' : 'transparent', boxShadow: null
         }}
 		  />
 	        <Drawer
