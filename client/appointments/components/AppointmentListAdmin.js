@@ -88,6 +88,9 @@ class AppointmentList extends Component {
 
 	return (
 		<div style={{width: '100%', overflowY: 'scroll', display: 'flex', flexDirection: 'column'}}>
+			<div stlyle={{width: '100%', top: 0, height: 64, zIndex: 0, backgroundColor: 'black'}} >
+
+			</div>
 			<List>
 				{appointments[0] && appointments[0].length && <Subheader style={{color: 'black'}} >{`Unassigned appointments ( ${appointments[0] && appointments[0].length || 0} )`}</Subheader> }
 			    { 
@@ -230,7 +233,6 @@ class AppointmentList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     location: state.router.location.pathname,
     appointments: state.appointment.appointments,
