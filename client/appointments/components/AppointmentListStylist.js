@@ -78,14 +78,14 @@ function AppointmentList(props) {
 	return (
 		<div style={{width: '100%', overflowY: 'scroll'}}>
 			<List>
-			    {appointments[1] && appointments[1].length && <Subheader style={{color: 'pink'}} >{`Pending Assigned Appointments ( ${appointments[1] && appointments[1].length || 0} )`}</Subheader> }
+			    {appointments[1] && appointments[1].length && <Subheader style={{color: 'black'}} >{`Pending Assigned Appointments ( ${appointments[1] && appointments[1].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[1] && map(appointments[1], (appointment) => {
 					  return (
 					  	  <div>
 					  	  <Divider />
 							<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
@@ -101,12 +101,12 @@ function AppointmentList(props) {
 					  )
 			    	})
 			    }
-			    {appointments[2] && appointments[2].length && <Subheader style={{color: 'pink'}} >{`Accepted Appointments ( ${appointments[2] && appointments[2].length || 0} )`}</Subheader> }
+			    {appointments[2] && appointments[2].length && <Subheader style={{color: 'black'}} >{`Accepted Appointments ( ${appointments[2] && appointments[2].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[2] && map(appointments[2], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
@@ -120,12 +120,12 @@ function AppointmentList(props) {
 					  )
 			    	})
 			    }
-			    {appointments[3] && appointments[3].length && <Subheader style={{color: 'pink'}} >{`In-Progress Appointments ( ${appointments[3] && appointments[3].length || 0} )`}</Subheader> }
+			    {appointments[3] && appointments[3].length && <Subheader style={{color: 'black'}} >{`In-Progress Appointments ( ${appointments[3] && appointments[3].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[3] && map(appointments[3], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
@@ -143,7 +143,7 @@ function AppointmentList(props) {
 			    	appointments[4] && map(appointments[4], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
@@ -157,12 +157,12 @@ function AppointmentList(props) {
 					  )
 			    	})
 			    }
-			    {appointments[5] && appointments[5].length && <Subheader style={{color: 'pink'}} >{`My Pending Appointments ( ${appointments[5] && appointments[5].length || 0} )`}</Subheader> }
+			    {appointments[5] && appointments[5].length && <Subheader style={{color: 'black'}} >{`My Pending Appointments ( ${appointments[5] && appointments[5].length || 0} )`}</Subheader> }
 			    { 
 			    	appointments[5] && map(appointments[5], (appointment) => {
 					  return ( 
 						  	<div 
-						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}
+						  		style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'black', borderWidth: 1 }}
 						  		onClick={() => props.navigate(`appointment/${appointment._id}`)}
 						  	>
 					  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
