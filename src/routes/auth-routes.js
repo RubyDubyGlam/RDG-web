@@ -118,8 +118,8 @@ function registerRoutes(app, db) {
 							bcrypt.hash(password, salt, function(err, hash) {
 
 								controller.set(
-									user._id, 
-									{ email_address: email_address, password: hash }, 
+									user[0]._id, 
+									{ password: hash }, 
 									function(user) {
 										var payload = {id: user._id}
 										var token = jwt.sign(payload, options.secretOrKey)
