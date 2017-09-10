@@ -110,6 +110,8 @@ function registerRoutes(app, db) {
 			controller.get(
 				{ email_address: email_address },
 				function(user, err) {
+
+					console.log('wtf')
 					if (user.length && user[0].password) {
 						return res.status(401).json({message:"Email address taken"})
 					} else if (user.length && !user[0].password) {
