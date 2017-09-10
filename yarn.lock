@@ -895,6 +895,13 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bcrypt@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-1.0.3.tgz#b02ddc6c0b52ea16b8d3cf375d5a32e780dab548"
+  dependencies:
+    nan "2.6.2"
+    node-pre-gyp "0.6.36"
+
 big.js@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.1.3.tgz#4cada2193652eb3ca9ec8e55c9015669c9806978"
@@ -2423,6 +2430,16 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
+jsonwebtoken@^7.0.0, jsonwebtoken@^7.4.3:
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-7.4.3.tgz#77f5021de058b605a1783fa1283e99812e645638"
+  dependencies:
+    joi "^6.10.1"
+    jws "^3.1.4"
+    lodash.once "^4.0.0"
+    ms "^2.0.0"
+    xtend "^4.0.1"
+
 jsonwebtoken@^7.4.1:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-7.4.2.tgz#571b903c07e875c0fc59203d1ac78667d80e09cd"
@@ -2809,6 +2826,10 @@ muri@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/muri/-/muri-1.2.1.tgz#ec7ea5ce6ca6a523eb1ab35bacda5fa816c9aa3c"
 
+nan@2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
+
 nan@^2.3.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.1.tgz#d5b01691253326a97a2bbee9e61c55d8d60351e2"
@@ -2859,6 +2880,20 @@ node-libs-browser@^2.0.0:
     url "^0.11.0"
     util "^0.10.3"
     vm-browserify "0.0.4"
+
+node-pre-gyp@0.6.36:
+  version "0.6.36"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.36.tgz#db604112cb74e0d477554e9b505b17abddfab786"
+  dependencies:
+    mkdirp "^0.5.1"
+    nopt "^4.0.1"
+    npmlog "^4.0.2"
+    rc "^1.1.7"
+    request "^2.81.0"
+    rimraf "^2.6.1"
+    semver "^5.3.0"
+    tar "^2.2.1"
+    tar-pack "^3.4.0"
 
 node-pre-gyp@^0.6.29:
   version "0.6.34"
@@ -3081,6 +3116,13 @@ passport-instagram@^1.0.0:
   resolved "https://registry.yarnpkg.com/passport-instagram/-/passport-instagram-1.0.0.tgz#eaa2b42d11473bcfda5190f26234cf485f645656"
   dependencies:
     passport-oauth2 "1.x.x"
+
+passport-jwt@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/passport-jwt/-/passport-jwt-3.0.0.tgz#7d9e4ff0fa0522108540ce1fcfa83bbd8faa29c9"
+  dependencies:
+    jsonwebtoken "^7.0.0"
+    passport-strategy "^1.0.0"
 
 passport-oauth1@1.x.x:
   version "1.1.0"

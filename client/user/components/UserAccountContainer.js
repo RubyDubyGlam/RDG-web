@@ -13,7 +13,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { connect } from 'react-redux'
 
-import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../action/user-action'
+import { changePhoneNumber, changeEmailAddress, toggleSubscribe, changePassword } from '../action/user-action'
 
 import { withRouter } from 'react-router'
 
@@ -135,6 +135,62 @@ class ChangeEmailAddressModal extends Component {
   }
 }
 
+class ChangePasswordModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: '',
+      confirm_password: '',
+    }
+  }
+
+  render() {
+    const {
+      props
+    } = this
+
+    const actions = [
+      <FlatButton
+        label="back"
+        primary={true}
+        onTouchTap={props.handleDialogClose}
+      />,
+      <FlatButton
+        label="submit"
+        disabled={!this.state.password || (this.state.password !== this.state.confirm_password)}
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={() => props.handleSubmit(this.state.password)}
+      />,
+    ]
+
+    return (
+      <Dialog
+        title="New password"
+        actions={actions}
+        modal={false}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={styles.phone_number_style}
+        bodyStyle={{minHeight: 90 }}
+      >
+        <TextField
+          hintText="Password"
+          floatingLabelText="Password"
+          type="password"
+          onChange={e => this.setState({password: e.target.value})}
+        />
+        <TextField
+          hintText="Re-enter password"
+          floatingLabelText="Confirm password"
+          type="password"
+          onChange={e => this.setState({confirm_password: e.target.value})}
+        />
+      </Dialog>
+    )
+  }
+}
+
 
 class CancelModal extends Component {
   render() {
@@ -172,9 +228,17 @@ class ListExampleSettings extends Component {
     this.state = {
       is_editing_phone_number: false,
       is_editing_email_address: false,
+      is_editing_password: false,
       error: '',
       delete_account_modal: false
     }
+  }
+
+  handleChangePasswordModalClose = () => {
+    this.setState({
+      is_editing_password: false,
+      error: ''
+    })
   }
 
   handleChangePhoneNumberModalClose = () => {
@@ -199,6 +263,18 @@ class ListExampleSettings extends Component {
       })      
     }).catch((error) => {
       this.setState({error: 'Invalid phone_number'})
+    })     
+  }
+
+  handleSubmitChangePassword = (password) => {
+    console.log(password)
+    this.props.changePassword(password).then(() => {
+      this.setState({
+        is_editing_password: false,
+        error: ''
+      })      
+    }).catch((error) => {
+      this.setState({error: 'Invalid password'})
     })     
   }
 
@@ -229,8 +305,6 @@ class ListExampleSettings extends Component {
       user
     } = this.props
 
-    console.log(user)
-
    return ( 
       <div style={styles.root}>
         <div style={{width: '100%', height: '60px', backgroundColor: 'black', marginBottom: '2em'}} />
@@ -238,6 +312,11 @@ class ListExampleSettings extends Component {
           open={this.state.is_editing_phone_number}
           handleDialogClose={this.handleChangePhoneNumberModalClose}
           handleSubmit={this.handleSubmitChangePhoneNumber}
+        />
+        <ChangePasswordModal 
+          open={this.state.is_editing_password}
+          handleDialogClose={this.handleChangePasswordModalClose}
+          handleSubmit={this.handleSubmitChangePassword}
         />
         <ChangeEmailAddressModal 
           open={this.state.is_editing_email_address}
@@ -248,9 +327,9 @@ class ListExampleSettings extends Component {
         <List>
           <Subheader style={{fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
           <ListItem
-            primaryText="Change my phone number"
-            secondaryText={<span>{user.email_address}</span>}
-            onClick={e => this.setState({is_editing_email_address: true})}
+            primaryText="Change my password"
+            secondaryText={<span>**********</span>}
+            onClick={e => this.setState({is_editing_password: true})}
           />
           <ListItem
             primaryText="Change my phone number"
@@ -289,6 +368,7 @@ const mapStateToProps = (state) => {
 let ListExampleSettingsComponent = connect( mapStateToProps, {
   changePhoneNumber,
   changeEmailAddress,
+  changePassword,
   toggleSubscribe
 })(ListExampleSettings)
 

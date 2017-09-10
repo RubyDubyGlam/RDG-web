@@ -1,11 +1,35 @@
-var passport = require('passport')
-var Strategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var InstagramStrategy = require('passport-instagram').Strategy;
 var _ = require('lodash')
 
+var jwt = require('jsonwebtoken');
+
+var bcrypt = require('bcrypt');
+
+var passport = require('passport')
+
+var JwtStrategy = require('passport-jwt').Strategy,
+		ExtractJwt = require('passport-jwt').ExtractJwt;
+		
+const base_url = process.env.HOST || "http://localhost:8080"
+
+var user_controller = require('../controllers/user-controller')
+
+var salt = 'salty salt yum yum'
+
+var options = {
+	jwtFromRequest: function(req) {
+		var token = null
+
+    if (req && req.cookies) {
+        token = req.cookies['jwt']
+		}
+			
+    return token
+	},
+	secretOrKey: 'shhhhh'
+}
 
 passport.serializeUser(function(user, cb) {
+	user._id = user._id.toString()
   cb(null, user);
 });
 
@@ -13,110 +37,129 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-
 function registerRoutes(app, db) {
-	const base_url = process.env.HOST || "http://localhost:8080"
 
-	passport.use(new Strategy({
-	    clientID: process.env.FACEBOOK_ID || '1003305543133729',
-	    clientSecret: process.env.FACEBOOK_SECRET || '216a6e0705a46d9dfc3f98433fdbcf31',
-	    callbackURL: base_url + "/v1/auth/facebook/callback",
-	    profileFields: ['id', 'emails', 'name']
-	  },
-	  function(accessToken, refreshToken, profile, cb) {
+	var controller = user_controller.initializeController(app, db.model('User'))
 
-	  	var User = db.model('User')
+	passport.use(new JwtStrategy(options, function(jwt_payload, done) {
+			controller.get(
+				jwt_payload.id, 
+				function(user, err) {
+					if (err) {
+						return done(err, false);
+					}
+					if (user) {
+						return done(null, user);
+					} else {
+						return done(null, false);
+					}
+				}, 
+				function(err) { 
+					return done(err, false) 
+				}
+			)
+	}));
 
-	    User.findOrCreate({facebook_id: profile.id}, { 
-	    	facebook_id: profile.id,
-	    	first_name: profile.name.givenName,
-	    	last_name: profile.name.familyName,
-	    	email_address: profile.emails[0].value,
-		}, function (err, user) {
-	      return cb(err, user);
-	    })
-	  }
-	));
+	app.post("/v1/auth/login", function(req, res) {
+		
+		var email_address = req.body.email_address
+		var password = req.body.password
 
-	passport.use(new GoogleStrategy({
-	    clientID: process.env.GOOGLE_ID || '246933107573-8mf4fgcjqsf448980ct165jm5b44sgsc.apps.googleusercontent.com',
-	    clientSecret: process.env.GOOGLE_SECRET || 'YtznwHibfajEG5TT1DEVmLtC',
-	    callbackURL: base_url + "/v1/auth/google/callback"
-	  },
-	  function(accessToken, refreshToken, profile, cb) {
-	  	   var User = db.model('User')
+		if (!email_address) {
+			return res.status(401).json({message:"No email address"})
+		} else if (!password) {
+			return res.status(401).json({message:"No password"})
+		} else {
+			controller.get(
+				{ email_address: email_address },
+				function(user, err) {
+					if (!user.length) {
+						return res.status(401).json({message:"Invalid user"})
+					}
 
-			var photo = _.get(profile, 'photos[0].value')
+					bcrypt.compare(password, user[0].password, function(err, is_same) {
 
-		    User.findOrCreate({google_id: profile.id}, { 
-		    	google_id: profile.id,
-		    	first_name: profile.name.givenName,
-		    	last_name: profile.name.familyName,
-		    	email_address: profile.emails[0].value,
-		    	profile_picture: photo
-			}, function (err, user) {
-		      return cb(err, user);
-		    })
-	  }
-	));
+						if (is_same == true) {
+							var payload = {id: user[0]._id}
+							var token = jwt.sign(payload, options.secretOrKey)
 
-	passport.use(new InstagramStrategy({
-	    clientID: process.env.INSTAGRAM_ID || '7ab71bbbf974497ba441f53dbb133225',
-	    clientSecret: process.env.INSTAGRAM_SECRET || 'a85610256de44acb9f2fbaa98d9beee6',
-	    callbackURL: base_url + "/v1/auth/instagram/callback"
-	  },
-	  function(accessToken, refreshToken, profile, cb) {
-	  	   var User = db.model('User')
+							res.cookie('jwt', token);
 
-	  	   var full_name = profile.displayName.split(' ')
-	       
-	       User.findOrCreate({instagram_id: profile.id}, { 
-	       	instagram_id: profile.id,
-	    	first_name: full_name[0],
-	    	last_name: full_name[1],
-	       }, function (err, user) {
-	         return cb(err, user);
-	       });
-	  }
-	));
+							res.redirect('/')
+						} else {
+							res.status(401).json({message:"Invalid password"})
+						}
+					})
+				},
+				function(err) {
+					res.status(401).json({message:"User not found"})
+				}
+			)
+		}
+	})
 
-	app.use(passport.initialize());
-	app.use(passport.session());
+	app.post("/v1/auth/register", function(req, res) {
+		var email_address = req.body.email_address
+		var password = req.body.password
 
-	app.get('/v1/auth/instagram', passport.authenticate('instagram'));
+		if(!email_address){
+			return res.status(401).json({message:"Invalid: email address"})
+		} else if (!password) {
+			return res.status(401).json({message:"Invalid: password"})
+		} else {
+			controller.get(
+				{ email_address: email_address },
+				function(user, err) {
+					if (user.length && user[0].password) {
+						return res.status(401).json({message:"Email address taken"})
+					} else if (user.length && !user.password) {
 
-	app.get('/v1/auth/instagram/callback', 
-	  passport.authenticate('instagram', { failureRedirect: '/', scope: ['email', 'profile'] }),
-	  function(req, res) {
-	    res.redirect('/');
-	  });
+						bcrypt.genSalt(10, function(err, salt) {
+							bcrypt.hash(password, salt, function(err, hash) {
 
-	app.get('/v1/auth/google',
-	  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email', 'profile'] }));
+								controller.set(
+									user._id, 
+									{ email_address: email_address, password: hash }, 
+									function(user) {
+										var payload = {id: user._id}
+										var token = jwt.sign(payload, options.secretOrKey)
 
-	app.get('/v1/auth/google/callback', 
-	  passport.authenticate('google', { failureRedirect: '/', scope: ['email', 'profile'] }),
-	  function(req, res) {
-	    res.redirect('/');
-	  });
+										res.cookie('jwt', token);
 
-	app.get('/v1/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
+										res.redirect('/')
+									},
+									function(err) { res.status(401).json({message:"Invalid: something went wrong"}) }
+								)
+							})
+						})
+					} else {
+						bcrypt.genSalt(10, function(err, salt) {
+							bcrypt.hash(password, salt, function(err, hash) {
+								var user = controller.create({ email_address: email_address, password: hash }, function(user) {
+									var payload = {id: user._id}
+									var token = jwt.sign(payload, options.secretOrKey)
 
-	app.get(
-	  '/v1/auth/facebook/callback', 
-	  passport.authenticate('facebook', { failureRedirect: '/' }),
-	  function(req, res) {
-	    res.redirect('/')
-	  }
-	)
+									res.cookie('jwt', token);
+
+									res.redirect('/')
+								})
+							})
+						})						
+					}
+				},
+				function(err) {
+					return res.status(401).json({message:"Email address taken"})
+				}
+			)
+		}
+	})
 
 	app.get('/v1/auth/logout', function(req, res){
-		req.session.destroy((err) => {
-			req.logout()
-
-			res.redirect('/')
-		})
+		res.cookie('jwt', '')
+		res.redirect('/')
 	});
+
+	app.use('/v1/*', passport.authenticate('jwt', { session: false }))
 }
 
 module.exports = {

@@ -55,13 +55,6 @@ function registerRoutes(app, db, twilio_client, cache) {
 	appointment_controller = appointment_controller.initializeController(app, db.model('Appointment'))
 	user_controller = user_controller.initializeController(app, db.model('User'))
 
-	function ensureAuthenticated(req, res, next) {
-	  if (req.isAuthenticated())
-	    return next();
-	  else
-	    res.redirect('/')
-	}
-
 	function ensureAdmin(req, res, next) {
 		if (req.user.roles.admin) {
 			return next()
@@ -195,8 +188,6 @@ function registerRoutes(app, db, twilio_client, cache) {
 			)			
 		}
 	}
- 
-	app.use('/v1/appointment/*', ensureAuthenticated)
 
 	app.post('/v1/appointment/book', 
 		function(req, res) {

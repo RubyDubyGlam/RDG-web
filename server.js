@@ -29,22 +29,12 @@ var cache = redis.createClient(process.env.REDIS_URL || 'redis://h:pa253ba6c192c
 
 cache.flushdb()
 
-app.use(session({
-    store: new RedisStore({
-    	client: cache
-    }),
-    secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: false
-}));
-
 initializeModels.initializeModels(mongoose)
 registerRoutes.registerRoutes(app, mongoose, twilio_client, cache)
 registerServices.registerServices(app, mongoose, twilio_client, cache)
 
 app.get('/', function(req, res, next) {
-	console.log(req.isAuthenticated())
-	if (req.isAuthenticated()) {
+	if (req.cookies['jwt']) {
 		next()
 	} else {
 		res.sendFile(path.join(__dirname, 'public/landing-index.html'))

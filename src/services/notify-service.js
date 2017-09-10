@@ -3,7 +3,6 @@ var notify_services = require('./notify-service')
 var appointment_controller = require('../controllers/appointment-controller')
 var _ = require('lodash')
 
-
 function pollCritical(app, db, twilio_client){
 	notifyCritical(app, db, twilio_client)
 
