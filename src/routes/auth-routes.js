@@ -112,7 +112,7 @@ function registerRoutes(app, db) {
 				function(user, err) {
 					if (user.length && user[0].password) {
 						return res.status(401).json({message:"Email address taken"})
-					} else if (user.length && !user.password) {
+					} else if (user.length && !user[0].password) {
 
 						bcrypt.genSalt(10, function(err, salt) {
 							bcrypt.hash(password, salt, function(err, hash) {
