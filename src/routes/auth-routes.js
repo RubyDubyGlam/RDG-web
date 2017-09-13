@@ -25,7 +25,8 @@ var options = {
 			
     return token
 	},
-	secretOrKey: 'shhhhh'
+	secretOrKey: 'shhhhh',
+	ignoreExpiration: true,
 }
 
 passport.serializeUser(function(user, cb) {
@@ -110,16 +111,12 @@ function registerRoutes(app, db) {
 			controller.get(
 				{ email_address: email_address },
 				function(user, err) {
-
-					console.log('wtf')
 					if (user.length && user[0].password) {
 						return res.status(401).json({message:"Email address taken"})
 					} else if (user.length && !user[0].password) {
 
 						bcrypt.genSalt(10, function(err, salt) {
 							bcrypt.hash(password, salt, function(err, hash) {
-
-								console.log(user[0])
 
 								controller.set(
 									user[0]._id, 

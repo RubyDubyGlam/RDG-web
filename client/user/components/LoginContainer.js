@@ -222,6 +222,7 @@ class LoginContainer extends Component {
                   inputStyle={{color: 'white'}}
                   floatingLabelStyle={{color: 'white'}}
                   value={this.state.confirm_password}
+                  errorText={this.state.confirm_password && (this.state.password !== this.state.confirm_password) ? "Passwords don't match" : null }
                   onChange={(e) => this.setState({ confirm_password: e.target.value, error: '' })}
                 /><br />
                 <p>

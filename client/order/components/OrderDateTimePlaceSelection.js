@@ -463,20 +463,20 @@ class OrderDateTimePlaceSelection extends Component {
 
   		if (this.state.date) {
   			if(parseInt(moment(this.state.date).format('e')) > 4 ) {
-				beginningTime = moment('8:00am', 'h:mma');
-				endTime = moment('7:00pm', 'h:mma');
-				invalidTime = 'Please choose a time between 8am and 7pm'
+					beginningTime = moment('8:00am', 'h:mma');
+					endTime = moment('7:00pm', 'h:mma');
+					invalidTime = 'Please choose a time between 8am and 7pm'
   			} else {
-				beginningTime = moment('9:00am', 'h:mma');
-				endTime = moment('5:00pm', 'h:mma'); 
-				invalidTime = 'Please choose a time between 9am and 5pm'				
+					beginningTime = moment('9:00am', 'h:mma');
+					endTime = moment('5:00pm', 'h:mma'); 
+					invalidTime = 'Please choose a time between 9am and 5pm'				
   			}
   		}
 
 		const rawTime = moment(moment(raw_time).format('h:mma'), 'h:mma')
 
-		const is_after_eight = rawTime.isAfter(beginningTime)
-		const is_before_six = rawTime.isBefore(endTime)
+		const is_after_eight = rawTime.isSameOrAfter(beginningTime)
+		const is_before_six = rawTime.isSameOrBefore(endTime)
 
 		if (is_after_eight && is_before_six) {
 			const display_time = (moment(raw_time).format('hh:mm A'))
