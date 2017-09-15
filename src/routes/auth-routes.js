@@ -82,9 +82,9 @@ function registerRoutes(app, db) {
 
 						if (is_same == true) {
 							var payload = {id: user[0]._id}
-							var token = jwt.sign(payload, options.secretOrKey)
+							var token = jwt.sign(payload, options.secretOrKey, { expiresIn: '100 days' })
 
-							res.cookie('jwt', token);
+							res.cookie('jwt', token, { expires: new Date(253402300000000) });
 
 							res.redirect('/')
 						} else {
@@ -125,7 +125,7 @@ function registerRoutes(app, db) {
 										var payload = {id: user._id}
 										var token = jwt.sign(payload, options.secretOrKey)
 
-										res.cookie('jwt', token);
+										res.cookie('jwt', token, { expires: new Date(253402300000000), maxAge: new Date(253402300000000) });
 
 										res.redirect('/')
 									},
@@ -140,7 +140,7 @@ function registerRoutes(app, db) {
 									var payload = {id: user._id}
 									var token = jwt.sign(payload, options.secretOrKey)
 
-									res.cookie('jwt', token);
+									res.cookie('jwt', token, { expires: new Date(253402300000000) });
 
 									res.redirect('/')
 								})
