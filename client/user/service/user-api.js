@@ -21,10 +21,12 @@ export function login(email_address, password) {
   })
 }
 
-export function register(email_address, password) {
+export function register(email_address, password, first_name, last_name) {
   return axios.post('/v1/auth/register', {
     email_address,
     password,
+    first_name,
+    last_name,
   }).then((response) => {
     return response.data
   })

@@ -41,6 +41,8 @@ class LoginContainer extends Component {
       password: '',
       confirm_password: '',
       toggle: '',
+      first_name: '',
+      last_name: ''
     }
   }
 
@@ -127,6 +129,20 @@ class LoginContainer extends Component {
       return false
     }
 
+    if (!this.state.first_name) {
+      if (is_submitting) {
+        this.setState({ error: "No first name" })
+      }
+      return false
+    }
+
+    if (!this.state.last_name) {
+      if (is_submitting) {
+        this.setState({ error: "No last name" })
+      }
+      return false
+    }
+
     return true
   }
 
@@ -135,7 +151,9 @@ class LoginContainer extends Component {
       toggle,
       email_address: '',
       password: '',
-      confirm_password: ''
+      confirm_password: '',
+      first_name: '',
+      last_name: ''
     })
   }
 
@@ -201,6 +219,22 @@ class LoginContainer extends Component {
             this.state.toggle === 'register' && (
               <div style={{flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <TextField
+                  floatingLabelText="First name"
+                  inputStyle={{color: 'white'}}
+                  floatingLabelStyle={{color: 'white'}}
+                  value={this.state.first_name}
+                  onChange={(e) => this.setState({ first_name: e.target.value, error: '' })}
+                  errorText = { this.state.error === "No first name" && this.state.error }
+                /><br />
+                <TextField
+                  floatingLabelText="Last name"
+                  inputStyle={{color: 'white'}}
+                  floatingLabelStyle={{color: 'white'}}
+                  value={this.state.last_name}
+                  onChange={(e) => this.setState({ last_name: e.target.value, error: '' })}
+                  errorText = { this.state.error === "No last name" && this.state.error }
+                /><br />
+                <TextField
                   floatingLabelText="Email address"
                   inputStyle={{color: 'white'}}
                   floatingLabelStyle={{color: 'white'}}
@@ -234,7 +268,7 @@ class LoginContainer extends Component {
                   primary={true}
                   disabled={!this.isValidRegister()}
                   onClick={() => {
-                    this.props.register(this.state.email_address, this.state.password)
+                    this.props.register(this.state.email_address, this.state.password, this.state.first_name, this.state.last_name)
                     .catch(error => this.setState({ error: error.response.data.message }) )
                   }}
                   style={{marginTop: 26, color: (!this.isValidRegister()) ? 'gray' : 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: '10vh'}}

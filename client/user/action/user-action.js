@@ -36,9 +36,9 @@ export function login(email_address, password) {
 	}
 }
 
-export function register(email_address, password) {
+export function register(email_address, password, first_name, last_name) {
 	return function(dispatch, getState) {
-		return registerApi(email_address, password).then((response) => {
+		return registerApi(email_address, password, first_name, last_name).then((response) => {
 			window.location.href = '/'
 		})
 	}

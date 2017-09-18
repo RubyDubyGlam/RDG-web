@@ -102,8 +102,14 @@ function registerRoutes(app, db) {
 	app.post("/v1/auth/register", function(req, res) {
 		var email_address = req.body.email_address
 		var password = req.body.password
+		var first_name = req.body.first_name
+		var last_name = req.body.last_name
 
-		if(!email_address){
+		if (!first_name) {
+			return res.status(401).json({message:"Invalid: first name"})
+		} else if (!last_name) {
+			return res.status(401).json({message: 'Invalid: last name'})
+		} else if (!email_address){
 			return res.status(401).json({message:"Invalid: email address"})
 		} else if (!password) {
 			return res.status(401).json({message:"Invalid: password"})
@@ -136,7 +142,7 @@ function registerRoutes(app, db) {
 					} else {
 						bcrypt.genSalt(10, function(err, salt) {
 							bcrypt.hash(password, salt, function(err, hash) {
-								var user = controller.create({ email_address: email_address, password: hash }, function(user) {
+								var user = controller.create({ email_address: email_address, password: hash, first_name: first_name, last_name: last_name }, function(user) {
 									var payload = {id: user._id}
 									var token = jwt.sign(payload, options.secretOrKey)
 
