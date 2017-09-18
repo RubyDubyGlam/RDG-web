@@ -29,7 +29,8 @@ const styles = {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundImage: 'url("/assets/hair-salon-port.jpg")'
+    backgroundImage: 'url("/assets/hair-salon-port.jpg")',
+    backgroundAttachment: 'fixed',
   },
 }
 
