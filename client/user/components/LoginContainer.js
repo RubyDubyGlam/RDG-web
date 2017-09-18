@@ -25,10 +25,11 @@ const styles = {
     padding: 0,
     margin: 0,
     position: 'absolute',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundImage: 'url("/assets/hair-salon-port.jpg")'
+    backgroundColor: 'black',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundImage: 'url("/assets/hair-salon-port.jpg")'
   },
 }
 
@@ -163,7 +164,7 @@ class LoginContainer extends Component {
       <div style={styles.container}>
         { this.state.is_loading ? <Loader /> : null }
         <div style={{position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 2, backgroundColor: 'black', opacity: .9}} />
-        <div style={{flexDirection: 'column', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 3, color: 'white'}}>
+        <div style={{flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 3, color: 'white'}}>
           <p style={{fontSize: 24}}>Welcome to RubyDubyGlam!</p>
           {
             this.state.toggle === '' && [
@@ -271,7 +272,7 @@ class LoginContainer extends Component {
                     this.props.register(this.state.email_address, this.state.password, this.state.first_name, this.state.last_name)
                     .catch(error => this.setState({ error: error.response.data.message }) )
                   }}
-                  style={{marginTop: 26, color: (!this.isValidRegister()) ? 'gray' : 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: '10vh'}}
+                  style={{marginTop: 26, color: (!this.isValidRegister()) ? 'gray' : 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: '10%'}}
                 /> 
               </div>
             )
