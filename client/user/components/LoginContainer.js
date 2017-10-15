@@ -227,6 +227,7 @@ class LoginContainer extends Component {
                   value={this.state.first_name}
                   onChange={(e) => this.setState({ first_name: e.target.value, error: '' })}
                   errorText = { this.state.error === "No first name" && this.state.error }
+                  style={{ marginTop: -24 }}
                 /><br />
                 <TextField
                   floatingLabelText="Last name"
@@ -235,6 +236,7 @@ class LoginContainer extends Component {
                   value={this.state.last_name}
                   onChange={(e) => this.setState({ last_name: e.target.value, error: '' })}
                   errorText = { this.state.error === "No last name" && this.state.error }
+                  style={{ marginTop: -24 }}
                 /><br />
                 <TextField
                   floatingLabelText="Email address"
@@ -243,6 +245,7 @@ class LoginContainer extends Component {
                   value={this.state.email_address}
                   onChange={(e) => this.setState({ email_address: e.target.value, error: '' })}
                   errorText = { this.state.error === "Email address taken" && this.state.error }
+                  style={{ marginTop: -24 }}
                 /><br />
                 <TextField
                   floatingLabelText="Password"
@@ -251,6 +254,7 @@ class LoginContainer extends Component {
                   floatingLabelStyle={{color: 'white'}}
                   value={this.state.password}
                   onChange={(e) => this.setState({ password: e.target.value, error: '' })}
+                  style={{ marginTop: -24 }}
                 /><br />
                 <TextField
                   floatingLabelText="Re-enter Password"
@@ -260,6 +264,7 @@ class LoginContainer extends Component {
                   value={this.state.confirm_password}
                   errorText={this.state.confirm_password && (this.state.password !== this.state.confirm_password) ? "Passwords don't match" : null }
                   onChange={(e) => this.setState({ confirm_password: e.target.value, error: '' })}
+                  style={{ marginTop: -24 }}
                 /><br />
                 <p>
                   <span>Already have an account?</span>
@@ -273,7 +278,7 @@ class LoginContainer extends Component {
                     this.props.register(this.state.email_address, this.state.password, this.state.first_name, this.state.last_name)
                     .catch(error => this.setState({ error: error.response.data.message }) )
                   }}
-                  style={{marginTop: 26, color: (!this.isValidRegister()) ? 'gray' : 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: '10%'}}
+                  style={{marginTop: 26, color: (!this.isValidRegister()) ? 'gray' : 'white', borderStyle: 'solid', borderRadius: 4, borderWidth: 1, width: '60vw', height: 48}}
                 /> 
               </div>
             )
