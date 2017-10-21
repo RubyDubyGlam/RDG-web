@@ -71,9 +71,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 		appointment_controller.get(
 			req.params.id,
 			function(appointment) {
-
-				console.log(appointment.stylist_id, req.user._id)
-				if (appointment.stylist_id == req.user._id) {
+				if (appointment.stylist_id.toString() == req.user._id.toString()) {
 					return next()
 				}
 
@@ -237,10 +235,10 @@ function registerRoutes(app, db, twilio_client, cache) {
 
 	app.post('/v1/appointment/:id/accept', ensureIsSameStylistOrAdmin, function(req, res) {
 	    appointment_controller.set(
-			req.params.id,
-			{ status: 2 },
-			createHandleSuccess(req, res),
-	    	createHandleError(req, res)
+				req.params.id,
+				{ status: 2 },
+				createHandleSuccess(req, res),
+				createHandleError(req, res)
 	    )
 	})
 
