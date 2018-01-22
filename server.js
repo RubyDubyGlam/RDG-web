@@ -33,17 +33,17 @@ initializeModels.initializeModels(mongoose)
 registerRoutes.registerRoutes(app, mongoose, twilio_client, cache)
 registerServices.registerServices(app, mongoose, twilio_client, cache)
 
-app.get('/', function(req, res, next) {
-	if (req.cookies['jwt']) {
-		next()
-	} else {
-		res.sendFile(path.join(__dirname, 'public/landing-index.html'))
-	}
-})
+// app.get('/', function(req, res, next) {
+// 	if (req.cookies['jwt']) {
+// 		next()
+// 	} else {
+// 		res.sendFile(path.join(__dirname, 'public/landing-index.html'))
+// 	}
+// })
 
-app.get('/login', function(req, res) {
-	res.sendFile(path.join(__dirname, 'public/index.html'))
-})
+// app.get('/login', function(req, res) {
+// 	res.sendFile(path.join(__dirname, 'public/index.html'))
+// })
 
 app.use(express.static('public'))
 
