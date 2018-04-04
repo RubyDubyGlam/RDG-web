@@ -7,6 +7,8 @@ var initializeModels = require('./src/schema/schema')
 var redis = require("redis")
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var MobileDetect = require('mobile-detect')
+
 
 var accountSid = process.env.TWILIO_SID || 'ACc25db466a2c0059b6fe9b12b5ec06609'
 var authToken = process.env.TWILIO_AUTH || '47da183cb3cf8394b0f260f7c5ada896'
@@ -29,17 +31,19 @@ var cache = redis.createClient(process.env.REDIS_URL || 'redis://h:pa253ba6c192c
 
 cache.flushdb()
 
+app.get('/', function(req, res, next) {
+  md = new MobileDetect(req.headers['user-agent'])
+
+	if (md.mobile()) {
+		next()
+	} else {
+		res.sendFile(path.join(__dirname, 'public/landing-index.html'))
+	}
+})
+
 initializeModels.initializeModels(mongoose)
 registerRoutes.registerRoutes(app, mongoose, twilio_client, cache)
 registerServices.registerServices(app, mongoose, twilio_client, cache)
-
-// app.get('/', function(req, res, next) {
-// 	if (req.cookies['jwt']) {
-// 		next()
-// 	} else {
-// 		res.sendFile(path.join(__dirname, 'public/landing-index.html'))
-// 	}
-// })
 
 // app.get('/login', function(req, res) {
 // 	res.sendFile(path.join(__dirname, 'public/index.html'))
