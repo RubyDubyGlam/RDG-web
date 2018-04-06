@@ -209,9 +209,6 @@ import {injectStripe} from 'react-stripe-elements';
 class ElementsCard extends React.Component {
   handleSubmit = (ev) => {
     // We don't want to let default form submission happen here, which would refresh the page.
-    if(ev) {
-		ev.preventDefault();
-    }
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
     this.props.stripe.createToken().then(({token, err, error}) => {
