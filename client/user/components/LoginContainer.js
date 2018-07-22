@@ -166,7 +166,7 @@ class LoginContainer extends Component {
         { this.state.is_loading ? <Loader /> : null }
         <div style={{position: 'fixed', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 2, backgroundColor: 'black', opacity: .9}} />
         <div style={{flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, height: '100vh', maxHeight: '100vh', minHeight: '100vh', overflow: 'scroll', width: '100vw', zIndex: 3, color: 'white'}}>
-          <p style={{fontSize: 24}}>Welcome to RubyDubyGlam!</p>
+          <p style={{fontSize: 24}}>Welcome to RD Glam!</p>
           {
             this.state.toggle === '' && [
               <p onClick={() => this.setState({ toggle: 'login' })} style={{fontSize: 24, marginTop: 24}}>LOGIN</p>,

@@ -289,7 +289,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 	    appointment_controller.set(
 			req.params.id,
 			{ status: 5 },
-			createHandleSuccessSingleNotify(req, res, 'Your appointment is complete! Thank you for using Ruby Duby Glam. If you were happy with your service, feel free to leave a tip for your stylist by clicking on the "Add Tip" button on your appointment. If you would like to give us feedback, please send an email to info@rubydubyglam.com'),
+			createHandleSuccessSingleNotify(req, res, 'Your appointment is complete! Thank you for using RD Glam. If you were happy with your service, feel free to leave a tip for your stylist by clicking on the "Add Tip" button on your appointment. If you would like to give us feedback, please send an email to info@rubydubyglam.com'),
 	    	createHandleError(req, res)
 	    )
 	})

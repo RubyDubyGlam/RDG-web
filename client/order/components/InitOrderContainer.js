@@ -72,7 +72,7 @@ class OrderFlow extends Component {
 				<div style={{position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 2, backgroundColor: 'black', opacity: .9}}>
 				</div>
 				<div style={{flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, bottom: 0, height: '100vh', width: '100vw', zIndex: 3, color: 'white'}}>
-					<p style={{transition: 'fadein'}}>Welcome to RubyDubyGlam</p>
+					<p style={{transition: 'fadein'}}>Welcome to RD Glam</p>
 					<p style={{transition: 'fadein'}}>The premier app for in-home styling services</p>
 					    <FlatButton
 					        label="Let's get started"
