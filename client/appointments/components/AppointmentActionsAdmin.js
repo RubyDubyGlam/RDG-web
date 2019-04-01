@@ -7,8 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 
 import navigate from '../../common/actions/router-actions'
-import { 
-	acceptAppointment,
+import {
 	assignStylist,
 	appointmentStateChange
 } from '../action/appointment-action'
@@ -142,7 +141,6 @@ const mapStateToProps = (state) => {
 
 let AppointmentActionsComponent = connect( mapStateToProps, {
   navigate,
-  acceptAppointment,
   assignStylist, 
   appointmentStateChange
 })(AppointmentActions)

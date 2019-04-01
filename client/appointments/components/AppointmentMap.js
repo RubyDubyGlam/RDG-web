@@ -1,7 +1,9 @@
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import React, { Component } from 'react'
 
-import CarIcon from '../../../public/assets/car.svg'
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { noop } from 'lodash'
+
+import CarIcon from '../../svg/car.svg'
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
@@ -82,10 +84,10 @@ export default class AppointmentMap extends Component {
   		    mapElement={
   		      <div style={{ height: agent === 'web' ? 450 : '100vw' }} />
   		    }
-  		    onMapLoad={_.noop}
-  		    onMapClick={_.noop}
+  		    onMapLoad={noop}
+  		    onMapClick={noop}
   		    markers={markers}
-  		    onMarkerRightClick={_.noop}
+  		    onMarkerRightClick={noop}
           lat={props.lat}
           lng={props.lng}
     		/> 

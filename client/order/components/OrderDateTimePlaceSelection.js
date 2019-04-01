@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+
+import { map, forEach } from 'lodash'
+import moment from 'moment'
 
 import {
   Step,
@@ -6,12 +11,10 @@ import {
   StepLabel,
   StepContent,
 } from 'material-ui/Stepper'
-
-import navigate from '../../common/actions/router-actions'
-import { createOrder } from '../action/order-action'
-
-import { connect } from 'react-redux'
-
+import Avatar from 'material-ui/Avatar';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 import TimePicker from 'material-ui/TimePicker'
 import DatePicker from 'material-ui/DatePicker'
 import AutoComplete from 'material-ui/AutoComplete'
@@ -19,30 +22,28 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Snackbar from 'material-ui/Snackbar'
 import TextField from 'material-ui/TextField'
-import Loader from '../../common/components/Loader'
-
-import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../../user/action/user-action'
-
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-
-import { map, forEach } from 'lodash'
-
-import moment from 'moment'
-
-import { withRouter } from 'react-router'
-
-import FontIcon from 'material-ui/FontIcon';
-
-import Avatar from 'material-ui/Avatar';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
-
+import FontIcon from 'material-ui/FontIcon';
+import Dialog from 'material-ui/Dialog';
 import {blue500, red500, green500} from 'material-ui/styles/colors';
 
-import Dialog from 'material-ui/Dialog';
+import {
+	CardElement, 
+	StripeProvider, 
+	Elements, 
+	injectStripe,
+} from 'react-stripe-elements';
+
+import navigate from '../../common/actions/router-actions'
+import Loader from '../../common/components/Loader'
+import { createOrder } from '../action/order-action'
+import { 
+	changePhoneNumber, 
+	changeEmailAddress, 
+	toggleSubscribe, 
+} from '../../user/action/user-action'
 
 const styles = {
   root: {
@@ -200,11 +201,6 @@ class ChangeEmailAddressModal extends Component {
     )
   }
 }
-
-import {CardElement} from 'react-stripe-elements';
-import {StripeProvider} from 'react-stripe-elements';
-import {Elements} from 'react-stripe-elements';
-import {injectStripe} from 'react-stripe-elements';
 
 class ElementsCard extends React.Component {
   handleSubmit = (ev) => {
@@ -406,8 +402,8 @@ class OrderDateTimePlaceSelection extends Component {
 			has_accepted_tos: false
 		}
 
-		this.autocompleteService = new google.maps.places.AutocompleteService()
-		this.geocoder = new google.maps.Geocoder()
+		this.autocompleteService = new window.google.maps.places.AutocompleteService()
+		this.geocoder = new window.google.maps.Geocoder()
 	}
 
   	handleLocationSelect = ({value}) => {
@@ -539,11 +535,11 @@ class OrderDateTimePlaceSelection extends Component {
   	}
 
   	handleAddressSubmit = (e) => {
-  		e.preventDefault(),
+  		e.preventDefault()
   		this.setState({
   			is_editing_address: false
   		})
-  		this.handleLocationSelect()
+			this.handleLocationSelect()
   	}
 
   	shouldDisplaySubmitText = () => {

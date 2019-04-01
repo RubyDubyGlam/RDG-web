@@ -129,8 +129,8 @@ class OrderPaymentSelection extends Component {
 			is_loading: false,
 		}
 
-		this.autocompleteService = new google.maps.places.AutocompleteService()
-		this.geocoder = new google.maps.Geocoder()
+		this.autocompleteService = new window.google.maps.places.AutocompleteService()
+		this.geocoder = new window.google.maps.Geocoder()
 	}
 
 	setAddress = (address) => {

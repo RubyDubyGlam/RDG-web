@@ -38,11 +38,11 @@ export default class OrderPaymentSelection extends Component {
 			error: '',
 			is_valid_card: false
 		}
-		Stripe.setPublishableKey('pk_test_BTRrj2yjVesTnchX9JbiYJE3')
+		window.Stripe.setPublishableKey('pk_test_BTRrj2yjVesTnchX9JbiYJE3')
 	}
 
 	createToken = () => {
-	  	Stripe.card.createToken({
+	  	window.Stripe.card.createToken({
 		    number: this.state.number,
 		    cvc: this.state.cvc,
 		    exp_month: this.state.expr.substring(0,2),

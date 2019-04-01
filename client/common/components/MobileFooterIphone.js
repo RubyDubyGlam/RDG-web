@@ -1,19 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
+import { Link } from 'react-router-dom';
+import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+import navigate from '../actions/router-actions'
 
 const recentsIcon = <FontIcon className="material-icons">account_box</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">book</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
-
-import navigate from '../actions/router-actions'
-
-import { connect } from 'react-redux'
-
-import { Link } from 'react-router-dom';
 
 function MobileFooterIphone(props) {
   

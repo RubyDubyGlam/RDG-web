@@ -33,9 +33,9 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 
-import HairDryer from '../../../public/assets/technology.svg'
-import Nails from '../../../public/assets/nail-polish.svg'
-import Makeup from '../../../public/assets/lipstick.svg'
+import HairDryer from '../../svg/technology.svg'
+import Nails from '../../svg/nail-polish.svg'
+import Makeup from '../../svg/lipstick.svg'
 
 const styles = {
   root: {

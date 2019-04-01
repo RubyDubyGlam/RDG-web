@@ -24,9 +24,9 @@ import { connect } from 'react-redux'
 
 import Loader from '../../common/components/Loader'
 
-import HairDryer from '../../../public/assets/technology.svg'
-import Nails from '../../../public/assets/nail-polish.svg'
-import Makeup from '../../../public/assets/lipstick.svg'
+import HairDryer from '../../svg/technology.svg'
+import Nails from '../../svg/nail-polish.svg'
+import Makeup from '../../svg/lipstick.svg'
 
 import Divider from 'material-ui/Divider';
 

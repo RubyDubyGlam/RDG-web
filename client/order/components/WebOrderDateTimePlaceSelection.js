@@ -46,8 +46,8 @@ export default class OrderDateTimePlaceSelection extends Component {
 			address: props.form_data.address
 		}
 
-		this.autocompleteService = new google.maps.places.AutocompleteService()
-		this.geocoder = new google.maps.Geocoder()
+		this.autocompleteService = new window.google.maps.places.AutocompleteService()
+		this.geocoder = new window.google.maps.Geocoder()
 	}
 
   	handleLocationSelect = ({value}) => {

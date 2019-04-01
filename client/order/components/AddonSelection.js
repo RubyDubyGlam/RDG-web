@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper';
-
-import navigate from '../../common/actions/router-actions'
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
-import moment from 'moment'
-
 import { connect } from 'react-redux'
 
+import moment from 'moment'
 import { map, each } from 'lodash'
+
+import Slider from 'react-slick'
+
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import Paper from 'material-ui/Paper';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+
+import navigate from '../../common/actions/router-actions'
 
 const styles = {
 	container: {
@@ -72,12 +73,11 @@ var product_list = {
   },
 }
 
-import Slider from 'react-slick'
-
 class SimpleSlider extends React.Component {
-
   computeAddons = (product_selection) => {
-  	const base_product = product_list[product_selection]
+		const base_product = product_list[product_selection]
+		
+		const Slide = window.Slide
 
   	const slides = [
   		<Slide 
@@ -89,7 +89,7 @@ class SimpleSlider extends React.Component {
 
   	each( base_product.addons, (addon) => {
   		slides.push(
-	 		<Slide 
+	 			<Slide 
 	  			price={addon.price[0]} 
 	  			image={addon.image}
 	  			duration={addon.duration[0]}

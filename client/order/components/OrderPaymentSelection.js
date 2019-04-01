@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import { withRouter } from 'react-router'
+
+import moment from 'moment'
 
 import {
   Step,
@@ -6,9 +9,7 @@ import {
   StepLabel,
   StepContent,
 } from 'material-ui/Stepper';
-
 import Snackbar from 'material-ui/Snackbar';
-
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
@@ -26,10 +27,6 @@ const styles = {
     textAlign: 'center'
   },
 };
-
-import { withRouter } from 'react-router'
-
-import moment from 'moment'
 
 var product_list = {
   'blowout': {
@@ -83,12 +80,12 @@ class OrderPaymentSelection extends Component {
 			is_valid_card: false,
 			is_loading: false
 		}
-		Stripe.setPublishableKey('pk_live_StmsYeM1MHShCtaqySy02iz4')
+		window.Stripe.setPublishableKey('pk_live_StmsYeM1MHShCtaqySy02iz4')
 	}
 
 	createToken = () => {
 		this.setState({is_loading: true})
-	  	Stripe.card.createToken({
+	  	window.Stripe.card.createToken({
 		    number: this.state.number,
 		    cvc: this.state.cvc,
 		    exp_month: this.state.expr.substring(0,2),
