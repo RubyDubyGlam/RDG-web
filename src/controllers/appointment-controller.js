@@ -1,5 +1,5 @@
 var stripe = require("stripe")(
-  process.env.STRIPE_SECRET || "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
+  process.env.STRIPE_SECRET || "sk_test_6vH37zGJp5ZIfHC0bEcMdEXa"
 );
 
 var product_list = {
@@ -19,12 +19,12 @@ var product_list = {
 		name: 'Up-do',
 	},
 	'makeup': {
-		price: 6500,
+		price: 7500,
 		duration: 60,
 		name: 'Makeup',
 	},
 	'makeup+lashstrip': {
-		price: 9000,
+		price: 10000,
 		duration: 60,
 		name: 'Makeup & Lash Strip',
 	},
@@ -73,34 +73,34 @@ function initializeController(app, Appointment) {
 
 				stripe.charges.create({
 				  source: appointment.payment_token,
-				  amount: parseInt(product_list[appointment.products].price + appointment.gratuity),
+				  amount: appointment.sub_total + appointment.gratuity - appointment.discount,
 				  currency: "usd",
-				  description: product_list[appointment.products].name,
-				  email: appointment.email_address,
+				  receipt_email: appointment.email_address,
 				  metadata: {
 				  	gratuity: appointment.gratuity,
-				  	subtotal: product_list[appointment.products].price,
-				  	service: appointment.products,
+				  	subtotal: appointment.sub_total,
+				  	discount: appointment.discount,
+				  	service: appointment.products.toString(),
 				  	customer_id: appointment.customer_id.toString(),
 				  	stylist_id: appointment.stylist_id.toString(),
 				  	customer_full_name: appointment.customer_full_name,
 				  	stylist_full_name: appointment.stylist_full_name,
 				  },
-				  source: appointment.payment_token,
 				}, function(err, order) {
-						if (err) {
+
+						if (err && error_cb) {
 							return error_cb(err)
 						}
+
 						Appointment.findByIdAndUpdate(
 							appointment_id, 
-							{settled: true, status: 5},
+							{settled: true, status: 6},
 							{new: true},
 							function(err, user) {
-								if (err) {
+								if (err && error_cb) {
 									return error_cb(err)
 								}
-
-								success_cb(user)
+								success_cb && success_cb(user)
 							}
 						)
 					})			  

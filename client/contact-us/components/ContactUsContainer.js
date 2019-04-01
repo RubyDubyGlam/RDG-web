@@ -10,9 +10,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     overflowY: 'scroll',
-    backgroundImage: 'url("/assets/black-gradient.jpg")',
-    color: 'white',
-    padding: '10%'
+    position: 'absolute'
   },
 };
 
@@ -25,7 +23,8 @@ class FAQSContainer extends Component {
 
    return ( 
       <div style={styles.root}>
-		<p style={{ fontSize: 12, textAlign: 'center', marginBottom: 40, fontSize: '.8em' }} >Please send us an email at info@rubydubyglam.com</p>
+        <div style={{width: '100%', height: '60px', backgroundColor: 'black', marginBottom: '2em'}} />
+		    <p style={{ fontSize: 12, textAlign: 'center', marginBottom: 40, fontSize: '.8em' }} >Please send us an email at info@rubydubyglam.com</p>
       </div>
     )
   }

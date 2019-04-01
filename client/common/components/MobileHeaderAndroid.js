@@ -15,12 +15,12 @@ import navigate from '../actions/router-actions'
 
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 
-const recentsIcon = <FontIcon className="material-icons">account_box</FontIcon>;
-const favoritesIcon = <FontIcon className="material-icons">book</FontIcon>;
-const contactUsIcon = <FontIcon className="material-icons">email</FontIcon>;
-const logoutIcon = <FontIcon className="material-icons">exit_to_app</FontIcon>;
-const faqsIcon = <FontIcon className="material-icons">subject</FontIcon>;
-const nearbyIcon = <IconLocationOn />;
+const recentsIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">account_box</FontIcon>;
+const favoritesIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">book</FontIcon>;
+const contactUsIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">email</FontIcon>;
+const logoutIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">exit_to_app</FontIcon>;
+const faqsIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">subject</FontIcon>;
+const nearbyIcon = <FontIcon style={{color: 'rgb(255, 64, 129)'}} className="material-icons">location_on</FontIcon>;
 
 class MobileHeaderAndroid extends React.Component {
 
@@ -48,8 +48,7 @@ class MobileHeaderAndroid extends React.Component {
 		    iconClassNameRight="muidocs-icon-navigation-expand-more"
 		    onLeftIconButtonTouchTap={e => this.setState({open: true})}
 		    style={{
-          backgroundColor: 'black',
-          backgroundImage: 'url("/assets/black-gradient.jpg")'
+          backgroundColor: this.props.user.roles.admin || this.props.user.roles.stylist ? 'black' : 'transparent', boxShadow: null
         }}
 		  />
 	        <Drawer
@@ -58,17 +57,22 @@ class MobileHeaderAndroid extends React.Component {
 	          open={this.state.open}
 	          onRequestChange={(open) => this.setState({open})}
             back
-            containerStyle={{backgroundImage: 'url("/assets/black-gradient.jpg")', maxHeight: '100%'}}
+            containerStyle={{maxHeight: '100%'}}
 	        >	
-	        	<div style={{ width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
+	        	<div style={{ backgroundColor: 'black', marginBottom: 26, width: '100%', height: '25%', display: 'flex', alignItems:'center', justifyContent: 'center', flexDirection: 'column'}}>
 	        		<img src={'/assets/rbg-logo.png'} style={{borderRadius: '50%', width:'45%'}} />
 	        	</div>
-        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/')}/>
-        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
-        		<MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="FAQS" leftIcon={faqsIcon} onTouchTap={() => this.navigate('/faqs')} />
-            <MenuItem style={{borderTopStyle: 'solid', borderBottomStyle: 'solid', borderWidth: 1, borderColor: 'gray', color: 'white', fontWeight: 100}} primaryText="Logout" leftIcon={logoutIcon} onTouchTap={this.props.logout} />
+        		{ 
+              !this.props.user.roles.admin && !this.props.user.roles.stylist ? [
+                <MenuItem primaryText="Book" leftIcon={favoritesIcon} onTouchTap={() => this.navigate('/book')}/>,
+                <MenuItem primaryText="Future Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/future')}/>,
+                <MenuItem primaryText="Past Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/client-appointment/past')}/>,
+              ] : <MenuItem primaryText="Appointments" leftIcon={nearbyIcon} onTouchTap={() => this.navigate('/appointment')}/>
+            }
+        		<MenuItem primaryText="My Account" leftIcon={recentsIcon} onTouchTap={() => this.navigate('/account')} />
+            <MenuItem primaryText="Contact Us" leftIcon={contactUsIcon} onTouchTap={() => this.navigate('/contact-us')} />
+            <MenuItem primaryText="FAQS" leftIcon={faqsIcon} onTouchTap={() => this.navigate('/faqs')} />
+            <MenuItem primaryText="Logout" leftIcon={logoutIcon} onTouchTap={this.props.logout} />
 	        </Drawer>
       </div>
     );

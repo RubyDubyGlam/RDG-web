@@ -21,6 +21,7 @@ export default class AppointmentContainer extends Component {
 				<Route path='/appointment/:id/assign' component={AppointmentAssign} />
 				<Route path='/appointment/:id' render={() => <AppointmentCard appointments={this.props.appointments} />} />
 				<Route path='/appointment' component={AppointmentRouter} />
+				<Route path='/client-appointment/:tense' render={({match}) => <AppointmentRouter match={match} />} />
 			</Switch>
 		)
 	}

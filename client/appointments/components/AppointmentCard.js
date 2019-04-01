@@ -32,6 +32,8 @@ import { withRouter } from 'react-router'
 
 import { addTip } from '../action/appointment-action'
 
+import { map } from 'lodash'
+
 var product_list = {
   'blowout': {
     price: 5000,
@@ -282,23 +284,22 @@ class AppointmentCard extends Component {
             open={this.state.is_tip_modal_open}
             handleDialogClose={this.handleAddTipModalClose}
             handleSubmitTip={this.handleSubmitTip}
-            product={appointment.products}
           />
           <CancelModal open={this.state.cancel_modal_open} handleDialogClose={() => this.setState({cancel_modal_open: false})}/>
           <List>
             <ListItem
               primaryText="Services"
               style={{color: 'white'}}
-              secondaryText={<span style={{color: 'pink'}}>{product_list[appointment.products].name}</span>}
+              secondaryText={<span style={{color: 'pink'}}>{appointment.products.join(' , ')}</span>}
             />
             <ListItem
               primaryText="Total"
               style={{color: 'white'}}
               secondaryText={
                 <div style={{color: 'pink', maxHeight: 85, height: ''}}>
-                  <p>Services: ${(product_list[appointment.products].price / 100).toFixed(2)}</p>
+                  <p>Services: ${(appointment.sub_total / 100).toFixed(2)}</p>
                   <p>Gratuity: ${(appointment.gratuity / 100).toFixed(2)}</p>
-                  <p>Total: ${((product_list[appointment.products].price + appointment.gratuity) / 100).toFixed(2)}</p>
+                  <p>Total: ${((appointment.sub_total + appointment.gratuity) / 100).toFixed(2)}</p>
                 </div>
               }
             />
@@ -355,18 +356,20 @@ class AppointmentCard extends Component {
       <Card style={{width: '100%', flexGrow: 1}}>
         <CardMedia>
           <GettingStartedGoogleMap 
-            lat={Number(props.appointments[props.match.params.id].latitude)}
-            lng={Number(props.appointments[props.match.params.id].longitude)}
+            lat={Number(appointment.latitude)}
+            lng={Number(appointment.longitude)}
           />
         </CardMedia>
-        <CardTitle title={moment(props.appointments[props.match.params.id].time).format('MMMM Do, h:mm a')} subtitle={props.appointments[props.match.params.id].address} />
+        <CardTitle title={moment(appointment.time).format('MMMM Do, h:mm a')} subtitle={appointment.address} />
         <CardText style={{paddingTop: 0}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-        Services: {product_list[props.appointments[props.match.params.id].products].name}
+        Services: {
+          map(appointment.products, product => `${product_list[product].name} `) 
+        }
         </div>
         {props.user.roles.admin &&
           <div style={{marginTop: 12}}>
-            Stylist: {props.appointments[props.match.params.id].stylist_full_name || 'Unassigned'}
+            Stylist: {appointment.stylist_full_name || 'Unassigned'}
           </div>
         }
         </CardText>

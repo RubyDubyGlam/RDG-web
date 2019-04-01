@@ -37,6 +37,17 @@ function initializeController(app, User) {
 			} else {
 				User.find(params, handleFetchResponse)
 			}
+		},
+		getById: function(id, success_cb, error_cb) {
+			function handleFetchResponse(err, user) {
+
+				if (err) {
+					return error_cb(err)
+				}
+				success_cb(user)
+			}
+
+			User.findById(id, handleFetchResponse)
 		}
 	}
 }

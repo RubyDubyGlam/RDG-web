@@ -13,16 +13,47 @@ var stripe = require("stripe")(
   process.env.STRIPE_SECRET || "sk_test_Lxwnqx79grhDeKqg0XUWMwUi"
 );
 
+var product_list = {
+  'blowout': {
+    price: 5000,
+    duration: 45,
+    name: 'Blowout',
+  },
+  'blowout+braid': {
+    price: 7500,
+    duration: 50,
+    name: 'Blowout & Braid',
+  },
+  'updo': {
+    price: 8500,
+    duration: 90,
+    name: 'Up-do',
+  },
+  'makeup': {
+    price: 7500,
+    duration: 60,
+    name: 'Makeup',
+  },
+  'makeup+lashstrip': {
+    price: 10000,
+    duration: 60,
+    name: 'Makeup & Lash Strip',
+  },
+  'lashextensions': {
+    price: 20000,
+    duration: 120,
+    name: 'Lash Extensions',
+  },
+  'lashfill': {
+    price: 12500,
+    duration: 120,
+    name: 'Lash Fill',
+  },
+}
+
 function registerRoutes(app, db, twilio_client, cache) {
 	appointment_controller = appointment_controller.initializeController(app, db.model('Appointment'))
 	user_controller = user_controller.initializeController(app, db.model('User'))
-
-	function ensureAuthenticated(req, res, next) {
-	  if (req.isAuthenticated())
-	    return next();
-	  else
-	    res.redirect('/')
-	}
 
 	function ensureAdmin(req, res, next) {
 		if (req.user.roles.admin) {
@@ -40,9 +71,7 @@ function registerRoutes(app, db, twilio_client, cache) {
 		appointment_controller.get(
 			req.params.id,
 			function(appointment) {
-
-				console.log(appointment.stylist_id, req.user._id)
-				if (appointment.stylist_id == req.user._id) {
+				if (appointment.stylist_id.toString() == req.user._id.toString()) {
 					return next()
 				}
 
@@ -92,6 +121,28 @@ function registerRoutes(app, db, twilio_client, cache) {
 		}
 	}
 
+	function createHandleSuccessSingleNotify(req, res, notification) {
+		return function(appointment) {
+			twilio_client.messages.create({
+			    body: notification,
+			    to: appointment.phone_number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			res.json(appointment)
+		}
+	}
+
+	function createHandleSuccessStylistNotify(req, res, notification) {
+		return function(appointment) {
+			twilio_client.messages.create({
+			    body: notification,
+			    to: appointment.stylist_phone_number,  // Text this number
+			    from: '+18052108161' // From a valid Twilio number
+			})
+			res.json(appointment)
+		}
+	}
+
 	function createHandleSuccessCreate(req, res, notification) {
 		return function(appointment) {
 			twilio_client.messages.create({
@@ -130,18 +181,23 @@ function registerRoutes(app, db, twilio_client, cache) {
 					stylist_full_name: stylist.first_name + ' ' + stylist.last_name,
 					stylist_phone_number: stylist.phone_number
 				},
-				createHandleSuccess(req, res),
+				createHandleSuccessStylistNotify(req, res, 'You have been assigned an appointment. Please check the app and accept.'),
 		    	createHandleError(req, res)
 			)			
 		}
 	}
- 
-	app.use('/v1/appointment/*', ensureAuthenticated)
 
 	app.post('/v1/appointment/book', 
 		function(req, res) {
 
 	    geocoder.geocode(req.body.address, function(err, location) {
+
+	    	var sub_total = 0
+
+	    	req.body.products.forEach(function(product) {
+	    		sub_total = sub_total + product_list[product].price
+	    	})
+
 		    var params = {
 		    	customer_id: req.user._id,
 		    	customer_full_name: req.user.first_name + ' ' + req.user.last_name,
@@ -152,12 +208,17 @@ function registerRoutes(app, db, twilio_client, cache) {
 		    	products: req.body.products,
 		    	time: req.body.time,
 		    	phone_number: req.body.phone_number,
-		    	email_address: req.body.email_address
+		    	email_address: req.body.email_address,
+		    	sub_total: sub_total,
+	    	}
+
+	    	if (req.body.discount) {
+	    		params.discount = req.body.discount.price
 	    	}
 
 	    	appointment_controller.create(
 	    		params,
-	    		createHandleSuccess(req, res),
+	    		createHandleSuccessCreate(req, res),
 	    		createHandleError(req, res)
 	    	)
   			
@@ -174,10 +235,10 @@ function registerRoutes(app, db, twilio_client, cache) {
 
 	app.post('/v1/appointment/:id/accept', ensureIsSameStylistOrAdmin, function(req, res) {
 	    appointment_controller.set(
-			req.params.id,
-			{ status: 2 },
-			createHandleSuccess(req, res),
-	    	createHandleError(req, res)
+				req.params.id,
+				{ status: 2 },
+				createHandleSuccess(req, res),
+				createHandleError(req, res)
 	    )
 	})
 
@@ -225,9 +286,18 @@ function registerRoutes(app, db, twilio_client, cache) {
 	})
 
 	app.post('/v1/appointment/:id/complete', ensureIsSameStylistOrAdmin, function(req, res) {
-	    appointment_controller.settle(
+	    appointment_controller.set(
 			req.params.id,
 			{ status: 5 },
+			createHandleSuccessSingleNotify(req, res, 'Your appointment is complete! Thank you for using RD Glam. If you were happy with your service, feel free to leave a tip for your stylist by clicking on the "Add Tip" button on your appointment. If you would like to give us feedback, please send an email to info@rubydubyglam.com'),
+	    	createHandleError(req, res)
+	    )
+	})
+
+	app.post('/v1/appointment/:id/settle', ensureIsSameStylistOrAdmin, function(req, res) {
+	    appointment_controller.settle(
+			req.params.id,
+			{ status: 6 },
 			createHandleSuccess(req, res),
 	    	createHandleError(req, res)
 	    )

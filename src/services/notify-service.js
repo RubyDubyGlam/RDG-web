@@ -1,5 +1,6 @@
 var moment = require('moment')
 var notify_services = require('./notify-service')
+var appointment_controller = require('../controllers/appointment-controller')
 var _ = require('lodash')
 
 function pollCritical(app, db, twilio_client){
@@ -36,46 +37,41 @@ function notifyCritical(app, db, twilio_client){
 	})		
 }
 
-function pollCompleted(app, db, twilio_client){
-	notifyCompleted(app, db, twilio_client)
-
+function pollSettle(app, db, twilio_client){
 	setInterval(() => {
-		notifyCompleted(app, db, twilio_client)
+		var now = moment()
+		var end_of_day = moment().endOf('day')
+
+		if (end_of_day.diff(now, 'minutes') <= 61) {
+			settle(app, db)
+		}
+
 	}, 3600000)	
+
+	settle(app, db)
 }
 
-function notifyCompleted(app, db, twilio_client){
+function settle(app, db, twilio_client){
 	var Appointment = db.model('Appointment')
 
-	Appointment.find({status: { $nin: [5]}}, function(err, appointments) {
-		var now = moment()
-		var critical_appointments = 0
-		var stylists = []
+	console.log('poll')
 
-		_.forEach(appointments, function(appointment) {
-			var appointment_time = moment(appointment.time)
-			var time_to_appoinment = moment.duration(now.diff(appointment_time)).asHours()
+	Appointment.find({status: 5}, function(err, appointments) {
 
-			if (time_to_appoinment > 1.5) {
-				critical_appointments ++
-				stylists.push(appointment.stylist_full_name )
-			}
-		})
-
-		if (critical_appointments) {
-			twilio_client.messages.create({
-			    body: 'You have ' + critical_appointments + ' appointment(s) that have starting times over 1.5 hours ago, but have not been marked complete. Please follow up with ' + stylists.join(', ') + ' on their appointments',
-			    to: process.env.ADMIN_PHONE || '+18059158479', // Text this number
-			    from: '+18052108161' // From a valid Twilio number
+		if (Array.isArray(appointments)) {
+			_.forEach(appointments, function(appointment) {
+				appointment_controller.initializeController(app, Appointment).settle(appointment._id)
 			})
+		} else {
+			appointment_controller.initializeController(app, Appointment).settle(appointments._id)
 		}
 	})		
 }
 
 module.exports = {
-	notifyCompleted,
-	pollCompleted,
 	notifyCritical,
-	pollCritical
+	pollCritical,
+	pollSettle,
+	settle
 }
 

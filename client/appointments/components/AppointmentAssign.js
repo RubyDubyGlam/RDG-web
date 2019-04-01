@@ -149,10 +149,10 @@ class AppointmentAssign extends Component {
 		    		map(stylists, (stylist) => {
 			    		return (
 					      <ListItem
-					        primaryText={<span style={{ color: 'white' }}>{`${stylist.first_name} ${stylist.last_name}`}</span>}
+					        primaryText={<span>{`${stylist.first_name} ${stylist.last_name}`}</span>}
 					        leftIcon={ stylist.permissions === 2 ? <ActionGrade color={pinkA200} /> : null }
 					        onClick={this.handleAssignClick(stylist)}
-					        style={{ borderColor: 'pink', borderStyle: 'solid', borderWidth: 1 }}
+					        style={{ borderColor: 'black', borderStyle: 'solid', borderWidth: 1 }}
 					      />
 			    		)
 		    		})
@@ -171,7 +171,7 @@ class AppointmentAssign extends Component {
 				        <p>{`${this.props.appointments[this.props.match.params.id].address}`}</p>
 				        <p style={{fontSize: 18}}>Time:</p>
 				        <p>{`${moment(this.props.appointments[this.props.match.params.id].time).format('MMMM Do, h:mm a')}`}</p>
-				        <p style={{fontSize: 18}}>Services: {product_list[this.props.appointments[this.props.match.params.id].products].name}</p>
+				        <p style={{fontSize: 18}}>Services: {this.props.appointments[this.props.match.params.id].products.toString()}</p>
 			        </Dialog>
 		      </div>
 	    	</List>

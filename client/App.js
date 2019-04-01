@@ -34,6 +34,7 @@ const store = createStore(reducer, applyMiddleware(thunk, router))
 import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
+
   render() {
     let agent = <Route path="/" component={WebLayout} />
 

@@ -272,6 +272,10 @@ class OrderConfirm extends Component {
 		const appointment = this.props.form_data
 		const product = this.props.match.params.service
 
+    if (!product) {
+      return null
+    }
+
 		const {
 			user
 		} = this.props

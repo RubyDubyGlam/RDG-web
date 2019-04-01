@@ -1,14 +1,8 @@
 var user_controller = require('../controllers/user-controller')
 var phone = require('phone');
+var bcrypt = require('bcrypt');
 
 function registerRoutes(app, db) {
-
-	function ensureAuthenticated(req, res, next) {
-	  if (req.isAuthenticated())
-	    return next();
-	  else
-	    res.status(401).send()
-	}
 
 	function ensureAdmin(req, res, next) {
 		if (req.user.roles.admin) {
@@ -33,10 +27,8 @@ function registerRoutes(app, db) {
 
 	var controller = user_controller.initializeController(app, db.model('User'))
 
-	app.use('/v1/user/*', ensureAuthenticated)
-
 	app.get('/v1/user/me', function (req, res) {
-	   	controller.get(
+	   	controller.getById(
 	   		req.user._id,
 	   		createHandleSuccess(req, res),
 	   		createHandleError(req, res)
@@ -52,11 +44,26 @@ function registerRoutes(app, db) {
 	})
 
 	app.get('/v1/user/:id', ensureAdmin, function(req, res) {
-	   	controller.get(
+	   	controller.getById(
 	   		req.params._id,
 	   		createHandleSuccess(req, res),
 	   		createHandleError(req, res)
 	   	)		
+	})
+
+	app.post('/v1/user/change-password', function(req, res) {
+		var password = req.body.password
+
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(password, salt, function(err, hash) {
+				controller.set(
+					req.user._id,
+					{password: hash},
+					createHandleSuccess(req, res),
+					createHandleError(req, res)
+				)
+			})
+		})
 	})
 
 	app.post('/v1/user/change-phone-number', function(req, res) {

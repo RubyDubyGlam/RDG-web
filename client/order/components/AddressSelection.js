@@ -93,12 +93,12 @@ class SelectAddressModal extends Component {
       >
         <List>
 		  <Subheader style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Select an Address</Subheader>
-		  <Subheader style={{color: 'white', fontSize: 16, textAlign: 'center'}}>Click on your address to select it</Subheader>
+		  <Subheader style={{color: 'black', fontSize: 16, textAlign: 'center'}}>Click on your address to select it</Subheader>
 		  {
 		  	map(props.possible_addresses, (address) => {
 		  		return (
 		          <ListItem
-		            primaryText={<span style={{color: 'white', fontSize: 12, textAlign: 'center'}}>{address.formatted_address}</span>}
+		            primaryText={<span style={{color: 'black', fontSize: 12, textAlign: 'center'}}>{address.formatted_address}</span>}
 		            style={{textAlign: 'center'}}
 		            onClick={e => props.setAddress(address.formatted_address)}
 		          />
@@ -170,6 +170,10 @@ class OrderPaymentSelection extends Component {
 	render() {
 		const product = this.props.match.params.service
 
+		if (!product) {
+			return null
+		}
+
 		const appointment = this.props.form_data
 
 		const display_time = (moment(appointment.date_time).format('hh:mm A'))
@@ -196,7 +200,7 @@ class OrderPaymentSelection extends Component {
 		return (
 			<div style={styles.root}>
 				<SelectAddressModal possible_addresses={this.state.possible_addresses} setAddress={this.setAddress} open={this.state.possible_addresses_open} />
-				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'white', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
+				  	<div style={{display: 'flex', textAlign: 'center', width: '100%', marginBottom: 24, minHeight: 90, color: 'black', borderStyle: 'solid', borderColor: 'pink', borderWidth: 1 }}>
 			  			<div style={{padding: 12, width: '50%', textAlign: 'left'}}>
 				  			<p style={{fontSize: '1em'}}>{product_list[product].name}</p>
 				  			<p style={{fontSize: '1em'}}>Price: ${product_list[product].price / 100}</p>
@@ -207,12 +211,12 @@ class OrderPaymentSelection extends Component {
 			  			</div>
 	  				</div>
 				  	<div style={{textAlign: 'center', paddingLeft: '20%', paddingRight: '20%', marginBottom: 24}}>
-			  			<p style={{fontSize: 42, color:'white', fontFamily: "'Great Vibes', cursive" }}> Address </p>
+			  			<p style={{fontSize: 42, color:'black', fontFamily: "'Great Vibes', cursive" }}> Address </p>
 	  				</div>
 				    <TextField
 			      		floatingLabelText="Address line 1"
 			      		onChange={e => this.setState({addressone: e.target.value})}
-			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		inputStyle={{ color: 'black', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 			      		underlineStyle={{ borderWidth: 0 }}
 			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
@@ -220,7 +224,7 @@ class OrderPaymentSelection extends Component {
 				    <TextField
 			      		floatingLabelText="Address line 2"
 			      		onChange={e => this.setState({addresstwo: e.target.value})}
-			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		inputStyle={{ color: 'black', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      	underlineStyle={{ borderWidth: 0 }}
 			      		style={{fontSize: '1em', margin: 5, padding: 16, width: '90%', borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
@@ -229,7 +233,7 @@ class OrderPaymentSelection extends Component {
 					    <TextField
 			      		floatingLabelText="City"
 			      		onChange={e => this.setState({city: e.target.value})}
-			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		inputStyle={{ color: 'black', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
 				      		style={{fontSize: '1em', padding: 16, flexGrow: 1, marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
@@ -239,7 +243,7 @@ class OrderPaymentSelection extends Component {
 				      		floatingLabelText="State"
 				      		value={this.state.state}
 				      		onChange={e => this.setState({state: e.target.value})}
-			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		inputStyle={{ color: 'black', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
 				      		style={{fontSize: '1em', padding: 6, width: '30%', marginTop: 5, marginRight: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}
@@ -248,7 +252,7 @@ class OrderPaymentSelection extends Component {
 
 				      		floatingLabelText="Zip"
 				      		onChange={e => this.setState({zip: e.target.value})}
-			      		inputStyle={{ color: 'white', fontSize: '1em' }}
+			      		inputStyle={{ color: 'black', fontSize: '1em' }}
 			      		floatingLabelStyle = {{ color: 'pink', fontSize: '1em' }}
 				      		underlineStyle={{ borderWidth: 0 }}
 					      	style={{fontSize: '1em', padding: 16, width: '35%', marginTop: 5, borderStyle: 'solid', borderWidth: 1, borderColor: 'gray' }}

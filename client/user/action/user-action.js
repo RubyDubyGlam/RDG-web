@@ -4,6 +4,9 @@ import {
 	meApi,
 	getStylists as getStylistsApi,
 	logout as logoutApi,
+	login as loginApi,
+	register as registerApi,
+	changePassword as changePasswordApi,
 	changePhoneNumber as changePhoneNumberApi,
 	changeEmailAddress as changeEmailAddressApi,
 	subscribe as subscribeApi,
@@ -14,7 +17,7 @@ import ACTION_TYPES from './user-action-enum'
 
 export function me() {
 	return function(dispatch, getState) {
-		meApi().then((response) => {
+		return meApi().then((response) => {
 			dispatch({
 				type: ACTION_TYPES.AUTH_USER.value,
 				payload: {
@@ -25,9 +28,25 @@ export function me() {
 	}
 }
 
+export function login(email_address, password) {
+	return function(dispatch, getState) {
+		return loginApi(email_address, password).then((response) => {
+			window.location.href = '/'
+		})
+	}
+}
+
+export function register(email_address, password, first_name, last_name) {
+	return function(dispatch, getState) {
+		return registerApi(email_address, password, first_name, last_name).then((response) => {
+			window.location.href = '/'
+		})
+	}
+}
+
 export function logout() {
 	return function(dispatch, getState) {
-		logoutApi().then((response) => {
+		return logoutApi().then((response) => {
 			window.location.href = '/'
 		})
 	}
@@ -35,7 +54,7 @@ export function logout() {
 
 export function getStylists() {
 	return function(dispatch, getState) {
-		getStylistsApi().then((response) => {
+		return getStylistsApi().then((response) => {
 			dispatch({
 				type: ACTION_TYPES.RECEIVED_STYLISTS.value,
 				payload: {
@@ -52,6 +71,22 @@ export function changePhoneNumber(phone_number) {
 			type: ACTION_TYPES.USER_INFO_CHANGING.value
 		})
 		return changePhoneNumberApi(phone_number).then((user) => {
+			dispatch({
+				type: ACTION_TYPES.USER_INFO_CHANGED.value,
+				payload: {
+					user: user
+				}
+			})
+		})
+	}
+}
+
+export function changePassword(password) {
+	return function(dispatch, setState) {
+		dispatch({
+			type: ACTION_TYPES.USER_INFO_CHANGING.value
+		})
+		return changePasswordApi(password).then((user) => {
 			dispatch({
 				type: ACTION_TYPES.USER_INFO_CHANGED.value,
 				payload: {

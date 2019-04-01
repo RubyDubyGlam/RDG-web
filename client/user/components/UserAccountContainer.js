@@ -13,9 +13,11 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { connect } from 'react-redux'
 
-import { changePhoneNumber, changeEmailAddress, toggleSubscribe } from '../action/user-action'
+import { changePhoneNumber, changeEmailAddress, toggleSubscribe, changePassword } from '../action/user-action'
 
 import { withRouter } from 'react-router'
+
+import FontIcon from 'material-ui/FontIcon';
 
 const styles = {
   root: {
@@ -27,8 +29,9 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     overflowY: 'scroll',
-    backgroundImage: 'url("/assets/black-gradient.jpg")',
-    color: 'white'
+    color: 'black',
+    position: 'absolute',
+    top: 0
   },
   phone_number_style: {
     width: '100%',
@@ -132,6 +135,62 @@ class ChangeEmailAddressModal extends Component {
   }
 }
 
+class ChangePasswordModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: '',
+      confirm_password: '',
+    }
+  }
+
+  render() {
+    const {
+      props
+    } = this
+
+    const actions = [
+      <FlatButton
+        label="back"
+        primary={true}
+        onTouchTap={props.handleDialogClose}
+      />,
+      <FlatButton
+        label="submit"
+        disabled={!this.state.password || (this.state.password !== this.state.confirm_password)}
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={() => props.handleSubmit(this.state.password)}
+      />,
+    ]
+
+    return (
+      <Dialog
+        title="New password"
+        actions={actions}
+        modal={false}
+        open={props.open}
+        onRequestClose={props.handleDialogClose}
+        contentStyle={styles.phone_number_style}
+        bodyStyle={{minHeight: 90 }}
+      >
+        <TextField
+          hintText="Password"
+          floatingLabelText="Password"
+          type="password"
+          onChange={e => this.setState({password: e.target.value})}
+        />
+        <TextField
+          hintText="Re-enter password"
+          floatingLabelText="Confirm password"
+          type="password"
+          onChange={e => this.setState({confirm_password: e.target.value})}
+        />
+      </Dialog>
+    )
+  }
+}
+
 
 class CancelModal extends Component {
   render() {
@@ -149,17 +208,14 @@ class CancelModal extends Component {
 
     return (
       <Dialog
-        title={<div style={{color: 'pink', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Delete Account</div>}
+        title={<div style={{fontSize: 32, textAlign: 'center'}}>Delete Account</div>}
         actions={actions}
         modal={false}
         open={props.open}
         onRequestClose={props.handleDialogClose}
         contentStyle={{minWidth: '100%'}}
-        bodyStyle={{ backgroundColor: 'rgba(0,0,0,0.9)', maxHeight: '100%' }}
-        titleStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
-        actionsContainerStyle={{ backgroundColor: 'rgba(0,0,0,0.9)' }}
       >
-        <p style={{color: 'white'}} >Please send us an email at info@rubydubyglam.com to delete your account </p>
+        <p>Please send us an email at info@rubydubyglam.com to delete your account </p>
       </Dialog>
     )
   }
@@ -172,9 +228,17 @@ class ListExampleSettings extends Component {
     this.state = {
       is_editing_phone_number: false,
       is_editing_email_address: false,
+      is_editing_password: false,
       error: '',
       delete_account_modal: false
     }
+  }
+
+  handleChangePasswordModalClose = () => {
+    this.setState({
+      is_editing_password: false,
+      error: ''
+    })
   }
 
   handleChangePhoneNumberModalClose = () => {
@@ -199,6 +263,18 @@ class ListExampleSettings extends Component {
       })      
     }).catch((error) => {
       this.setState({error: 'Invalid phone_number'})
+    })     
+  }
+
+  handleSubmitChangePassword = (password) => {
+    console.log(password)
+    this.props.changePassword(password).then(() => {
+      this.setState({
+        is_editing_password: false,
+        error: ''
+      })      
+    }).catch((error) => {
+      this.setState({error: 'Invalid password'})
     })     
   }
 
@@ -229,14 +305,18 @@ class ListExampleSettings extends Component {
       user
     } = this.props
 
-    console.log(user)
-
    return ( 
       <div style={styles.root}>
+        <div style={{width: '100%', height: '60px', backgroundColor: 'black', marginBottom: '2em'}} />
         <ChangePhoneNumberModal 
           open={this.state.is_editing_phone_number}
           handleDialogClose={this.handleChangePhoneNumberModalClose}
           handleSubmit={this.handleSubmitChangePhoneNumber}
+        />
+        <ChangePasswordModal 
+          open={this.state.is_editing_password}
+          handleDialogClose={this.handleChangePasswordModalClose}
+          handleSubmit={this.handleSubmitChangePassword}
         />
         <ChangeEmailAddressModal 
           open={this.state.is_editing_email_address}
@@ -245,24 +325,21 @@ class ListExampleSettings extends Component {
         />
         <CancelModal open={this.state.delete_account_modal} handleDialogClose={() => this.setState({delete_account_modal: false})}/>
         <List>
-          <Subheader style={{color: 'white', fontFamily: "'Great Vibes', cursive", fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
+          <Subheader style={{fontSize: 32, textAlign: 'center'}}>Contact</Subheader>
           <ListItem
-            primaryText="Change my phone number"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>{user.email_address}</span>}
-            onClick={e => this.setState({is_editing_email_address: true})}
+            primaryText="Change my password"
+            secondaryText={<span>**********</span>}
+            onClick={e => this.setState({is_editing_password: true})}
           />
           <ListItem
             primaryText="Change my phone number"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>{user.phone_number}</span>}
+            secondaryText={<span>{user.phone_number}</span>}
             onClick={e => this.setState({is_editing_phone_number: true})}
           />
           <ListItem
             leftCheckbox={<Checkbox checked={user.subscribed} onCheck={this.changeSubmitToggleSubscribe}/>}
             primaryText="Subscribed"
-            style={{color: 'white'}}
-            secondaryText={<span style={{color: 'pink'}}>Subscribed to offers</span>}
+            secondaryText={<span>Subscribed to offers</span>}
           />
         </List>
         <List>
@@ -291,6 +368,7 @@ const mapStateToProps = (state) => {
 let ListExampleSettingsComponent = connect( mapStateToProps, {
   changePhoneNumber,
   changeEmailAddress,
+  changePassword,
   toggleSubscribe
 })(ListExampleSettings)
 

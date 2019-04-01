@@ -12,16 +12,20 @@ import BlowoutContainer from '../../order/components/BlowoutContainer'
 import FAQSContainer from '../../faqs/components/FAQContainer'
 import ContactUsContainer from '../../contact-us/components/ContactUsContainer'
 import UpdoContainer from '../../order/components/UpdoContainer'
+import InitOrderContainer from '../../order/components/InitOrderContainer'
 
 import { me } from '../../user/action/user-action'
+import { getAppointments } from '../../appointments/action/appointment-action'
 import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router'
 
+import Loader from './Loader'
+
 import {
   Route,
-  Switch
-
+  Switch,
+  Redirect
 } from 'react-router-dom'
 
 const styles = {
@@ -30,8 +34,7 @@ const styles = {
     padding: 0,
     margin: 0,
     display: 'flex',
-    flexDirection: 'column',
-    backgroundImage: 'url("/assets/black-gradient.jpg")'    
+    flexDirection: 'column',  
   },
 }
 
@@ -42,6 +45,8 @@ class MobileLayoutIphone extends Component {
 
     this.state = {
       view: 1,
+      has_fetched: false,
+      is_loading: true
     }
   }
 
@@ -53,19 +58,34 @@ class MobileLayoutIphone extends Component {
 
   componentDidMount() {
     this.props.me()
+    .catch(() => this.setState({
+      has_fetched: true,
+      is_loading: false
+    }))   
+    .then(() => {
+      this.props.getAppointments().then(() => {
+        this.setState({
+          has_fetched: true,
+          is_loading: false
+        })        
+      })
+    })
   }
 
   render() {
     console.log(this.props.user)
     return (
-		<div style={styles.container}>
+		<div style={styles.container} ref={(ref) => this.reffers = ref}>
       {
         this.props.user && <MobileHeaderAndroid />
       }
+      { this.state.is_loading ? <Loader /> : null }
       {
-        this.props.user && (
+        this.props.user && !this.state.is_loading && (
           <Switch>
-            <Route path='/appointment' render={() => <AppointmentContainer appointments={this.props.appointments} user={this.props.user} />} />
+            <Route path='/appointment' render={({match}) => <AppointmentContainer appointments={this.props.appointments} match={match} user={this.props.user} />} />
+            <Route path='/client-appointment/:tense' render={({match}) => <AppointmentContainer appointments={this.props.appointments} match={match} user={this.props.user} />} />
+            <Route path='/book' render={() => <OrderContainer user={this.props.user}/>} />
             <Route path='/account' component={UserAccountContainer} user={this.props.user} />
             <Route path='/faqs' render={() => <FAQSContainer user={this.props.user}/>}  />
             <Route path='/contact-us' render={() => <ContactUsContainer user={this.props.user}/>}  />
@@ -77,12 +97,11 @@ class MobileLayoutIphone extends Component {
             <Route path='/makeup' render={() => <MakeupContainer user={this.props.user}/>}  />
             <Route path='/lashes/:service' render={() => <OrderContainer user={this.props.user}/>} /> 
             <Route path='/lashes' render={() => <LashesContainer user={this.props.user}/>}  />
-            <Route path='/' render={() => <HomeContainer user={this.props.user}/>}  />
+            <Route path='/' render={({match}) => this.props.user.roles.admin || this.props.user.roles.stylist ? <Redirect to='/appointment' /> : <InitOrderContainer appointments={this.props.appointments} user={this.props.user}/>}  />
           </Switch>
         )
       }
-			{ !this.props.user ? <LoginContainer /> : null}
-			<img style={{zIndex: -1, opacity: .05, position: 'fixed', margin: 'auto', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} src={'/assets/rbg-logo.png'} width={'100%'} opacity={.5}/>
+			{ !this.props.user && this.state.has_fetched ? <LoginContainer /> : null}
 		</div>
     )
   }
@@ -96,7 +115,8 @@ const mapStateToProps = (state) => {
 }
 
 let MobileLayoutIphoneComponent = withRouter(connect( mapStateToProps, {
-	me: me
+	me: me,
+  getAppointments
 }, undefined, {pure:false})(MobileLayoutIphone))
 
 

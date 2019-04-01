@@ -77,10 +77,10 @@ export default class AppointmentMap extends Component {
   	return ( 
   		<GettingStartedGoogleMap
   		    containerElement={
-  		      <div style={{ height: agent === 'web' ? 450 : 250 }} />
+  		      <div style={{ height: agent === 'web' ? 450 : '100vw' }} />
   		    }
   		    mapElement={
-  		      <div style={{ height: agent === 'web' ? 450 : 250 }} />
+  		      <div style={{ height: agent === 'web' ? 450 : '100vw' }} />
   		    }
   		    onMapLoad={_.noop}
   		    onMapClick={_.noop}

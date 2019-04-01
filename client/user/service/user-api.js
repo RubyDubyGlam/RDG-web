@@ -12,6 +12,26 @@ export function logout() {
   })  
 }
 
+export function login(email_address, password) {
+  return axios.post('/v1/auth/login', {
+    email_address,
+    password,
+  }).then((response) => {
+    return response.data
+  })
+}
+
+export function register(email_address, password, first_name, last_name) {
+  return axios.post('/v1/auth/register', {
+    email_address,
+    password,
+    first_name,
+    last_name,
+  }).then((response) => {
+    return response.data
+  })
+}
+
 export function getUser(user_id) {
   return axios.get(`/v1/user/${user_id}`).then((response) => {
     return response.data
@@ -27,6 +47,14 @@ export function getStylists() {
 export function changePhoneNumber(phone_number) {
   return axios.post('/v1/user/change-phone-number', {
     phone_number
+  }).then((response) => {
+    return response.data
+  })
+}
+
+export function changePassword(password) {
+  return axios.post('/v1/user/change-password', {
+    password
   }).then((response) => {
     return response.data
   })
